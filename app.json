@@ -16,7 +16,12 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.qinleiheng.MedalIOS"
+      "bundleIdentifier": "com.qinleiheng.MedalIOS",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {

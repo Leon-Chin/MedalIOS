@@ -17,9 +17,9 @@ export const deleteconversation = (conversationID) => request('delete', `/conver
 
 // messages
 export const getcurrentconversationmessages = (conversationID) => request('get', `/messages/${conversationID}`);
+export const getcurrentconversationmessagesmobile = (conversationID) => request('get', `/messages/mobile/${conversationID}`);
 export const sendmessage = (data) => request('post', '/messages', data);
 export const getunreadedmessage = () => request('get', '/messages/unreadmsgs');
-
 // get users
 export const getuser = (userID) => request('get', `/users/find/${userID}`);
 
@@ -51,9 +51,14 @@ export const getspecificblog = (blogID) => request('get', `/blogs/find/${blogID}
 export const getblogcomments = (blogID) => request('get', `/comments/${blogID}`);
 export const addcomment = (data) => request('post', `/comments`, data);
 export const likecomment = (commentID) => request('put', `/users/likecomment/${commentID}`);
+export const cancellikecomment = (commentID) => request('put', `/users/cancellikecomment/${commentID}`);
 
 // tutorial
 export const getalltutorial = () => request('get', '/tutorials')
 export const getonetutorial = (tutorialID) => request('get', `/tutorials/find/${tutorialID}`)
 
+// evalutation
+export const updatePrefer = (data) => request('post', `/users/prefer`, data);
 
+// notification
+export const updateNotificationTab = (data) => request('put', `/users/notificationtab/set`, data);

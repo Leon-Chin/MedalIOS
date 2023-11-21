@@ -1,10 +1,8 @@
-// import { message as $message } from 'antd';
 import axios from 'axios';
-import { store } from '../redux/store';
-import { setLoading } from '../redux/userSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const axiosInstance = axios.create({
+    // baseURL: 'https://medal.onrender.com/api',
     baseURL: 'http://localhost:3001/api',
     // timeout: 6000,
 });
@@ -37,8 +35,8 @@ axiosInstance.interceptors.response.use(
     },
 );
 
-export const request = (method, url, data, config) => {
-    const token = AsyncStorage.getItem('token')
+export const request = async (method, url, data, config) => {
+    const token = await AsyncStorage.getItem('token')
     switch (method) {
         case 'post':
             return axiosInstance.post(url, { ...data, token }, config);

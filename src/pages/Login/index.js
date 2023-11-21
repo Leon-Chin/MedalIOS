@@ -20,7 +20,6 @@ export default function Login() {
     const [focusednameSup, setFocusednameSup] = useState(false)
     const [focusedpasswordSup, setFocusedpasswordSup] = useState(false)
     const [focusedemail, setFocusedemail] = useState(false)
-    // const [selectedPic, setSelectedPic] = useState(1)
     const [signup, setSignup] = useState(false)
     const [sigInInfo, setSignInInfo] = useState({})
     const [sigUpInfo, setSignUpInfo] = useState({})
@@ -30,6 +29,7 @@ export default function Login() {
         dispatch(loginStart())
         await usersignup(sigUpInfo)
             .then((res) => {
+                console.log('token', res.token);
                 AsyncStorage.setItem('token', res.token)
                 dispatch(loginSuccess(res.user))
                 navigate('Home')
@@ -50,11 +50,9 @@ export default function Login() {
                 AsyncStorage.setItem('token', res.token)
                 dispatch(loginSuccess(res.user))
                 navigate('Home')
-                // message.success('Login Successfully! Welcome Back!!!')
             })
             .catch(() => {
                 dispatch(loginFailure())
-                // message.error('Login Failure! Try again please')
             })
     }
     const SignInWithGoogle = async () => {

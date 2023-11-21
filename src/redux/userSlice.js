@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { getLocales, getCalendars } from 'expo-localization';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const initialState = {
     currentUser: null,
     loading: false,
     error: false,
     currentTheme: 'light',
-    // userLocale: 'en_US',
     userLocale: getLocales()[0].languageCode === 'zh' ? 'zh_CN' : 'en_US',
 }
 
@@ -22,7 +20,6 @@ export const UserSlicer = createSlice({
             state.currentUser = action.payload
             state.currentTheme = action.payload.preferedTheme
             state.userLocale = action.payload.preferedLanguage
-            state.currentTutorial = null
             switch (action.payload.preferedLanguage) {
                 case 'zh_CN':
                     state.userLocale = "zh_CN"
@@ -56,12 +53,12 @@ export const UserSlicer = createSlice({
         setLocale: (state, action) => {
             state.userLocale = action.payload
         },
-        setLoading: (state, action) => {
-            state.loading = action.payload
-        }
+        // setLoading: (state, action) => {
+        //     state.loading = action.payload
+        // }
     }
 })
 
-export const { setLoading, loginStart, loginFailure, loginSuccess, logout, setTheme, setLocale } = UserSlicer.actions
+export const { loginStart, loginFailure, loginSuccess, logout, setTheme, setLocale } = UserSlicer.actions
 
 export default UserSlicer.reducer
