@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Login from '../pages/Login'
@@ -24,12 +24,16 @@ import HeightWeight from '../pages/Statistics/screens/HeightWeight'
 import TodaysExercises from '../pages/Statistics/screens/TodaysExercises'
 import AfterExcercise from '../pages/ExercisesPages/AfterExcercise'
 import Evaluation from '../pages/Calender/pages/Evaluation'
+import TutorialVideo from '../pages/SpecificTutorial/screens/TutorialVideo'
 
 const Stack = createNativeStackNavigator();
 
 export default function MyRouter() {
     const { userLocale, currentUser } = useSelector((state) => state.user)
     const Language = userLocale ? userLocale.substring(0, 2) : 'en'
+    useEffect(() => {
+        console.log("user");
+    }, [])
 
     if (!currentUser) {
         return (<IntlProvider locale={Language} messages={localeConfig[Language]}>
@@ -50,6 +54,7 @@ export default function MyRouter() {
                         <Stack.Screen name="SpecificTutorial" component={SpecificTutorial} options={{ title: 'Tutorial', headerShown: false }} />
                         <Stack.Screen name="Notifications" component={Notifications} options={{ title: 'Notifications', headerShown: true, }} />
                         <Stack.Screen name="AllTutorials" component={TutorialLibrary} options={{ title: 'Tutorials Library', headerShown: true }} />
+                        <Stack.Screen name="TutorialVideo" component={TutorialVideo} options={{ headerShown: false }} />
                         <Stack.Screen name="AllCompetitions" component={Competitions} options={{ title: 'Competitions', headerShown: true }} />
                         <Stack.Screen name="Statistics" component={Statistics} options={{ title: '个人数据中心', headerShown: true }} />
                         <Stack.Screen name="PersonalDetails" component={PersonalDetail} options={{ title: '个人信息', headerShown: true }} />

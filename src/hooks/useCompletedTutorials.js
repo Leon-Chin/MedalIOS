@@ -9,13 +9,20 @@ function useCompletedTutorials(selectDay) {
 
     useEffect(() => {
         let tutorials = [];
-        sessions.map(session => {
+        selectDay ? sessions.map(session => {
             if (checkTwoDaysIsEqual(new Date(session.date), selectDay)) {
                 if (session.completed === true) {
-                    tutorials.push(session.tutorial)
+                    tutorials.push({ ...session.tutorial, sessionID: session._id })
+                }
+            }
+        }) : sessions.map(session => {
+            if (checkTwoDaysIsEqual(new Date(session.date), new Date())) {
+                if (session.completed === true) {
+                    tutorials.push({ ...session.tutorial, sessionID: session._id })
                 }
             }
         })
+
         setCompletedTutorials(tutorials)
     }, [selectDay, sessions]);
 

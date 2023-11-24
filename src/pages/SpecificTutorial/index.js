@@ -1,31 +1,26 @@
-import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useMemo, useRef } from 'react';
-import { BottomSheetModal, BottomSheetModalProvider, } from '@gorhom/bottom-sheet';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { BottomSheetModalProvider, } from '@gorhom/bottom-sheet';
 import styles from './style'
 import CardTitle from '../../components/CardTitle'
 import Tag from '../../components/Tag'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import COLORS from '../../constants/COLORS';
-import { ICON } from '../../constants/SVG/ICON';
-import OptionsInModal from './components/OptionsInModal';
 import NavigationHeader from './components/NavigationHeader';
+import SIZE from '../../constants/SIZE';
+import { useState } from 'react';
+import MoreOptionsModal from './components/MoreOptionsModal';
+import BeforeStartExerciseModal from './components/BeforeStartExerciseModal';
 
 
-const SpecificTutorial = ({ navigation, route }) => {
+const SpecificTutorial = ({ route }) => {
     const { tutorial } = route.params
     const { cover, level, colorie, brief, name, duration, _id } = tutorial
-    const bottomSheetModalRef = useRef(null);
-    // variables
-    const snapPoints = useMemo(() => ['25%', '50%', '75%'], []);
-    // callbacks
-    const handleModelOpen = useCallback(() => bottomSheetModalRef.current?.present(), []);
-    const handleModelClose = () => bottomSheetModalRef.current?.dismiss()
+    const [MoreOptionsModalVisible, setMoreOptionsModalVisible] = useState(false)
+    const [BeforeStartExerciseModalVisible, setBeforeStartExerciseModalVisible] = useState(false)
 
     return (
         <BottomSheetModalProvider>
             <View style={styles.container}>
-
-                <NavigationHeader handleModelOpen={handleModelOpen} />
+                <NavigationHeader setVisible={setMoreOptionsModalVisible} />
                 {/* cover of the tutorial */}
                 <Image
                     source={{ uri: cover }}
@@ -38,14 +33,13 @@ const SpecificTutorial = ({ navigation, route }) => {
                         showsVerticalScrollIndicator={false}
                         style={{ flex: 1 }}
                     >
-                        <Tag content={['零噪音', "nihao"]} />
                         <View style={styles.tutorialIntro}>
                             <View style={styles.tutorialIntroLeft}>
                                 <View style={{ marginRight: 6 }}>
-                                    <Text className='commentText'>{level}</Text>
+                                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', }}>{level}</Text>
                                 </View>
-                                <View>
-                                    <Text>{duration} <Text>min</Text></Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', }}>{duration} </Text><Text>min</Text>
                                 </View>
                             </View>
                             <View style={styles.tutorialIntroRight}>
@@ -68,13 +62,7 @@ const SpecificTutorial = ({ navigation, route }) => {
                         </View>
                         <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Equipments Requirement:</Text>
                         <View style={styles.equipments}>
-                            {/* {equipments.map(item => <View className="specificTutorialPage-detail-equipments-item">{item}</View>)} */}
                             <Tag content={tutorial.equipments} />
-                        </View>
-                        {/* to do */}
-                        <View>
-                            <Text style={{ fontSize: 18, fontWeight: 600 }}>练习频次: need to do</Text>
-                            <Text>3-5次/周</Text>
                         </View>
                         <View style={{ height: 100 }}></View>
                     </ScrollView>
@@ -82,21 +70,14 @@ const SpecificTutorial = ({ navigation, route }) => {
                 <View style={styles.BottomBar}>
                     <TouchableOpacity
                         style={styles.startBtn}
-                        onPress={() => handleModelOpen()}
+                        onPress={() => setBeforeStartExerciseModalVisible(true)}
                     >
                         <Text style={{ fontSize: 20, fontWeight: 500, color: '#fff' }}>Start Exercise</Text>
                     </TouchableOpacity>
                 </View>
             </View >
-
-            <BottomSheetModal
-                ref={bottomSheetModalRef}
-                index={0}
-                enablePanDownToClose
-                snapPoints={snapPoints}
-            >
-                <OptionsInModal handleModelClose={handleModelClose} tutorial={tutorial} />
-            </BottomSheetModal>
+            <MoreOptionsModal visible={MoreOptionsModalVisible} setVisible={setMoreOptionsModalVisible} tutorial={tutorial} />
+            <BeforeStartExerciseModal visible={BeforeStartExerciseModalVisible} setVisible={setBeforeStartExerciseModalVisible} tutorial={tutorial} />
         </BottomSheetModalProvider >
     )
 }

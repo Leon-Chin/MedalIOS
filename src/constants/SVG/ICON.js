@@ -2,6 +2,7 @@ import { Foundation, FontAwesome5, FontAwesome, MaterialCommunityIcons, Entypo, 
 export const ICON = {
     right: (size, color) => <Entypo name="chevron-right" size={size} color={color} />,
     left: (size, color) => <Entypo name='chevron-left' size={size} color={color} />,
+    down: (size, color) => <Entypo name='chevron-down' size={size} color={color} />,
     calender: (size, color) => <Foundation name="calendar" size={size} color={color} />,
     weight: (size, color) => <FontAwesome5 name="weight" size={size} color={color} />,
     addToCalender: (size, color) => <FontAwesome name='calendar-plus-o' size={size} color={color} />,
@@ -18,4 +19,7 @@ export const ICON = {
     distanceIcon: (size, color) => <MaterialCommunityIcons name="map-marker-distance" size={size} color={color} />,
     time: (size, color) => <Ionicons name="timer-outline" size={size} color={color} />,
     more: (size, color) => <MaterialIcons name="more-horiz" size={size} color={color} />,
+    delete: (size, color) => <MaterialIcons name="delete" size={size} color={color} />,
+    edit: (size, color) => <MaterialCommunityIcons name="file-document-edit-outline" size={size} color={color} />,
+    target: (size, color) => <MaterialCommunityIcons name="bullseye-arrow" size={size} color={color} />
 }

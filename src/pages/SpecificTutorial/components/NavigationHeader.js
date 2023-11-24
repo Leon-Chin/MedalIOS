@@ -5,7 +5,7 @@ import { ICON } from '../../../constants/SVG/ICON'
 import { useNavigation } from '@react-navigation/native'
 import COLORS from '../../../constants/COLORS'
 
-const NavigationHeader = ({ handleModelOpen }) => {
+const NavigationHeader = ({ setVisible }) => {
     const { goBack } = useNavigation()
     return (
         <View style={styles.navigationBar}>
@@ -16,7 +16,7 @@ const NavigationHeader = ({ handleModelOpen }) => {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={handleModelOpen}
+                onPress={() => setVisible(true)}
             >
                 <View style={styles.btn}>
                     {ICON.more(28, COLORS.black)}

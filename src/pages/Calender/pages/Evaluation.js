@@ -7,14 +7,13 @@ import COLORS from '../../../constants/COLORS';
 import EvaluationQuestions from '../../../constants/EvaluationQuestions/index'
 import { useNavigation } from '@react-navigation/native';
 import SIZE from '../../../constants/SIZE';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import EvaluationQuestion from '../components/EvaluationQuestion';
 import { updatePrefer } from '../../../api/user.api';
 import { loginSuccess } from '../../../redux/userSlice';
 const { width } = Dimensions.get('screen')
 const Evaluation = () => {
     const dispatch = useDispatch()
-    const { currentUser } = useSelector(state => state.user)
     const { navigate, goBack } = useNavigation()
     const [questionNo, setQuestionNo] = useState(1)
     const [EvaluationAnswer, setEvaluationAnswer] = useState({})
@@ -64,7 +63,7 @@ const Evaluation = () => {
                         </TouchableOpacity>
                         <ProgressLine questionNo={questionNo} />
                     </View>
-                    {EvaluationQuestions.map((item, index) => <EvaluationQuestion questionNo={questionNo} EvaluationItem={item} setEvaluationAnswer={setEvaluationAnswer} />)}
+                    {EvaluationQuestions.map((item, index) => <EvaluationQuestion key={index} questionNo={questionNo} EvaluationItem={item} setEvaluationAnswer={setEvaluationAnswer} />)}
                     {/* <EvaluationQuestion questionNo={questionNo} setEvaluationAnswer={setEvaluationAnswer} /> */}
                     {!isLastQuestion ? <View style={styles.nextBtnArea}>
                         <TouchableOpacity

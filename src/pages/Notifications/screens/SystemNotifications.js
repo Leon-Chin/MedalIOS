@@ -1,10 +1,12 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import { Avatar } from '@rneui/base'
-import COLORS from '../../../constants/COLORS'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { getnotifications } from '../../../api/user.api'
+import { deletenotification, getnotifications } from '../../../api/notification.api'
+import SIZE from '../../../constants/SIZE'
+import { ICON } from '../../../constants/SVG/ICON'
+import COLORS from '../../../constants/COLORS'
 
 const SystemNotifications = () => {
     const [loading, setLoading] = useState(false)
@@ -18,17 +20,31 @@ const SystemNotifications = () => {
     useEffect(() => {
         getNoti()
     }, [])
+
+    const handleDeleteNotification = async (notiID) => {
+        await deletenotification(notiID).then(res => {
+            if (res.status !== false) {
+                getNoti()
+            }
+        })
+    }
     return (
         <ScrollView style={{ flex: 1 }}>
             {notifications && notifications.map((item, key) => <TouchableOpacity key={key} style={{ flexDirection: 'coloumn', justifyContent: 'space-between', width: '100%' }}>
-                <View style={{ flex: 1, marginHorizontal: '3%', marginVertical: 6, backgroundColor: '#fff', borderRadius: 12, padding: 10 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Avatar source={{ uri: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png' }} size={36} />
-                        <Text style={{ fontSize: 16, fontWeight: '500', marginLeft: 6 }}>系统消息</Text>
+                <View style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin, backgroundColor: '#fff', borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Avatar source={{ uri: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png' }} size={30} />
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', marginLeft: 6 }}>系统消息</Text>
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => { handleDeleteNotification(item._id) }}
+                        >
+                            {ICON.delete(24, COLORS.gray)}
+                        </TouchableOpacity>
                     </View>
-                    {/* title */}
-                    <View style={{ marginVertical: 10 }}>
-                        <Text style={{ fontSize: 18, fontWeight: '600' }}>{item.title}</Text>
+                    <View style={{ marginVertical: SIZE.LittleMargin }}>
+                        <Text style={{ fontSize: SIZE.SmallTitle }}>{item.title}</Text>
                     </View>
                 </View>
             </TouchableOpacity>)}

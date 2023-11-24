@@ -1,5 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native'
 import COLORS from '../../constants/COLORS'
+import SIZE from '../../constants/SIZE'
 const { width } = Dimensions.get('window')
 const styles = StyleSheet.create({
     container: {
@@ -39,13 +40,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16
     },
     tutorialIntro: {
-        display: 'flex',
         paddingVertical: 10,
+        backgroundColor: COLORS.backgroundGray,
+        paddingHorizontal: SIZE.NormalMargin,
+        borderRadius: SIZE.CardBorderRadius,
+        marginBottom: SIZE.NormalMargin,
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
     },
     tutorialIntroLeft: {
         display: 'flex',
+        alignItems: 'center',
         flexDirection: 'row',
     },
     tutorialIntroRight: {

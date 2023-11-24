@@ -10,9 +10,6 @@ const ProgressLine = ({ questionNo }) => {
     const [percentage, setPercentage] = useState(firstTimePercentage)
 
     useEffect(() => {
-        console.log("questionNo", questionNo);
-        console.log("EvaluationQuestions.length", EvaluationQuestions.length);
-        console.log(questionNo === EvaluationQuestions.length)
         if (questionNo === EvaluationQuestions.length) {
             setPercentage(1)
         } else {

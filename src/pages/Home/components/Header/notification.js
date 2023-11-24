@@ -4,7 +4,8 @@ import { Ionicons } from '@expo/vector-icons'
 import { Badge } from '@rneui/base'
 import { useIntl } from 'react-intl'
 import { useNavigation } from '@react-navigation/native'
-import { getnotifications, getunreadedmessage } from '../../../../api/user.api'
+import { getunreadedmessage } from '../../../../api/user.api'
+import { getnotifications } from '../../../../api/notification.api'
 import useUncompletedTutorials from '../../../../hooks/useUncompletedTutorials'
 const Notification = () => {
     const { formatMessage } = useIntl()

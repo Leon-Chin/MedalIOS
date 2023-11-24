@@ -4,13 +4,12 @@ import SystemNotifications from './screens/SystemNotifications'
 import Messages from './screens/Messages'
 import TodoExercise from './screens/TodoExercise'
 import { useState } from 'react';
-import { getunreadedmessage, getnotifications } from '../../api/user.api'
+import { getunreadedmessage } from '../../api/user.api'
+import { getnotifications } from '../../api/notification.api'
 import useUncompletedTutorials from '../../hooks/useUncompletedTutorials';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import COLORS from '../../constants/COLORS';
 import { ICON } from '../../constants/SVG/ICON';
-import { Modal } from 'react-native';
-import SIZE from '../../constants/SIZE';
 import TabSettingModel from './Components/TabSettingModel';
 import { useSelector } from 'react-redux';
 

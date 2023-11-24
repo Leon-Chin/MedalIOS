@@ -1,13 +1,14 @@
 import { request } from './request';
 //user infomation
 export const updateuserinfo = (userID, data) => request('put', `/users/${userID}`, data);
+export const updateweighttarget = (data) => request('put', `/users/updateWeightTarget`, data);
 // authentication
 export const signin = (data) => request('post', '/auth/signin', data);
 export const signinWithGoogle = (data) => request('post', '/auth/google', data);
 export const usersignup = (data) => request('post', '/auth/signup', data);
 
-// notification
-export const getnotifications = (data) => request('get', '/notification/getmynotification', data);
+// // notification
+// export const getnotifications = (data) => request('get', '/notification/getmynotification', data);
 
 // conversation
 export const getconversation = () => request('get', '/conversations');
@@ -56,6 +57,7 @@ export const cancellikecomment = (commentID) => request('put', `/users/cancellik
 // tutorial
 export const getalltutorial = () => request('get', '/tutorials')
 export const getonetutorial = (tutorialID) => request('get', `/tutorials/find/${tutorialID}`)
+export const participateTutorial = (tutorialID) => request('put', `/users/participateTutorial/${tutorialID}`)
 
 // evalutation
 export const updatePrefer = (data) => request('post', `/users/prefer`, data);

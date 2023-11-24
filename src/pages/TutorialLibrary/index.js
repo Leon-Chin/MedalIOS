@@ -9,7 +9,12 @@ import { getalltutorial } from '../../api/user.api'
 import { useEffect } from 'react'
 import TutorialVerticalView from '../../components/TutorialVerticalView'
 
-const TutorialLibrary = () => {
+const TutorialLibrary = ({ route }) => {
+    useEffect(() => {
+        const selectType = route?.params?.selectType
+        selectType && setSelectedType(selectType)
+    }, [route])
+
     const { navigate } = useNavigation()
     const [selectedType, setSelectedType] = useState()
     const [tutorials, setTutorials] = useState([])
@@ -20,7 +25,6 @@ const TutorialLibrary = () => {
             console.log(err);
         })
     }
-
     useEffect(() => {
         getLibs()
     }, [])
@@ -60,7 +64,6 @@ const TutorialLibrary = () => {
                     </View>
                 }
             </View>
-
         </SafeAreaView>
     )
 }

@@ -13,13 +13,13 @@ function useUncompletedTutorials(selectDay) {
             sessions.map(session => {
                 if (checkTwoDaysIsEqual(new Date(session.date), selectDay)) {
                     if (session.completed === false) {
-                        tutorials.push(session.tutorial)
+                        tutorials.push({ ...session.tutorial, sessionID: session._id })
                     }
                 }
             }) : sessions.map(session => {
                 if (checkTwoDaysIsEqual(new Date(session.date), new Date())) {
                     if (session.completed === false) {
-                        tutorials.push(session.tutorial)
+                        tutorials.push({ ...session.tutorial, sessionID: session._id })
                     }
                 }
             })

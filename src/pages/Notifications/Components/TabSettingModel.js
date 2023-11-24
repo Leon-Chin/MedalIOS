@@ -51,6 +51,7 @@ const TabSettingModel = ({ visible, setVisible }) => {
         }
         console.log(req);
         await updateNotificationTab(req).then(res => {
+            console.log("res", res);
             dispatch(setNotificationTab(res));
             setVisible(false)
         })
