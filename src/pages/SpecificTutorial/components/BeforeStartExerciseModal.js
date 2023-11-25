@@ -14,7 +14,7 @@ import { participateTutorial } from '../../../api/user.api';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../redux/userSlice';
 
-const BeforeStartExerciseModal = ({ visible, setVisible, tutorial }) => {
+const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }) => {
     const { navigate } = useNavigation()
     const dispatch = useDispatch()
     const bottomSheetModalRef = useRef(null);
@@ -36,9 +36,10 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial }) => {
     const handleStartExercise = async () => {
         await participateTutorial(tutorial._id).then(res => {
             if (res.status !== false) {
+                handleModelClose()
                 dispatch(loginSuccess(res.user))
+                setTutorial(res.updatedTutorial)
                 navigate("TutorialVideo", { tutorial })
-                setVisible(false)
             } else {
                 Alert.alert("出现异常，请稍后重试")
             }

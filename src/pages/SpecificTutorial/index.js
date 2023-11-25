@@ -12,7 +12,7 @@ import BeforeStartExerciseModal from './components/BeforeStartExerciseModal';
 
 
 const SpecificTutorial = ({ route }) => {
-    const { tutorial } = route.params
+    const [tutorial, setTutorial] = useState(route.params.tutorial)
     const { cover, level, colorie, brief, name, duration, _id } = tutorial
     const [MoreOptionsModalVisible, setMoreOptionsModalVisible] = useState(false)
     const [BeforeStartExerciseModalVisible, setBeforeStartExerciseModalVisible] = useState(false)
@@ -77,7 +77,7 @@ const SpecificTutorial = ({ route }) => {
                 </View>
             </View >
             <MoreOptionsModal visible={MoreOptionsModalVisible} setVisible={setMoreOptionsModalVisible} tutorial={tutorial} />
-            <BeforeStartExerciseModal visible={BeforeStartExerciseModalVisible} setVisible={setBeforeStartExerciseModalVisible} tutorial={tutorial} />
+            <BeforeStartExerciseModal setTutorial={setTutorial} visible={BeforeStartExerciseModalVisible} setVisible={setBeforeStartExerciseModalVisible} tutorial={tutorial} />
         </BottomSheetModalProvider >
     )
 }

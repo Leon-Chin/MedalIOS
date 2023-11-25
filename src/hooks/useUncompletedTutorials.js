@@ -5,7 +5,7 @@ import { checkTwoDaysIsEqual } from '../utils/checkIsToday';
 // 这是一个自定义Hook
 function useUncompletedTutorials(selectDay) {
     const { sessions } = useSelector(state => state.session)
-    const [completedtutorials, setCompletedTutorials] = useState([])
+    const [unCompletedtutorials, setUnCompletedTutorials] = useState([])
 
     useEffect(() => {
         let tutorials = []
@@ -23,11 +23,11 @@ function useUncompletedTutorials(selectDay) {
                     }
                 }
             })
-        setCompletedTutorials(tutorials)
+        setUnCompletedTutorials(tutorials)
     }, [selectDay, sessions]);
 
     // 返回状态和设置方法
-    return completedtutorials;
+    return unCompletedtutorials;
 }
 
 export default useUncompletedTutorials

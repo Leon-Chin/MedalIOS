@@ -3,7 +3,5 @@ import { request } from './request';
 export const createsession = (data) => request('post', `/session/`, data);
 export const getsessions = () => request('get', `/session/`);
 export const deletesession = (id) => request('delete', `/session/${id}`);
-export const getcompletedtutorials = () => request('get', `/session/completedtutorials`);
-export const getuncompletedtutorials = () => request('get', `/session/uncompletedtutorials`);
 
-
+export const finishsession = (tutorialId, data) => request('put', `/session/finishsession/${tutorialId}`, data);
