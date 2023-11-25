@@ -12,7 +12,7 @@ const COLORS = {
     white: '#fff',
     pink: '#f8edf2',
     pinkToGray: "#f2f0f5",
-    littleGray: '#ebf3f9'
-    // blueBackground: '#336699',
+    littleGray: '#ebf3f9',
+    red: '#CC3333',
 }
 export default COLORS
