@@ -1,4 +1,4 @@
-import { Alert, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useRef } from 'react';
@@ -7,8 +7,7 @@ import { useCallback } from 'react';
 import { useEffect } from 'react';
 import SIZE from '../../../constants/SIZE';
 import COLORS from '../../../constants/COLORS';
-import { ICON } from '../../../constants/SVG/ICON';
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../redux/userSlice';
 import { finishsession } from '../../../api/session.api';
@@ -17,6 +16,7 @@ import { setSessions } from '../../../redux/SessionSlice';
 const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, watchTime, startTime, endTime }) => {
     const [shouldRecord, setShouldRecord] = useState(false)
     const { navigate, goBack } = useNavigation()
+    const navigation = useNavigation()
     const dispatch = useDispatch()
     const bottomSheetModalRef = useRef(null);
     const [exerciseStartTime, setExerciseStartTime] = useState()
@@ -39,13 +39,8 @@ const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, wat
         setVisible(false)
         bottomSheetModalRef.current?.dismiss()
     }
-    const navigateToWarm = () => {
-        setVisible(false)
-        navigate("AllTutorials", { selectType: 'warmup' })
-    }
     const handleFinishExercise = async () => {
         const { lowerEstimateColorie, higherEstimateColorie } = tutorial
-        console.log(videoTime);
         const averageColorie = Math.round((parseInt(lowerEstimateColorie) + parseInt(higherEstimateColorie)) / 2 / videoTime * watchTime)
         const data = {
             exerciseDuration: watchTime,
@@ -57,7 +52,7 @@ const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, wat
             if (res.status !== false) {
                 dispatch(loginSuccess(res.user))
                 dispatch(setSessions(res.updatedSessions))
-                navigate("AfterExercise", { data })
+                navigation.dispatch(StackActions.replace("AfterExercise", { tutorial, data }))
             } else {
                 Alert.alert("出现异常，请稍后重试")
             }

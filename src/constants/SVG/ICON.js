@@ -21,5 +21,7 @@ export const ICON = {
     more: (size, color) => <MaterialIcons name="more-horiz" size={size} color={color} />,
     delete: (size, color) => <MaterialIcons name="delete" size={size} color={color} />,
     edit: (size, color) => <MaterialCommunityIcons name="file-document-edit-outline" size={size} color={color} />,
-    target: (size, color) => <MaterialCommunityIcons name="bullseye-arrow" size={size} color={color} />
+    target: (size, color) => <MaterialCommunityIcons name="bullseye-arrow" size={size} color={color} />,
+    lightning: (size, color) => <MaterialCommunityIcons name="lightning-bolt" size={size} color={color} />,
+    trophy: (size, color) => <FontAwesome5 name="trophy" size={size} color={color} />
 }

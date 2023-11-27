@@ -2,6 +2,7 @@ const SIZE = {
     CardBorderRadius: 10,
     CardBorderExtraRadius: 30,
     CardBorderRadiusForBtn: 20,
+    ExtarSmallTitle: 12,
     SmallTitle: 16,
     NormalTitle: 18,
     LargerTitle: 20,

@@ -3,10 +3,12 @@ import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import COLORS from '../../../constants/COLORS';
 import { ICON } from '../../../constants/SVG/ICON';
+import useTodayExerciseDuration from '../../../hooks/useTodayExerciseDuration';
+import { secToMin } from '../../../utils/funcs';
 
 const TimeCard = () => {
     const { navigate } = useNavigation()
-
+    const duration = useTodayExerciseDuration()
     return (
         <View
             style={{
@@ -34,7 +36,10 @@ const TimeCard = () => {
             </View>
             <View style={{ flex: 1, width: '100%', paddingHorizontal: '6%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 4 }}>
-                    <Text style={{ fontSize: 24, fontWeight: 'bold' }}>--</Text>
+                    {
+                        duration ? <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{secToMin(duration)}</Text> :
+                            <Text style={{ fontSize: 24, fontWeight: 'bold' }}>--</Text>
+                    }
                     <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>min</Text>
                 </View>
             </View>

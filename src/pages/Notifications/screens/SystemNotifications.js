@@ -7,6 +7,7 @@ import { deletenotification, getnotifications } from '../../../api/notification.
 import SIZE from '../../../constants/SIZE'
 import { ICON } from '../../../constants/SVG/ICON'
 import COLORS from '../../../constants/COLORS'
+import PIC from '../../../constants/PIC'
 
 const SystemNotifications = () => {
     const [loading, setLoading] = useState(false)
@@ -34,7 +35,7 @@ const SystemNotifications = () => {
                 <View style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin, backgroundColor: '#fff', borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Avatar source={{ uri: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png' }} size={30} />
+                            <Avatar source={{ uri: PIC.systemNoti }} size={30} />
                             <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', marginLeft: 6 }}>系统消息</Text>
                         </View>
                         <TouchableOpacity

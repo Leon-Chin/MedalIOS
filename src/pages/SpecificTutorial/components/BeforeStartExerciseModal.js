@@ -13,6 +13,8 @@ import { useNavigation } from '@react-navigation/native';
 import { participateTutorial } from '../../../api/user.api';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../redux/userSlice';
+import PIC from '../../../constants/PIC';
+import EXERCISETYPE from '../../../constants/EXERCISETYPE';
 
 const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }) => {
     const { navigate } = useNavigation()
@@ -31,7 +33,7 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
     }
     const navigateToWarm = () => {
         setVisible(false)
-        navigate("AllTutorials", { selectType: 'warmup' })
+        navigate("AllTutorials", { selectType: EXERCISETYPE.warmup })
     }
     const handleStartExercise = async () => {
         await participateTutorial(tutorial._id).then(res => {
@@ -50,7 +52,7 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
         <BottomSheetModal
             ref={bottomSheetModalRef}
             index={0}
-            enablePanDownToClose
+            enablePanDownToClose={false}
             snapPoints={snapPoints}
         >
             <View style={{ marginHorizontal: '3%' }}>
@@ -61,7 +63,7 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
                         style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: SIZE.NormalMargin, backgroundColor: COLORS.backgroundGray, marginTop: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius }}>
                         <View style={{ flexDirection: 'row', alignItems: "center", gap: SIZE.NormalMargin }}>
                             <ImageBackground
-                                source={{ uri: "https://www.popsci.com/uploads/2020/09/29/FWYNMFTCAJBFRBHP7CIRI2O26U.jpg?auto=webp&optimize=high&width=1440" }}
+                                source={{ uri: PIC.warmup }}
                                 style={{
                                     borderRadius: SIZE.CardBorderRadius, overflow: 'hidden',
                                     height: 50,

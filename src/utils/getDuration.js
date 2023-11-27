@@ -20,3 +20,7 @@ export const formatElapsedTime = (elapsed) => {
     const pad = (number) => (number < 10 ? `0${number}` : number);
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
 }
+
+export const isEmptyObj = (obj) => {
+    return Object.keys(obj).length === 0;
+}

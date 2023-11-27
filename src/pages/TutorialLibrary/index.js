@@ -10,13 +10,12 @@ import { useEffect } from 'react'
 import TutorialVerticalView from '../../components/TutorialVerticalView'
 
 const TutorialLibrary = ({ route }) => {
+    const { navigate } = useNavigation()
+    const [selectedType, setSelectedType] = useState()
     useEffect(() => {
         const selectType = route?.params?.selectType
         selectType && setSelectedType(selectType)
     }, [route])
-
-    const { navigate } = useNavigation()
-    const [selectedType, setSelectedType] = useState()
     const [tutorials, setTutorials] = useState([])
     const getLibs = async (type) => {
         await getalltutorial().then(res => {
@@ -54,7 +53,7 @@ const TutorialLibrary = ({ route }) => {
                 }
                 {selectedType &&
                     <View>
-                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin }}>{selectedType}</Text>
+                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin }}>{selectedType.label}</Text>
                         <FlatList
                             data={tutorials}
                             renderItem={({ item, index }) => <TutorialVerticalView key={index} tutorial={item} />}

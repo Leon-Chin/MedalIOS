@@ -2,6 +2,10 @@ import { request } from './request';
 //user infomation
 export const updateuserinfo = (userID, data) => request('put', `/users/${userID}`, data);
 export const updateweighttarget = (data) => request('put', `/users/updateWeightTarget`, data);
+export const updatesteptarget = (data) => request('put', `/users/updateStepTarget`, data);
+export const updatedistancetarget = (data) => request('put', `/users/updateDistanceTarget`, data);
+export const updatecalorietarget = (data) => request('put', `/users/updateCalorieTarget`, data);
+export const updatedurationtarget = (data) => request('put', `/users/updateDurationTarget`, data);
 // authentication
 export const signin = (data) => request('post', '/auth/signin', data);
 export const signinWithGoogle = (data) => request('post', '/auth/google', data);

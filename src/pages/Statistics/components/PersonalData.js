@@ -6,22 +6,24 @@ import { useNavigation } from '@react-navigation/native';
 import { getlatestmeasurement } from '../../../api/measurement';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import useMeasurement from '../../../hooks/useMeasurement';
 
 const PersonalData = () => {
     const { navigate } = useNavigation()
-    const [latestMeasurement, setLatestMeasurement] = useState({})
-    const getLatestMeasurement = async () => {
-        await getlatestmeasurement().then(res => {
-            if (res.status !== false) {
-                setLatestMeasurement(res)
-            } else {
-                Alert.alert("出现异常请稍后重试")
-            }
-        })
-    }
-    useEffect(() => {
-        getLatestMeasurement()
-    }, [])
+    // const [latestMeasurement, setLatestMeasurement] = useState({})
+    const { latestMeasurement } = useMeasurement()
+    // const getLatestMeasurement = async () => {
+    //     await getlatestmeasurement().then(res => {
+    //         if (res.status !== false) {
+    //             setLatestMeasurement(res)
+    //         } else {
+    //             Alert.alert("出现异常请稍后重试")
+    //         }
+    //     })
+    // }
+    // useEffect(() => {
+    //     getLatestMeasurement()
+    // }, [])
     return (
         <View style={{ marginHorizontal: '3%', marginBottom: 10, backgroundColor: '#fff', borderRadius: 12, paddingVertical: 12, paddingHorizontal: 14 }}>
             {/* title */}

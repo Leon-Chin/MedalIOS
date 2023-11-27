@@ -25,6 +25,10 @@ import TodaysExercises from '../pages/Statistics/screens/TodaysExercises'
 import AfterExcercise from '../pages/ExercisesPages/AfterExcercise'
 import Evaluation from '../pages/Calender/pages/Evaluation'
 import TutorialVideo from '../pages/SpecificTutorial/screens/TutorialVideo'
+import DurationScreen from '../pages/Statistics/screens/DurationScreen'
+import CalorieScreen from '../pages/Statistics/screens/CalorieScreen'
+import DistanceScreen from '../pages/Statistics/screens/DistanceScreen'
+import StepScreen from '../pages/Statistics/screens/StepScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -66,6 +70,10 @@ export default function MyRouter() {
                         <Stack.Screen name="ExercisesOverview" component={ExerciseOverview} options={{ headerShown: true }} />
                         <Stack.Screen name="SpecificBlog" component={SpecificBlog} options={{ headerShown: false }} />
                         <Stack.Screen name="AfterExercise" component={AfterExcercise} options={{ title: '恭喜完成运动🎉', headerShown: true }} />
+                        <Stack.Screen name="DurationSreen" component={DurationScreen} options={{ title: '运动时长', headerShown: true }} />
+                        <Stack.Screen name="CalorieScreen" component={CalorieScreen} options={{ title: '卡路里消耗', headerShown: true }} />
+                        <Stack.Screen name="DistanceScreen" component={DistanceScreen} options={{ title: '步行跑步距离', headerShown: true }} />
+                        <Stack.Screen name="StepScreen" component={StepScreen} options={{ title: '步数', headerShown: true }} />
                         <Stack.Screen name="Evaluation" component={Evaluation} options={{ headerShown: false }} />
                         <Stack.Screen name="HeightWeight" component={HeightWeight} options={{ title: '身高体重', headerShown: true }} />
                         <Stack.Screen name="TodaysExercises" component={TodaysExercises} options={{ title: '总运动', headerShown: true }} />

@@ -5,19 +5,34 @@ import SIZE from '../../../constants/SIZE'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { calculateBMI } from '../../../utils/BMICalculate'
 import { uploadmeasurement } from '../../../api/measurement'
+import { useDispatch } from 'react-redux'
+import { setLatestMeasurement, setMeasurements } from '../../../redux/MeasurementSlice'
+import { loginSuccess } from '../../../redux/userSlice'
+import useMeasurement from '../../../hooks/useMeasurement'
+import { isEmptyObj } from '../../../utils/getDuration'
 const { width } = Dimensions.get("screen")
 
-const UploadMeasurementModal = ({ visible, setVisible, latestMeasurement, getLatestMeasurement }) => {
+const UploadMeasurementModal = ({ visible, setVisible }) => {
+    const { latestMeasurement } = useMeasurement()
     const [height, setHeight] = useState();
     const [weight, setWeight] = useState();
     const [fatRate, setFatRate] = useState();
     const [BMI, setBMI] = useState();
+
+    const dispatch = useDispatch()
     useEffect(() => {
-        const { height, weight, bodyFatRate, BMI } = latestMeasurement
-        height && setHeight(height)
-        weight && setWeight(weight)
-        bodyFatRate && setFatRate(bodyFatRate)
-        BMI && setBMI(BMI)
+        if (!isEmptyObj(latestMeasurement)) {
+            latestMeasurement?.height && setHeight(latestMeasurement.height)
+            latestMeasurement?.weight && setWeight(latestMeasurement.weight)
+            latestMeasurement?.bodyFatRate && setFatRate(latestMeasurement.bodyFatRate)
+            latestMeasurement?.BMI && setBMI(latestMeasurement.BMI)
+        }
+        if (isEmptyObj(latestMeasurement)) {
+            setHeight()
+            setWeight()
+            setFatRate()
+            setBMI()
+        }
     }, [latestMeasurement])
     const handleInputWeight = (value) => {
         setWeight(value)
@@ -44,8 +59,10 @@ const UploadMeasurementModal = ({ visible, setVisible, latestMeasurement, getLat
             }
             await uploadmeasurement(data).then(res => {
                 if (res.status !== false) {
+                    dispatch(setLatestMeasurement(res.measurement))
+                    dispatch(setMeasurements(res.updatedMeasurements))
+                    dispatch(loginSuccess(res.user))
                     handlePresentModalClose()
-                    getLatestMeasurement()
                 } else {
                     Alert.alert("出现异常请稍后重试")
                 }
@@ -90,7 +107,7 @@ const UploadMeasurementModal = ({ visible, setVisible, latestMeasurement, getLat
                     <View style={styles.inputItem}>
                         <Text style={styles.inputItemFont}>体重(kg)</Text>
                         <TextInput
-                            defaultValue={weight + ""}
+                            defaultValue={weight ? weight + "" : ""}
                             autoFocus
                             keyboardType='decimal-pad'
                             onChangeText={handleInputWeight}
@@ -100,7 +117,7 @@ const UploadMeasurementModal = ({ visible, setVisible, latestMeasurement, getLat
                     <View style={styles.inputItem}>
                         <Text style={styles.inputItemFont}>身高(cm)</Text>
                         <TextInput
-                            defaultValue={height + ""}
+                            defaultValue={height ? height + "" : ""}
                             onChangeText={handleInputHeight}
                             keyboardType='decimal-pad'
                             style={styles.inputBox}

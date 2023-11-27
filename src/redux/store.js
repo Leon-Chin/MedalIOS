@@ -6,8 +6,10 @@ import ContactReducer from './ContactsSlice'
 import ConversationReducer from './ConversationSlice'
 import BlogReducer from './BlogSlice'
 import SessionReducer from './SessionSlice'
+import RecordReducer from './RecordSlice'
 import CalendarReducer from './CalendarSlice'
 import NotificationReducer from './NotificationSettingSlice'
+import MeasurementsReducer from './MeasurementSlice'
 const persistConfig = {
     key: 'root',
     version: 1,
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
     session: SessionReducer,
     calendar: CalendarReducer,
     notificationTab: NotificationReducer,
+    record: RecordReducer,
+    measurement: MeasurementsReducer,
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 export const store = configureStore({

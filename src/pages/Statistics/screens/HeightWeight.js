@@ -10,35 +10,40 @@ import StatisticChart from '../components/StatisticChart'
 import AddStatisticBtn from '../components/AddStatisticBtn'
 import UploadMeasurementModal from '../components/UploadMeasurementModal'
 import UploadWeightTargetModal from '../components/UploadWeightTargetModal'
+import useMeasurement from '../../../hooks/useMeasurement'
 const { width } = Dimensions.get("screen")
 
 const HeightWeight = () => {
-    const [latestMeasurement, setLatestMeasurement] = useState({})
+    const { latestMeasurement, allMeasurements } = useMeasurement()
+    // const [latestMeasurement, setLatestMeasurement] = useState({})
+    // const getLatestMeasurement = async () => {
+    //     await getlatestmeasurement().then(res => {
+    //         if (res.status !== false) {
+    //             setLatestMeasurement(res)
+    //         } else {
+    //             Alert.alert("出现异常请稍后重试")
+    //         }
+    //     })
+    // }
+
     const getLatestMeasurement = async () => {
-        await getlatestmeasurement().then(res => {
-            if (res.status !== false) {
-                setLatestMeasurement(res)
-            } else {
-                Alert.alert("出现异常请稍后重试")
-            }
-        })
     }
-    const [allMeasurements, setAllMeasurement] = useState([])
-    const getAllMeasurements = async () => {
-        await getmeasurements().then(res => {
-            if (res.status !== false) {
-                setAllMeasurement(res)
-            } else {
-                Alert.alert("出现异常请稍后重试")
-            }
-        })
-    }
+    // const [allMeasurements, setAllMeasurement] = useState([])
+    // const getAllMeasurements = async () => {
+    //     await getmeasurements().then(res => {
+    //         if (res.status !== false) {
+    //             setAllMeasurement(res)
+    //         } else {
+    //             Alert.alert("出现异常请稍后重试")
+    //         }
+    //     })
+    // }
     const getData = () => {
-        getAllMeasurements()
-        getLatestMeasurement()
+        // getAllMeasurements()
+        // getLatestMeasurement()
     }
     useEffect(() => {
-        getData()
+        // getData()
     }, [])
 
     const [UploadMeasurementModalVisible, setUploadMeasurementModalVisible] = useState(false)

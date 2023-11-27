@@ -1,10 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import COLORS from '../../../constants/COLORS'
-import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import { exerciseLogo } from '../../../constants/SVG/AllExercises';
+import useHealthKit from '../../../hooks/useHealthkit';
+import useTodayExerciseDuration from '../../../hooks/useTodayExerciseDuration';
+import { secToMin } from '../../../utils/funcs';
+import { ICON } from '../../../constants/SVG/ICON';
 
 const AllDataCard = () => {
+    const { steps, distance, calorie } = useHealthKit()
+    const duration = useTodayExerciseDuration()
     return (
         <View style={{ marginHorizontal: '3%', marginBottom: 10, backgroundColor: '#fff', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
             {/* title */}
@@ -20,11 +24,11 @@ const AllDataCard = () => {
                             <View style={{ justifyContent: 'center', alignItems: 'center', width: 26, height: 26, backgroundColor: COLORS.primary, borderRadius: 9 }}>
                                 {exerciseLogo.run(18)}
                             </View>
-                            <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.primary }}>跑步</Text>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.primary }}>跑步步行</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                        <Text style={{ color: COLORS.black, fontSize: 26, fontWeight: 'bold' }}>0</Text>
+                        <Text style={{ color: COLORS.black, fontSize: 26, fontWeight: 'bold' }}>{(distance / 1000).toFixed(2)}</Text>
                         <Text style={{ color: COLORS.black, fontSize: 14, fontWeight: 'bold' }}>公里</Text>
                     </View>
                 </View>
@@ -36,11 +40,11 @@ const AllDataCard = () => {
                             <View style={{ justifyContent: 'center', alignItems: 'center', width: 26, height: 26, backgroundColor: COLORS.primary, borderRadius: 9 }}>
                                 {exerciseLogo.walk(18)}
                             </View>
-                            <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.primary }}>步行</Text>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.primary }}>步数</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                        <Text style={{ color: COLORS.black, fontSize: 26, fontWeight: 'bold' }}>0</Text>
+                        <Text style={{ color: COLORS.black, fontSize: 26, fontWeight: 'bold' }}>{steps}</Text>
                         <Text style={{ color: COLORS.black, fontSize: 14, fontWeight: 'bold' }}>步</Text>
                     </View>
                 </View>
@@ -53,13 +57,13 @@ const AllDataCard = () => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                             {/* icon */}
                             <View style={{ width: 26, height: 26, backgroundColor: COLORS.colorieOrange, alignItems: 'center', justifyContent: 'center', borderRadius: 9 }}>
-                                <FontAwesome5 name="fire" size={16} color="#fff" />
+                                {ICON.fire(16, COLORS.white)}
                             </View>
                             <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.colorieOrange }}>卡路里</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                        <Text style={{ color: COLORS.black, fontSize: 26, fontWeight: 'bold' }}>0</Text>
+                        <Text style={{ color: COLORS.black, fontSize: 26, fontWeight: 'bold' }}>{calorie}</Text>
                         <Text style={{ color: COLORS.black, fontSize: 14, fontWeight: 'bold' }}>千卡</Text>
                     </View>
                 </View>
@@ -70,13 +74,13 @@ const AllDataCard = () => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                             {/* icon */}
                             <View style={{ width: 26, height: 26, backgroundColor: COLORS.purple, borderRadius: 9, justifyContent: 'center', alignItems: 'center' }}>
-                                <MaterialCommunityIcons name="lightning-bolt" size={18} color="#fff" />
+                                {ICON.lightning(18, COLORS.white)}
                             </View>
                             <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.purple }}>健身</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                        <Text style={{ color: COLORS.black, fontSize: 26, fontWeight: 'bold' }}>0</Text>
+                        <Text style={{ color: COLORS.black, fontSize: 26, fontWeight: 'bold' }}>{secToMin(duration)}</Text>
                         <Text style={{ color: COLORS.black, fontSize: 14, fontWeight: 'bold' }}>分钟</Text>
                     </View>
                 </View>

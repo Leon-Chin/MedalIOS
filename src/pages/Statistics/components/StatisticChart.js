@@ -22,20 +22,26 @@ import { formatTimeForChartSoloItem, formatTimeForCharts } from '../../../utils/
 import { ICON } from '../../../constants/SVG/ICON';
 import { deletemeasurement } from '../../../api/measurement';
 import { loginSuccess } from '../../../redux/userSlice';
+import { setLatestMeasurement, setMeasurements } from '../../../redux/MeasurementSlice';
+import useMeasurement from '../../../hooks/useMeasurement';
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get('screen')
-const StatisticChart = ({ getData, allMeasurements }) => {
+const StatisticChart = ({ getData }) => {
+    const { allMeasurements } = useMeasurement()
     const { currentUser } = useSelector(state => state.user)
     const dispatch = useDispatch()
     const { weightTarget } = currentUser
-    const skiaRef = useRef(null);
     const { heightArr, weightArr, BMIArr, dateArr, bodyFatRateArr } = useMeasurements(allMeasurements)
     const [reversedMeasurements, setReversedMeasurements] = useState([])
     const [collapsed, setCollapsed] = useState(true)
+    
+    const skiaRef = useRef(null);
     useEffect(() => {
         if (allMeasurements?.length !== 0) {
             const reveArr = [...allMeasurements].reverse()
             setReversedMeasurements(reveArr)
+        } else {
+            setReversedMeasurements([])
         }
         let chart;
         if (skiaRef.current) {
@@ -53,6 +59,8 @@ const StatisticChart = ({ getData, allMeasurements }) => {
         await deletemeasurement(measurementID).then(res => {
             if (res.status !== false) {
                 dispatch(loginSuccess(res.user))
+                dispatch(setLatestMeasurement(res.measurement))
+                dispatch(setMeasurements(res.updatedMeasurements))
                 getData()
             } else {
                 Alert.alert("出现异常请稍后重试")
