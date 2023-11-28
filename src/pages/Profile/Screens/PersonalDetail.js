@@ -1,19 +1,30 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar } from '@rneui/base'
 import { useSelector } from 'react-redux'
 import COLORS from '../../../constants/COLORS'
 import { formatTimeToChinese } from '../../../utils/formatTime'
 import { useNavigation } from '@react-navigation/native'
+import AvatorModal from '../components/AvatorModal'
+import GenderModal from '../components/GenderModal'
+import GENDER from '../../../constants/GENDER'
+import { ICON } from '../../../constants/SVG/ICON'
+import NameModal from '../components/NameModal'
+import StatusModal from '../components/StatusModal'
+import BirthdayModal from '../components/BirthdayModal'
 
 const PersonalDetail = () => {
     const { currentUser } = useSelector(state => state.user)
-    const { navigate } = useNavigation()
+    const [avatorModalVisible, setAvatorModalVisible] = useState(false)
+    const [nameModalVisible, setNameModalVisible] = useState(false)
+    const [birthdayModalVisible, setBirthdayModalVisible] = useState(false)
+    const [statusModalVisible, setStatusModalVisible] = useState(false)
+    const [genderModalVisible, setGenderModalVisible] = useState(false)
     return (
         <ScrollView>
             <TouchableOpacity
-                onPress={() => { }}
+                onPress={() => setAvatorModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: '#fff', marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
                 <Text style={{ fontSize: 18, fontWeight: '500' }}>头像</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -23,9 +34,9 @@ const PersonalDetail = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={() => { }}
+                onPress={() => setNameModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: '#fff', marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: '500' }}>name</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500' }}>账号名</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: COLORS.commentText }}>{currentUser.name}</Text>
                     <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" />
@@ -33,17 +44,17 @@ const PersonalDetail = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={() => { }}
+                onPress={() => setGenderModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: '#fff', marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
                 <Text style={{ fontSize: 18, fontWeight: '500' }}>性别</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: COLORS.commentText }}>{currentUser.gender && currentUser.gender}</Text>
+                    {currentUser.gender && (currentUser.gender === GENDER.male ? ICON.male(24, COLORS.primary) : ICON.female(24, COLORS.pink))}
                     <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" />
                 </View>
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={() => { }}
+                onPress={() => setStatusModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: '#fff', marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
                 <Text style={{ fontSize: 18, fontWeight: '500' }}>个性签名</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -53,7 +64,7 @@ const PersonalDetail = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={() => { }}
+                onPress={() => setBirthdayModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: '#fff', marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
                 <Text style={{ fontSize: 18, fontWeight: '500' }}>生日</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -61,6 +72,11 @@ const PersonalDetail = () => {
                     <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" />
                 </View>
             </TouchableOpacity>
+            <AvatorModal visible={avatorModalVisible} setVisible={setAvatorModalVisible} />
+            <GenderModal visible={genderModalVisible} setVisible={setGenderModalVisible} />
+            <NameModal visible={nameModalVisible} setVisible={setNameModalVisible} />
+            <StatusModal visible={statusModalVisible} setVisible={setStatusModalVisible} />
+            <BirthdayModal visible={birthdayModalVisible} setVisible={setBirthdayModalVisible} />
         </ScrollView>
     )
 }

@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import COLORS from '../../../constants/COLORS';
+import { useIntl } from 'react-intl';
 
 const ExerciseLogo = ({ children, exerciseName }) => {
+    const { formatMessage } = useIntl()
     return (
         <View style={styles.container}>
             <View style={styles.logoCard}>

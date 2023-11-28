@@ -10,7 +10,7 @@ const COLORS = {
     backgroundGray: '#f2f2f2',
     purple: '#7b63fc',
     white: '#fff',
-    pink: '#f8edf2',
+    pink: 'rgb(235, 148, 173)',
     pinkToGray: "#f2f0f5",
     littleGray: '#ebf3f9',
     red: '#CC3333',

@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Video, ResizeMode } from 'expo-av'
 import { FormatTimestamp } from '../../../utils/chatMessageFormat'
 import COLORS from '../../../constants/COLORS'
+import SIZE from '../../../constants/SIZE'
 
 const { width, height } = Dimensions.get('screen')
 const Message = ({ owner, message }) => {
@@ -35,7 +36,7 @@ const Message = ({ owner, message }) => {
         <View style={[owner ? styles.owner : styles.sender, styles.messageContainer]}>
             <View style={[styles.message, msgType === 'text' && (!owner ? styles.msgSender : styles.msgOwner)]}>
                 <Pressable onLongPress={() => { }}>
-                    {msgType === 'text' && <Text style={{ fontSize: 16 }}>{msgValue}</Text>}
+                    {msgType === 'text' && <Text style={{ fontSize: SIZE.NormalTitle, color: owner ? COLORS.backgroundGray : COLORS.black }}>{msgValue}</Text>}
                     {msgType === 'image' && <View style={{ width: msgWidth, height: (msgWidth * message.msgHeight / message.msgWidth) }}>
                         <Image source={{ uri: msgValue }} resizeMode='contain' style={{ width: '100%', flex: 1 }} />
                     </View>}
@@ -50,7 +51,11 @@ const Message = ({ owner, message }) => {
                         />
                     </View>}
                 </Pressable>
-                {Math.abs(new Date().getTime() - new Date(createdAt).getTime()) >= (3 * 60 * 1000) && <Text style={styles.date}>{FormatTimestamp(createdAt)}</Text>}
+                <Text style={{
+                    fontSize: 10,
+                    color: owner ? COLORS.gray : COLORS.commentText,
+                    marginTop: 6
+                }}>{FormatTimestamp(createdAt)}</Text>
             </View>
         </View >
     )
@@ -65,12 +70,12 @@ const styles = StyleSheet.create({
     message: {
         width: 'auto',
         maxWidth: width * 0.8,
-        paddingHorizontal: 10,
-        paddingVertical: 4,
-        borderRadius: 10,
+        paddingHorizontal: SIZE.NormalMargin,
+        paddingVertical: SIZE.LittleMargin,
+        borderRadius: SIZE.CardBorderRadius,
     },
     msgSender: {
-        backgroundColor: '#fff'
+        backgroundColor: COLORS.white
     },
     messageContainer: {
         paddingHorizontal: 10,

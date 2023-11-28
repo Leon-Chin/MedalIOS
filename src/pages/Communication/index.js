@@ -1,20 +1,20 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 import { getconversation } from '../../api/user.api'
 import ConversationItem from './components/conversationItem'
 const Communication = () => {
-    const { currentUser } = useSelector((state) => state.user)
-    const { navigate } = useNavigation()
     const [conversations, setConversations] = useState()
     useEffect(() => {
         const getData = async () => {
             const conversations = await getconversation()
             setConversations(conversations)
         }
+        const interval = setInterval(getData, 3000)
         getData()
+        return () => {
+            clearInterval(interval)
+        }
     }, [])
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -39,7 +39,3 @@ const Communication = () => {
 export default Communication
 
 const styles = StyleSheet.create({})
-
-
-
-// BQCJb-7z5WNZPz3R16i9VU9i8EeGSPE4gMcWrZshcVE9sEt-LA8D6dK_1MsgD7a6BgclbqLx1UrJk8MR5hQC2oX9WZxzSp9Wuc_b2IPL8dueyNC3o3Y

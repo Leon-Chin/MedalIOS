@@ -26,7 +26,6 @@ const ConversationItem = ({ conversation }) => {
     useEffect(() => {
         const getUnreadNum = async () => {
             const res = await getspecificconversationunreadnum(conversation._id)
-            console.log(res);
             setUnreadNum(res.length)
         }
         getUnreadNum()

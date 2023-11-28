@@ -1,4 +1,4 @@
-import { Foundation, FontAwesome5, FontAwesome, MaterialCommunityIcons, Entypo, Octicons, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Foundation, FontAwesome5, FontAwesome, MaterialCommunityIcons, Entypo, Octicons, Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 export const ICON = {
     right: (size, color) => <Entypo name="chevron-right" size={size} color={color} />,
     left: (size, color) => <Entypo name='chevron-left' size={size} color={color} />,
@@ -23,5 +23,12 @@ export const ICON = {
     edit: (size, color) => <MaterialCommunityIcons name="file-document-edit-outline" size={size} color={color} />,
     target: (size, color) => <MaterialCommunityIcons name="bullseye-arrow" size={size} color={color} />,
     lightning: (size, color) => <MaterialCommunityIcons name="lightning-bolt" size={size} color={color} />,
-    trophy: (size, color) => <FontAwesome5 name="trophy" size={size} color={color} />
+    trophy: (size, color) => <FontAwesome5 name="trophy" size={size} color={color} />,
+    picture: (size, color) => <AntDesign name="picture" size={size} color={color} />,
+    video: (size, color) => <Entypo name="folder-video" size={size} color={color} />,
+    plus: (size, color) => <AntDesign name="plus" size={size} color={color} />,
+    light: (size, color) => <Entypo name="light-up" size={size} color={color} />,
+    dark: (size, color) => <Ionicons name="moon" size={size} color={color} />,
+    male: (size, color) => <Foundation name="male-symbol" size={size} color={color} />,
+    female: (size, color) => <Foundation name="female-symbol" size={size} color={color} />,
 }

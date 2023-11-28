@@ -9,10 +9,12 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import UnDoneTodoItem from './UnDoneTodoItem'
 import DoneTodoItem from './DoneTodoItem'
+import { useIntl } from 'react-intl'
 
 const TodayTodo = ({ selectDay }) => {
     const yetDoneTutorial = useUncompletedTutorials(selectDay)
     const doneTutorial = useCompletedTutorials(selectDay)
+    const { formatMessage } = useIntl()
     const [noTutorial, setNoTutorial] = useState(yetDoneTutorial.length === 0 && doneTutorial.length === 0)
     useEffect(() => {
         const noTutorial = yetDoneTutorial.length === 0 && doneTutorial.length === 0
@@ -21,7 +23,7 @@ const TodayTodo = ({ selectDay }) => {
     return (
         <View style={{ marginBottom: SIZE.LargerMargin }}>
             <View style={{ paddingHorizontal: 20, marginBottom: SIZE.NormalMargin }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>今日日程</Text>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{formatMessage({ id: 'todaySessions' })}</Text>
             </View>
             {!noTutorial && <Percentage selectDay={selectDay} />}
             {noTutorial && <NoTutorialToday />}

@@ -3,9 +3,12 @@ import React from 'react'
 import { Entypo } from '@expo/vector-icons';
 import COLORS from '../../../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
+import useMeasurement from '../../../hooks/useMeasurement';
+import { formatTimeForChartSoloItem } from '../../../utils/formatTime';
 
 const BodyMetric = () => {
     const { navigate } = useNavigation()
+    const { latestMeasurement } = useMeasurement()
     return (
         <TouchableOpacity
             onPress={() => navigate("Statistics")}
@@ -15,13 +18,13 @@ const BodyMetric = () => {
                 <Text style={{ fontSize: 16, fontWeight: 'bold' }}>体重</Text>
                 <Entypo name="chevron-small-right" size={24} color="black" />
             </View>
-            <View style={{ flexDirection: 'row', height: 20, alignItems: 'baseline' }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>78</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{latestMeasurement.weight}</Text>
                 <Text style={{ fontSize: 16, color: COLORS.commentText }}>(kg)</Text>
             </View>
             <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                 <Text style={{ fontSize: 10, color: COLORS.commentText }}>记录于</Text>
-                <Text style={{ fontSize: 10, color: COLORS.commentText }}>{new Date().toDateString()}</Text>
+                <Text style={{ fontSize: 10, color: COLORS.commentText }}>{formatTimeForChartSoloItem(new Date(latestMeasurement.date))}</Text>
             </View>
         </TouchableOpacity>
     )

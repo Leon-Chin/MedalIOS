@@ -8,6 +8,7 @@ import { getrandomblog, searchblog } from '../../api/user.api';
 import { Avatar } from '@rneui/base';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import PostBlogModal from './components/PostBlogModal';
 
 const Community = () => {
     const { navigate } = useNavigation()
@@ -49,6 +50,8 @@ const Community = () => {
             // scrollToTop();
         }
     };
+
+    const [postBlogModalVisible, setPostBlogVisible] = useState(false)
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ paddingHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center', height: 60, paddingBottom: 10, width: '100%' }}>
@@ -91,14 +94,17 @@ const Community = () => {
             <View style={{ height: 50 }}></View>
             <TouchableOpacity
                 onPress={() => {
-                    // getRecommandBlogs()
+                    setPostBlogVisible(true)
                     // scrollToTop()
                 }}
                 style={{ justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 100, right: 20, width: 50, height: 50, backgroundColor: COLORS.primary, borderRadius: 25, zIndex: 1 }}
             >
                 <Entypo name="plus" size={28} color="#fff" />
-                {/* <MaterialIcons name="refresh" size={28} color="#fff" /> */}
             </TouchableOpacity>
+            <PostBlogModal
+                visible={postBlogModalVisible}
+                setVisible={setPostBlogVisible}
+            />
         </SafeAreaView>
     )
 }

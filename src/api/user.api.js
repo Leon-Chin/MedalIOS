@@ -68,3 +68,5 @@ export const updatePrefer = (data) => request('post', `/users/prefer`, data);
 
 // notification
 export const updateNotificationTab = (data) => request('put', `/users/notificationtab/set`, data);
+export const createfeedback = (data) => request('post', `/feedback/`, data);
+

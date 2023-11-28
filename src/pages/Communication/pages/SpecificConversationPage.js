@@ -1,13 +1,18 @@
-import { FlatList, TouchableOpacity, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, TouchableOpacity, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import SpecificConversationHeader from '../components/SpecificConversationHeader'
 import { getcurrentconversationmessages, getcurrentconversationmessagesmobile, getspecificconversation, sendmessage } from '../../../api/user.api'
 import Message from '../components/Message'
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { useSelector } from 'react-redux'
 import COLORS from '../../../constants/COLORS'
 import { useRef } from 'react'
 import { io } from 'socket.io-client'
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+
+import * as ImagePicker from 'expo-image-picker'
+import { storage } from '../../../../firebase'
+import { ICON } from '../../../constants/SVG/ICON'
 const SpecificConversationPage = ({ route }) => {
     const { currentUser } = useSelector(state => state.user)
     const { contact, conversationID } = route.params
@@ -48,7 +53,6 @@ const SpecificConversationPage = ({ route }) => {
     // }, [setArrivalMessage, arrivalMessage])
     const [message, setMessage] = useState()
     const sendMessage = async (type, value, width, height) => {
-
         try {
             if (value) {
                 socket.current.emit('sendMessage', { msgType: type, senderId: currentUser._id, receiverId: contact._id, msgValue: value, msgHeight: height ? height : null, msgWidth: width ? width : null })
@@ -67,14 +71,69 @@ const SpecificConversationPage = ({ route }) => {
         const getMessages = async () => {
             try {
                 const res = await getcurrentconversationmessagesmobile(conversationID)
-                console.log('msgs', res);
                 setCurrentConversationMessages(res)
             } catch (error) {
                 // message.error('Failed to get your messages')
             }
         }
         getMessages()
+        const interval = setInterval(getMessages, 2000)
+        return () => {
+            clearInterval(interval)
+        }
     }, [])
+    const pickImage = async () => {
+        console.log("diaoyongle");
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            quality: 0.6,
+        })
+
+        if (!result.canceled) {
+            const imageHeight = result.assets[0].height
+            const imageWidth = result.assets[0].width
+            console.log("imageHeight", imageHeight);
+            console.log("imageWidth", imageWidth);
+            await uploadImage(result.assets[0].uri, "image", imageHeight, imageWidth)
+        }
+    }
+    const pickVideo = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+            allowsEditing: false,
+            quality: 0.4,
+        })
+
+        if (!result.canceled) {
+            const videoHeight = result.assets[0].height
+            const videoWidth = result.assets[0].width
+            console.log("videoHeight", videoHeight);
+            console.log("videoWidth", videoWidth);
+            await uploadImage(result.assets[0].uri, "video", videoHeight, videoWidth)
+        }
+    }
+    const [progress, setProgress] = useState()
+    const uploadImage = async (uri, fileType, imageHeight, imageWidth) => {
+        const response = await fetch(uri);
+        const blob = await response.blob()
+        const storageRef = ref(storage, `mobile-message-${fileType}-${parseInt((new Date().getTime() / 1000).toString())}`);
+        const uploadTask = uploadBytesResumable(storageRef, blob);
+        uploadTask.on('state_changed', (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(progress.toFixed(2));
+        },
+            (error) => {
+                Alert.alert('出现异常')
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    // console.log('already exsity', downloadURL);
+                    sendMessage(fileType, downloadURL, imageWidth, imageHeight)
+                });
+            }
+        );
+    }
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding'>
@@ -90,16 +149,24 @@ const SpecificConversationPage = ({ route }) => {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: '3%', paddingVertical: 10, borderTopWidth: 0.18, borderTopColor: COLORS.commentText }}>
-                    <TouchableOpacity>
-                        <AntDesign name="picture" size={30} color="black" />
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', gap: 6 }}>
+                        <TouchableOpacity
+                            onPress={pickImage}
+                        >
+                            {ICON.picture(24, COLORS.black)}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={pickVideo}
+                        >
+                            {ICON.video(24, COLORS.black)}
+                        </TouchableOpacity>
+                    </View>
                     <TextInput onChangeText={(text) => setMessage(text)} value={message} style={{ flex: 1, padding: 10, borderWidth: 0.2, borderRadius: 8, marginHorizontal: 8, borderColor: 'gray' }} placeholder='input' />
                     <TouchableOpacity
                         onPress={() => sendMessage('text', message)}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 10, paddingHorizontal: 14, backgroundColor: COLORS.primary, borderRadius: 20 }}>
-                            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>Send</Text>
-                            <FontAwesome name="send" size={16} style={{ marginLeft: 6 }} color="#fff" />
+                            <FontAwesome name="send" size={16} color="#fff" />
                         </View>
                     </TouchableOpacity>
                 </View>
