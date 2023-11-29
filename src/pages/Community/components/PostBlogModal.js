@@ -21,11 +21,8 @@ const PostBlogModal = ({ visible, setVisible }) => {
     const [blogType, setBlogType] = useState('text')
     const [blogImgs, setBlogImgs] = useState([])
     const [blogVideo, setBlogVideo] = useState({})
-    const [videoSize, setVideoSize] = useState([])
-
 
     const pickImage = async () => {
-        console.log("diaoyongle");
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
@@ -35,8 +32,6 @@ const PostBlogModal = ({ visible, setVisible }) => {
         if (!result.canceled) {
             const imageHeight = result.assets[0].height
             const imageWidth = result.assets[0].width
-            console.log("imageHeight", imageHeight);
-            console.log("imageWidth", imageWidth);
             await uploadImage(result.assets[0].uri, "picture", imageHeight, imageWidth)
         }
     }

@@ -4,7 +4,7 @@ import SlidePics from './Components/SlidePics';
 import Tag from '../../components/Tag'
 import { FormattedTime } from '../../utils/formatTime'
 import COLORS from '../../constants/COLORS';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import SpecificBlogHeaderLeft from './Components/SpecificBlogHeaderLeft';
@@ -17,10 +17,11 @@ import {
     BottomSheetModal,
     BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
+import { loginSuccess } from '../../redux/userSlice';
 
 const { width: ScreenWidth, height: ScreenHeight } = Dimensions.get('screen')
 const SpecificBlog = ({ route }) => {
-
+    const dispatch = useDispatch()
     // bottem sheet
     const bottomSheetModalRef = useRef(null);
     // variables
@@ -29,8 +30,6 @@ const SpecificBlog = ({ route }) => {
     const handlePresentModalPress = useCallback(() => {
         bottomSheetModalRef.current?.present();
     }, []);
-
-
     const { blog, user } = route.params
     const videoPlayer = useRef(null)
     const [playbackInstanceInfo, setPlaybackInstanceInfo] = useState({
@@ -72,72 +71,88 @@ const SpecificBlog = ({ route }) => {
     }, [])
     const getBlogComments = async () => {
         await getblogcomments(blog._id).then(comments => {
-            setComments(comments)
-            if (comments.length !== 0) {
-                const usersReqs = comments.map(async (comment) => {
-                    return await getuser(comment.userID)
-                })
-                getWholeBlogInfo(usersReqs, comments)
+            if (comments.status !== false) {
+                setComments(comments)
+                if (comments.length !== 0) {
+                    const usersReqs = comments.map(async (comment) => {
+                        return await getuser(comment.userID)
+                    })
+                    getWholeBlogInfo(usersReqs, comments)
+                }
+            } else {
+                Alert.alert("出现异常请稍后重试")
             }
         }).catch(err => {
-            console.log(err);
-            message.error('failed to get user data')
+            Alert.alert("出现异常请稍后重试")
         })
     }
     const getWholeBlogInfo = async (userReq, comments) => {
-        await Promise.all(userReq).then(usersInfo => {
-            setComments(comments.map((comment, i) => { return { ...comment, commentUserInfo: usersInfo[i] } }))
+        await Promise.all(userReq).then(res => {
+            if (res.status !== false) {
+                setComments(comments.map((comment, i) => { return { ...comment, commentUserInfo: res[i] } }))
+            } else {
+                Alert.alert("出现异常请稍后重试")
+            }
         })
     }
 
     const handleLikeBlog = async () => {
-        liked ? await cancellikeblog(blogID).then(() => {
-            // message.success('cancer like blog successfully')
-            setLikeNum(likedNum - 1)
-            setLiked(false)
+        liked ? await cancellikeblog(blogID).then((res) => {
+            if (res.status !== false) {
+                dispatch(loginSuccess(res))
+                setLikeNum(likedNum - 1)
+                setLiked(false)
+            } else {
+                Alert.alert("出现异常请稍后重试")
+            }
         }).catch((err) => {
-            // message.error('error happens')
-            console.log('err', err);
-        }) : await likeblog(blogID).then(() => {
-            // message.success('like blog successfully')
-            setLikeNum(likedNum + 1)
-            setLiked(true)
+            Alert.alert("出现异常请稍后重试")
+        }) : await likeblog(blogID).then((res) => {
+            if (res.status !== false) {
+                console.log("res", res);
+                console.log("res", res.likeBlogs);
+                dispatch(loginSuccess(res))
+                setLikeNum(likedNum + 1)
+                setLiked(true)
+            }
         }).catch((err) => {
-            console.log('err', err);
-            // message.error("error happens")
+            Alert.alert("出现异常请稍后重试")
         })
     }
     const handleFavoriteBlog = async () => {
         favorited ? await cancelfavoriteblog(blogID)
             .then((res) => {
-                // message.success(res)
-                setFavoritedNum(favoritedNum - 1)
-                setFavorited(false)
+                if (res.status !== false) {
+                    dispatch(loginSuccess(res))
+                    setFavoritedNum(favoritedNum - 1)
+                    setFavorited(false)
+                }
             }).catch((err) => {
-                console.log('err', err);
-                // message.error("error happens")
+                Alert.alert("出现异常请稍后重试")
             }) : await favoriteblog(blogID)
-                .then(() => {
-                    // message.success('favorite blog successfully')
-                    setFavoritedNum(favoritedNum + 1)
-                    setFavorited(true)
+                .then((res) => {
+                    if (res.status !== false) {
+                        dispatch(loginSuccess(res))
+                        setFavoritedNum(favoritedNum + 1)
+                        setFavorited(true)
+                    }
                 }).catch((err) => {
-                    console.log('err', err);
-                    // message.error("error happens")
+                    Alert.alert("出现异常请稍后重试")
                 })
     }
 
     const handleAddComment = async () => {
         // 在这里执行你想要的操作
         commentText && await addcomment({ blogID, content: commentText })
-            .then(() => {
-                // message.success('comment successfully')
-                getBlogComments()
-                setCommentText('')
+            .then((res) => {
+                if (res.status !== false) {
+                    getBlogComments()
+                    setCommentText('')
+                } else {
+                    Alert.alert("出现异常请稍后重试")
+                }
             }).catch(error => {
-                // message.error(error)
-                Alert.alert('发送失败')
-                console.log(error);
+                Alert.alert("出现异常请稍后重试")
             })
     };
     return (

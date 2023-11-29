@@ -3,15 +3,30 @@ import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import COLORS from '../../../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import SIZE from '../../../constants/SIZE';
 
 const MyBlogsCard = () => {
     const { navigate } = useNavigation()
+    const { currentUser } = useSelector(state => state.user)
+    const [likeBlogs, setLikeBlogs] = useState([])
+    const [favoriteBlogs, setFavoriteBlogs] = useState([])
+    useEffect(() => {
+        if (currentUser?.likeBlogs && currentUser?.likeBlogs.length !== 0) {
+            setLikeBlogs(currentUser.likeBlogs)
+        }
+        if (currentUser?.favoriteBlogs && currentUser?.favoriteBlogs.length !== 0) {
+            setFavoriteBlogs(currentUser.favoriteBlogs)
+        }
+    }, [currentUser])
     return (
         <View style={{ backgroundColor: '#fff', marginHorizontal: '3%', marginBottom: 10, padding: '3%', borderRadius: 20 }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>My Blogs</Text>
             <View style={{ flexDirection: 'row', height: 80 }}>
                 <TouchableOpacity
-                    onPress={() => navigate('MyBlogsOverview', { screen: 'MyBlogs' })}
+                    onPress={() => navigate('MyBlogsOverview', { screen: 'LikeBlogs' })}
                     style={{
                         flex: 1,
                         flexDirection: 'row',
@@ -27,11 +42,14 @@ const MyBlogsCard = () => {
                     </View>
                     <View style={{ marginLeft: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: '600' }}>
-                            {'全部blog'}
+                            {'点赞blog'}
                         </Text>
-                        <Text style={{ fontSize: 10, marginTop: 6, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
-                            {'3 个blog'}
-                        </Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{likeBlogs.length}</Text>
+                            <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
+                                {`个blog`}
+                            </Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -53,9 +71,12 @@ const MyBlogsCard = () => {
                         <Text style={{ fontSize: 16, fontWeight: '600' }}>
                             {'收藏blogs'}
                         </Text>
-                        <Text style={{ fontSize: 10, marginTop: 6, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
-                            {'0个'}
-                        </Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{favoriteBlogs.length}</Text>
+                            <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
+                                {`个blog`}
+                            </Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
             </View>

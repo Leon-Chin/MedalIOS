@@ -31,4 +31,7 @@ export const ICON = {
     dark: (size, color) => <Ionicons name="moon" size={size} color={color} />,
     male: (size, color) => <Foundation name="male-symbol" size={size} color={color} />,
     female: (size, color) => <Foundation name="female-symbol" size={size} color={color} />,
+    frowno: (size, color) => <AntDesign name="frowno" size={size} color={color} />,
+    personalize: (size, color) => <MaterialIcons name="collections-bookmark" size={size} color={color} />,
+    all: (size, color) => <MaterialCommunityIcons name="folder-multiple" size={size} color={color} />
 }

@@ -3,8 +3,23 @@ import { Entypo } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import COLORS from '../../../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import SIZE from '../../../constants/SIZE';
 
 const MyExercisesCard = () => {
+    const { currentUser } = useSelector(state => state.user)
+    const [favoriteTutorials, setFavoriteTutorials] = useState([])
+    const [practicedTutorials, setPracticedTutorials] = useState([])
+    useEffect(() => {
+        if (currentUser?.favoriteTutorials && currentUser?.favoriteTutorials.length !== 0) {
+            setFavoriteTutorials(currentUser.favoriteTutorials)
+        }
+        if (currentUser?.practicedTutorials && currentUser?.practicedTutorials.length !== 0) {
+            setPracticedTutorials(currentUser.practicedTutorials)
+        }
+    }, [currentUser])
     const { navigate } = useNavigation()
     return (
         <View style={{ backgroundColor: '#fff', marginHorizontal: '3%', marginBottom: 10, padding: '3%', borderRadius: 20 }}>
@@ -29,9 +44,12 @@ const MyExercisesCard = () => {
                         <Text style={{ fontSize: 16, fontWeight: '600' }}>
                             {'收藏课程'}
                         </Text>
-                        <Text style={{ fontSize: 10, marginTop: 6, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
-                            {'0 节课程'}
-                        </Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{favoriteTutorials.length}</Text>
+                            <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
+                                {`节课程`}
+                            </Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -53,9 +71,12 @@ const MyExercisesCard = () => {
                         <Text style={{ fontSize: 16, fontWeight: '600' }}>
                             {'练过课程'}
                         </Text>
-                        <Text style={{ fontSize: 10, marginTop: 6, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
-                            {'0 节课程'}
-                        </Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{practicedTutorials.length}</Text>
+                            <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
+                                {`节课程`}
+                            </Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
             </View>

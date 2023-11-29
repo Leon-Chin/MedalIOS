@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import TutorialsInLibrary from '../../constants/SVG/TutorialLibrary'
 import { useNavigation } from '@react-navigation/native'
@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { getalltutorial } from '../../api/user.api'
 import { useEffect } from 'react'
 import TutorialVerticalView from '../../components/TutorialVerticalView'
+import { getspecifictypetutorials } from '../../api/tutorial.api'
 
 const TutorialLibrary = ({ route }) => {
     const { navigate } = useNavigation()
@@ -17,11 +18,37 @@ const TutorialLibrary = ({ route }) => {
         selectType && setSelectedType(selectType)
     }, [route])
     const [tutorials, setTutorials] = useState([])
-    const getLibs = async (type) => {
+    const [specificTypeTutorials, setSpecificTutorials] = useState([])
+
+    const getSpecificBlog = async () => {
+        const reqBody = { type: selectedType.value }
+        console.log(reqBody);
+        await getspecifictypetutorials(reqBody).then(res => {
+            if (res.status !== false) {
+                setSpecificTutorials(res)
+                console.log("res", res);
+            } else {
+                Alert.alert("出现异常，请稍后重试")
+            }
+        })
+    }
+    useEffect(() => {
+        if (selectedType?.value) {
+            if (selectedType.value === "recommand") {
+
+            } else if (selectedType.value === "all") {
+                setSpecificTutorials(tutorials)
+            } else {
+                getSpecificBlog()
+            }
+        }
+    }, [selectedType])
+
+    const getLibs = async () => {
         await getalltutorial().then(res => {
             setTutorials(res)
         }).catch(err => {
-            console.log(err);
+            setTutorials([])
         })
     }
     useEffect(() => {
@@ -36,7 +63,7 @@ const TutorialLibrary = ({ route }) => {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ columnGap: 10 }}
-                    renderItem={({ item, index }) => <TouchableOpacity onPress={() => { setSelectedType(item.name) }}><ExerciseLogo key={index} exerciseName={item.name}>{item.icon}</ExerciseLogo></TouchableOpacity>}
+                    renderItem={({ item, index }) => <TouchableOpacity onPress={() => { setSelectedType(item) }}><ExerciseLogo key={index} exerciseName={item.name}>{item.icon}</ExerciseLogo></TouchableOpacity>}
                 />
             </View>
             <View style={{ flex: 1, marginHorizontal: '3%' }}>
@@ -53,9 +80,9 @@ const TutorialLibrary = ({ route }) => {
                 }
                 {selectedType &&
                     <View>
-                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin }}>{selectedType.label}</Text>
+                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin }}>{selectedType.name}</Text>
                         <FlatList
-                            data={tutorials}
+                            data={specificTypeTutorials}
                             renderItem={({ item, index }) => <TutorialVerticalView key={index} tutorial={item} />}
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={{ columnGap: 10 }}

@@ -6,9 +6,11 @@ import {
 import COLORS from '../../../constants/COLORS';
 import { logout } from '../../../redux/userSlice';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 
 const LogoutModal = ({ visible, setVisible }) => {
+    const dispatch = useDispatch()
     useEffect(() => {
         visible && handlePresentModalPress()
     }, [visible])

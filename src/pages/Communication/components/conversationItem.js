@@ -7,7 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { formatDateTime } from '../../../utils/chatContactFormat'
 import COLORS from '../../../constants/COLORS'
 import { useNavigation } from '@react-navigation/native'
-
+import { Swipeable } from 'react-native-gesture-handler';
 const ConversationItem = ({ conversation }) => {
     const { currentUser } = useSelector(state => state.user)
     const { navigate } = useNavigation()
@@ -43,21 +43,34 @@ const ConversationItem = ({ conversation }) => {
                 break;
         }
     }
-    return (
-        <TouchableOpacity
-            onPress={() => navigate('SpecificConversationPage', { conversationID: conversation._id, contact })}
-            style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginHorizontal: '3%', paddingVertical: 6, borderBottomWidth: 0.2, borderBottomColor: COLORS.commentText }}>
-            {contact ? <Avatar size={50} rounded source={{ uri: contact.avator }} /> : <FontAwesome5 name="user-circle" size={24} color="black" />}
-            <View style={{ flex: 1, marginLeft: 10, }}>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold' }}>{contact.name}</Text>}
-                    <Text style={{ color: COLORS.commentText, fontSize: 14 }}>{formatDateTime(conversation.updatedAt)}</Text>
-                </View>
-                <View>
-                    <Text numberOfLines={1} style={{ fontSize: 16, color: COLORS.commentText }}>{getMsgValue(conversation)}</Text>
-                </View>
+
+    const rightActions = (dragX) => {
+        return (
+            <View style={{ backgroundColor: 'red', justifyContent: 'center' }}>
+                <Text style={{ color: 'white', padding: 20 }} onPress={() => onDelete(item.id)}>
+                    Delete
+                </Text>
             </View>
-        </TouchableOpacity>
+        );
+    };
+
+    return (
+        <Swipeable renderRightActions={rightActions}>
+            <TouchableOpacity
+                onPress={() => navigate('SpecificConversationPage', { conversationID: conversation._id, contact })}
+                style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginHorizontal: '3%', paddingVertical: 6, borderBottomWidth: 0.2, borderBottomColor: COLORS.commentText }}>
+                {contact ? <Avatar size={50} rounded source={{ uri: contact.avator }} /> : <FontAwesome5 name="user-circle" size={24} color="black" />}
+                <View style={{ flex: 1, marginLeft: 10, }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold' }}>{contact.name}</Text>}
+                        <Text style={{ color: COLORS.commentText, fontSize: 14 }}>{formatDateTime(conversation.updatedAt)}</Text>
+                    </View>
+                    <View>
+                        <Text numberOfLines={1} style={{ fontSize: 16, color: COLORS.commentText }}>{getMsgValue(conversation)}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        </Swipeable>
     )
 }
 

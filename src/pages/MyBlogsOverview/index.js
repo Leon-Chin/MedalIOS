@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import FavoriteBlogs from './Screens/FavoriteBlogs'
-import MyBlogs from './Screens/MyBlogs'
+import LikeBlogs from './Screens/LikeBlogs'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import MyBlogs from './Screens/MyBlogs';
 
 const Tab = createMaterialTopTabNavigator();
 const MyBlogsOverview = () => {
@@ -13,6 +14,11 @@ const MyBlogsOverview = () => {
                 tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold', textTransform: 'none' },
             }}
         >
+            <Tab.Screen
+                name="LikeBlogs"
+                component={LikeBlogs}
+                options={{ tabBarLabel: `点赞博客` }}
+            />
             <Tab.Screen
                 name="MyBlogs"
                 component={MyBlogs}

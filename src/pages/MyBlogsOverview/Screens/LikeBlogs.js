@@ -6,22 +6,22 @@ import { useEffect } from 'react';
 import SIZE from '../../../constants/SIZE';
 import BlogCardWithID from '../../../components/BlogCardWithID';
 
-const FavoriteBlogs = () => {
+const LikeBlogs = () => {
     const { currentUser } = useSelector(state => state.user)
-    const [favoriteBlogs, setFavoriteTutorials] = useState([])
+    const [likeBlogs, setLikeBlogs] = useState([])
     useEffect(() => {
-        if (currentUser?.favoriteBlogs && currentUser?.favoriteBlogs.length !== 0) {
-            setFavoriteTutorials(currentUser.favoriteBlogs)
+        if (currentUser?.likeBlogs && currentUser?.likeBlogs.length !== 0) {
+            setLikeBlogs(currentUser.likeBlogs)
         }
     }, [currentUser])
     const { navigate } = useNavigation()
     return (
         <View style={{ flex: 1 }}>
             <ScrollView style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin }}>
-                {favoriteBlogs.map((item, index) => <BlogCardWithID blogID={item} key={index} />)}
+                {likeBlogs.map((item, index) => <BlogCardWithID blogID={item} key={index} />)}
             </ScrollView>
         </View>
     )
 }
 
-export default FavoriteBlogs
+export default LikeBlogs

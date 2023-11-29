@@ -18,9 +18,13 @@ const AfterExcercise = ({ route }) => {
     const { cover, level, colorie, brief, name, duration, _id } = tutorial
     const { navigate } = useNavigation()
     const navigateToCool = () => {
-        navigate("AllTutorials", { selectType: EXERCISETYPE.cooldown })
+        navigate("AllTutorials", {
+            selectType: {
+                name: 'Relax',
+                value: EXERCISETYPE.cooldown.value,
+            }
+        })
     }
-
     return (
         <View style={{ flex: 1 }}>
             <View style={{ marginHorizontal: '3%' }}>

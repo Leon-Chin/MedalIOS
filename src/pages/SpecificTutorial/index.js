@@ -6,12 +6,15 @@ import Tag from '../../components/Tag'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import NavigationHeader from './components/NavigationHeader';
 import SIZE from '../../constants/SIZE';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MoreOptionsModal from './components/MoreOptionsModal';
 import BeforeStartExerciseModal from './components/BeforeStartExerciseModal';
 
 
 const SpecificTutorial = ({ route }) => {
+    useEffect(() => {
+        setTutorial(route.params.tutorial)
+    }, [route.params])
     const [tutorial, setTutorial] = useState(route.params.tutorial)
     const { cover, level, colorie, brief, name, duration, _id } = tutorial
     const [MoreOptionsModalVisible, setMoreOptionsModalVisible] = useState(false)

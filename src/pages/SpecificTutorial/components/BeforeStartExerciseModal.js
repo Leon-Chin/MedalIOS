@@ -32,8 +32,13 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
         bottomSheetModalRef.current?.dismiss()
     }
     const navigateToWarm = () => {
-        setVisible(false)
-        navigate("AllTutorials", { selectType: EXERCISETYPE.warmup })
+        handleModelClose()
+        navigate("AllTutorials", {
+            selectType: {
+                name: 'Stretch',
+                value: EXERCISETYPE.warmup.value,
+            }
+        })
     }
     const handleStartExercise = async () => {
         await participateTutorial(tutorial._id).then(res => {
