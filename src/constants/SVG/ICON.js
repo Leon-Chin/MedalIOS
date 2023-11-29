@@ -33,5 +33,6 @@ export const ICON = {
     female: (size, color) => <Foundation name="female-symbol" size={size} color={color} />,
     frowno: (size, color) => <AntDesign name="frowno" size={size} color={color} />,
     personalize: (size, color) => <MaterialIcons name="collections-bookmark" size={size} color={color} />,
-    all: (size, color) => <MaterialCommunityIcons name="folder-multiple" size={size} color={color} />
+    all: (size, color) => <MaterialCommunityIcons name="folder-multiple" size={size} color={color} />,
+    contact: (size, color) => <AntDesign name="contacts" size={size} color={color} />
 }

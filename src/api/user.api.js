@@ -31,6 +31,7 @@ export const getuser = (userID) => request('get', `/users/find/${userID}`);
 // contacts
 export const removecontact = (contactID) => request('put', `/users/remove/${contactID}`);
 export const addcontact = (data) => request('put', `/users/add`, data);
+export const addcontactbyid = (id) => request('put', `/users/addbycontactid/${id}`);
 
 // conversation
 export const createconversation = (data) => request('post', `/conversations`, data);
@@ -69,4 +70,8 @@ export const updatePrefer = (data) => request('post', `/users/prefer`, data);
 // notification
 export const updateNotificationTab = (data) => request('put', `/users/notificationtab/set`, data);
 export const createfeedback = (data) => request('post', `/feedback/`, data);
+
+
+// fuzzy Search users
+export const fuzzysearchuser = (data) => request('get', '/users/fuzzysearchusers', data)
 

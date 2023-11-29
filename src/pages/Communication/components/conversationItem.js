@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Touchable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getspecificconversationunreadnum, getuser } from '../../../api/user.api'
@@ -8,20 +8,24 @@ import { formatDateTime } from '../../../utils/chatContactFormat'
 import COLORS from '../../../constants/COLORS'
 import { useNavigation } from '@react-navigation/native'
 import { Swipeable } from 'react-native-gesture-handler';
-const ConversationItem = ({ conversation }) => {
+import SIZE from '../../../constants/SIZE'
+import { ICON } from '../../../constants/SVG/ICON'
+const ConversationItem = ({ conversation, deleteConversation }) => {
     const { currentUser } = useSelector(state => state.user)
     const { navigate } = useNavigation()
     const { _id } = currentUser
     const [contact, setContact] = useState()
     const [unreadNum, setUnreadNum] = useState(0)
     useEffect(() => {
-        const contactIndex = conversation.members.indexOf(_id) === 1 ? 0 : 1
-        const contactID = conversation.members[contactIndex]
-        const getContactInfo = async () => {
-            const res = await getuser(contactID)
-            setContact(res)
+        if (Object.keys(conversation).length !== 0) {
+            const contactIndex = conversation.members.indexOf(_id) === 1 ? 0 : 1
+            const contactID = conversation.members[contactIndex]
+            const getContactInfo = async () => {
+                const res = await getuser(contactID)
+                setContact(res)
+            }
+            getContactInfo()
         }
-        getContactInfo()
     }, [conversation])
     useEffect(() => {
         const getUnreadNum = async () => {
@@ -47,8 +51,8 @@ const ConversationItem = ({ conversation }) => {
     const rightActions = (dragX) => {
         return (
             <View style={{ backgroundColor: 'red', justifyContent: 'center' }}>
-                <Text style={{ color: 'white', padding: 20 }} onPress={() => onDelete(item.id)}>
-                    Delete
+                <Text style={{ color: COLORS.white, padding: 20, fontSize: SIZE.NormalTitle, fontWeight: '500' }} onPress={() => deleteConversation(conversation._id)}>
+                    {ICON.delete(24, COLORS.white)}
                 </Text>
             </View>
         );
@@ -57,6 +61,7 @@ const ConversationItem = ({ conversation }) => {
     return (
         <Swipeable renderRightActions={rightActions}>
             <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={() => navigate('SpecificConversationPage', { conversationID: conversation._id, contact })}
                 style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginHorizontal: '3%', paddingVertical: 6, borderBottomWidth: 0.2, borderBottomColor: COLORS.commentText }}>
                 {contact ? <Avatar size={50} rounded source={{ uri: contact.avator }} /> : <FontAwesome5 name="user-circle" size={24} color="black" />}

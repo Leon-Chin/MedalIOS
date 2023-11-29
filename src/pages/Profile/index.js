@@ -18,8 +18,12 @@ const Profile = () => {
             <View style={{ marginHorizontal: '3%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
                 <TouchableOpacity onPress={() => navigate('PersonalDetails')} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Avatar source={{ uri: avator }} rounded size={52} />
-                    <View>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 6, color: COLORS.primary }}>{name}</Text>
+                    <View style={{ marginLeft: 6 }}>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.primary }}>{name}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontSize: 10, marginTop: 4, color: COLORS.commentText }}>ID:</Text>
+                            <Text style={{ fontSize: 10, marginTop: 4, color: COLORS.commentText }}>{_id}</Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('Setting')}>

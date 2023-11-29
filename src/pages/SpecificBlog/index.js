@@ -1,4 +1,4 @@
-import { Alert, Dimensions, FlatList, Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { Alert, Dimensions, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import SlidePics from './Components/SlidePics';
 import Tag from '../../components/Tag'
@@ -8,16 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import SpecificBlogHeaderLeft from './Components/SpecificBlogHeaderLeft';
-import SpecificBlogHeaderRight from './Components/SpecificBlogHeaderRight';
-import { cancellikeblog, cancelfavoriteblog, favoriteblog, getblogcomments, likeblog, getuser, addcomment } from '../../api/user.api'
+import { cancellikeblog, cancelfavoriteblog, favoriteblog, getblogcomments, likeblog, getuser, addcomment, deleteblog } from '../../api/user.api'
 import OneComment from './Components/oneComment'
 import { ResizeMode, Video } from 'expo-av';
 import { ICON } from '../../constants/SVG/ICON';
-import {
-    BottomSheetModal,
-    BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { loginSuccess } from '../../redux/userSlice';
+import EditBlogModal from './Components/EditBlogModal';
 
 const { width: ScreenWidth, height: ScreenHeight } = Dimensions.get('screen')
 const SpecificBlog = ({ route }) => {
@@ -25,11 +22,14 @@ const SpecificBlog = ({ route }) => {
     // bottem sheet
     const bottomSheetModalRef = useRef(null);
     // variables
-    const snapPoints = useMemo(() => ['15%', "25%"], []);
+    const snapPoints = useMemo(() => ["25%"], []);
     // callbacks
     const handlePresentModalPress = useCallback(() => {
         bottomSheetModalRef.current?.present();
     }, []);
+    const handleModelClose = () => {
+        bottomSheetModalRef.current?.dismiss()
+    }
     const { blog, user } = route.params
     const videoPlayer = useRef(null)
     const [playbackInstanceInfo, setPlaybackInstanceInfo] = useState({
@@ -37,6 +37,8 @@ const SpecificBlog = ({ route }) => {
         duration: 0,
         state: 'Buffering'
     });
+
+
     const updatePlaybackCallback = (status) => {
         if (status.isLoaded) {
             setPlaybackInstanceInfo({
@@ -58,13 +60,14 @@ const SpecificBlog = ({ route }) => {
     const { currentUser } = useSelector(state => state.user)
     const [blogID, setBlogID] = useState(blog._id)
     const { userID, title, likesUsers, favoriteUsers, blogType, videoUrl, width, height } = blog
-    const { navigate } = useNavigation()
+    const { navigate, goBack } = useNavigation()
     const { _id } = currentUser
     const [liked, setLiked] = useState(likesUsers.includes(_id))
     const [likedNum, setLikeNum] = useState(likesUsers.length)
     const [favoritedNum, setFavoritedNum] = useState(favoriteUsers.length)
     const [favorited, setFavorited] = useState(favoriteUsers.includes(_id))
     const [comments, setComments] = useState()
+    const [owner, setOwner] = useState(userID === _id)
     const [commentText, setCommentText] = useState()
     useEffect(() => {
         getBlogComments()
@@ -155,6 +158,19 @@ const SpecificBlog = ({ route }) => {
                 Alert.alert("出现异常请稍后重试")
             })
     };
+    const [editModalVisible, setEditModalVisible] = useState(false)
+
+    const handleDeleteBlog = async () => {
+        await deleteblog(blog._id).then(res => {
+            console.log(res);
+            if (res.status !== false) {
+                goBack()
+                dispatch(loginSuccess(res))
+            } else {
+                Alert.alert("出现异常请稍后重试")
+            }
+        })
+    }
     return (
         <BottomSheetModalProvider>
             <View style={{ flex: 1 }}>
@@ -248,15 +264,36 @@ const SpecificBlog = ({ route }) => {
                 snapPoints={snapPoints}
             >
                 <View style={{ flex: 1 }}>
-                    <TouchableOpacity
-                        onPress={() => navigate("Report", { type: "blog", target: blog })}
-                        style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
-                    >
-                        <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}>举报</Text>
-                    </TouchableOpacity>
+
+                    {owner ? <View>
+                        <TouchableOpacity
+                            onPress={() => {
+                                handleModelClose()
+                                setEditModalVisible(true)
+                            }}
+                            style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+                        >
+                            <Text style={{ fontSize: 18, color: COLORS.black, fontWeight: 'bold' }}>编辑</Text>
+                            {ICON.edit(24, COLORS.black)}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={handleDeleteBlog}
+                            style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+                        >
+                            <Text style={{ fontSize: 18, color: COLORS.red, fontWeight: 'bold' }}>删除</Text>
+                            {ICON.delete(24, COLORS.red)}
+                        </TouchableOpacity>
+                    </View> :
+                        <TouchableOpacity
+                            onPress={() => navigate("Report", { type: "blog", target: blog })}
+                            style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+                        >
+                            <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}>举报</Text>
+                        </TouchableOpacity>}
                 </View>
             </BottomSheetModal>
-        </BottomSheetModalProvider>
+            <EditBlogModal visible={editModalVisible} setVisible={setEditModalVisible} blog={blog} />
+        </BottomSheetModalProvider >
 
     )
 }
