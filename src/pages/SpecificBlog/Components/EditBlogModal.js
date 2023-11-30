@@ -20,8 +20,8 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
     const [content, setContent] = useState(blog.content)
     const [tags, setTags] = useState(blog.tags)
     const [blogType, setBlogType] = useState(blog.blogType)
-    const [blogImgs, setBlogImgs] = useState(blog?.imgUrl)
-    const [blogVideo, setBlogVideo] = useState(blog?.videoUrl)
+    const [blogImgs, setBlogImgs] = useState(blog?.imgUrl.map(item => { return { url: item, width: blog.width, height: blog.height } }))
+    const [blogVideo, setBlogVideo] = useState({ url: blog?.videoUrl, height: blog.height, width: blog.width })
 
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -120,7 +120,7 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
         }
     }
     const handleDeletePic = (deletedImg) => {
-        const filteredBlogImgs = blogImgs.filter(item => item.id !== deletedImg.id);
+        const filteredBlogImgs = blogImgs.filter(item => item.url !== deletedImg.url);
         setBlogImgs(filteredBlogImgs)
     }
     return (
