@@ -8,8 +8,12 @@ import SIZE from '../../../constants/SIZE'
 import { ICON } from '../../../constants/SVG/ICON'
 import COLORS from '../../../constants/COLORS'
 import PIC from '../../../constants/PIC'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const SystemNotifications = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [loading, setLoading] = useState(false)
     const [notifications, setNotifications] = useState([]);
     const getNoti = async () => {
@@ -30,19 +34,19 @@ const SystemNotifications = () => {
         })
     }
     if (notifications.length === 0) {
-        return <View style={{ flex: 1, marginTop: SIZE.NormalMargin, alignItems: 'center', justifyContent: 'center' }}>
+        return <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, alignItems: 'center', justifyContent: 'center' }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.commentText }}>
                 没有系统消息
             </Text></View>
     } else {
         return (
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, }}>
                 {notifications && notifications.map((item, key) => <TouchableOpacity key={key} style={{ flexDirection: 'coloumn', justifyContent: 'space-between', width: '100%' }}>
-                    <View style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin, backgroundColor: '#fff', borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}>
+                    <View style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin, backgroundColor: currentTheme.contentColor, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Avatar source={{ uri: PIC.systemNoti }} size={30} />
-                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', marginLeft: 6 }}>系统消息</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', marginLeft: 6, color: currentTheme.fontColor }}>系统消息</Text>
                             </View>
                             <TouchableOpacity
                                 onPress={() => { handleDeleteNotification(item._id) }}
@@ -51,7 +55,7 @@ const SystemNotifications = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={{ marginVertical: SIZE.LittleMargin }}>
-                            <Text style={{ fontSize: SIZE.SmallTitle }}>{item.title}</Text>
+                            <Text style={{ fontSize: SIZE.SmallTitle, color: currentTheme.fontColor }}>{item.title}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>)}

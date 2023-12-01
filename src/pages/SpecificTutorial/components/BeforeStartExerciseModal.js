@@ -15,8 +15,12 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../redux/userSlice';
 import PIC from '../../../constants/PIC';
 import EXERCISETYPE from '../../../constants/EXERCISETYPE';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
     const dispatch = useDispatch()
     const bottomSheetModalRef = useRef(null);
@@ -59,13 +63,14 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
             index={0}
             enablePanDownToClose={false}
             snapPoints={snapPoints}
+            backgroundStyle={{ backgroundColor: currentTheme.contentColor }}
         >
             <View style={{ marginHorizontal: '3%' }}>
                 <View style={{}}>
-                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.black }}>今日热身了么？做下热身活动吧！</Text>
+                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>今日热身了么？做下热身活动吧！</Text>
                     <TouchableOpacity
                         onPress={navigateToWarm}
-                        style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: SIZE.NormalMargin, backgroundColor: COLORS.backgroundGray, marginTop: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius }}>
+                        style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: SIZE.NormalMargin, backgroundColor: currentTheme.backgroundColor, marginTop: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius }}>
                         <View style={{ flexDirection: 'row', alignItems: "center", gap: SIZE.NormalMargin }}>
                             <ImageBackground
                                 source={{ uri: PIC.warmup }}
@@ -76,7 +81,7 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
                                 }}>
                             </ImageBackground>
                             <View>
-                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.black }}>
+                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>
                                     Warm Up
                                 </Text>
                             </View>
@@ -88,13 +93,13 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
                     onPress={handleStartExercise}
                     style={{ padding: SIZE.NormalMargin, flexDirection: 'row', justifyContent: 'center', marginTop: SIZE.NormalMargin }}
                 >
-                    <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', fontStyle: 'italic' }}>直接开练</Text>
+                    <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', fontStyle: 'italic', color: currentTheme.fontColor }}>直接开练</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={handleModelClose}
                     style={{ padding: SIZE.NormalMargin, flexDirection: 'row', justifyContent: 'center', marginTop: SIZE.NormalMargin }}
                 >
-                    <Text style={{ fontSize: SIZE.NormalTitle, }}>取消</Text>
+                    <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>取消</Text>
                 </TouchableOpacity>
             </View>
         </BottomSheetModal>

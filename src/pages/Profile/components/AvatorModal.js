@@ -10,8 +10,12 @@ import SIZE from '../../../constants/SIZE'
 import * as ImagePicker from 'expo-image-picker'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { storage } from '../../../../firebase'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const AvatorModal = ({ visible, setVisible }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [updatedAvator, setUpdatedAvator] = useState()
     const dispatch = useDispatch()
     const { currentUser } = useSelector(state => state.user)
@@ -71,7 +75,7 @@ const AvatorModal = ({ visible, setVisible }) => {
             visible={visible}
             style={{ flex: 1 }}
         >
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZE.NormalMargin, justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>

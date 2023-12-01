@@ -15,7 +15,11 @@ export const chartsOneItemOptions = (dateArr, dataArr, title) => {
         grid: {
             left: '46',
         },
-        legend: {},
+        legend: {
+            textStyle: {
+                color: COLORS.commentText
+            }
+        },
         toolbox: {
             show: true,
             feature: {

@@ -6,7 +6,11 @@ import ConversationItem from './components/conversationItem'
 import { ICON } from '../../constants/SVG/ICON';
 import COLORS from '../../constants/COLORS';
 import SubscribeContactModal from './components/SubscribeContactModal';
+import useUserTheme from '../../hooks/useUserTheme';
+import APPTHEME from '../../constants/COLORS/APPTHEME';
 const Communication = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [conversations, setConversations] = useState([{}])
     useEffect(() => {
         const getData = async () => {
@@ -31,13 +35,13 @@ const Communication = () => {
     }
     const [subscribeContactModalVisible, setSubscribeContactModalVisible] = useState(false)
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: '3%', paddingBottom: 10 }}>
-                <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Communication</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: currentTheme.fontColor }}>Communication</Text>
                 <TouchableOpacity
                     onPress={() => setSubscribeContactModalVisible(true)}
                 >
-                    {ICON.contact(24, COLORS.black)}
+                    {ICON.contact(24, COLORS.gray)}
                 </TouchableOpacity>
             </View>
             <View style={{ flex: 1 }}>

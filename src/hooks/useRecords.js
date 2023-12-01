@@ -2,6 +2,17 @@ import { useState, useEffect } from 'react';
 import { formatTimeForCharts } from '../utils/formatTime';
 import { useSelector } from 'react-redux';
 import { secConvertToMin, secToSpecificMin } from '../utils/funcs';
+import {
+    startOfWeek,
+    startOfMonth,
+    startOfYear,
+    eachDayOfInterval,
+    eachWeekOfInterval,
+    eachMonthOfInterval,
+    eachYearOfInterval,
+    format,
+} from 'date-fns';
+
 // 这是一个自定义Hook
 function useRecords() {
     const { records } = useSelector(state => state.record)
@@ -26,6 +37,10 @@ function useRecords() {
     const [durationSum, setDurationSum] = useState(0)
     const [calorieSum, setCalorieSum] = useState(0.0)
     const [tutorialCalorieSum, setTutorialCalorieSum] = useState(0.0)
+
+    const [weeklyData, setWeeklyData] = useState([]);
+    const [monthlyData, setMonthlyData] = useState([]);
+    const [yearlyData, setYearlyData] = useState([]);
 
     useEffect(() => {
         if (records && records.length > 0) {
@@ -59,21 +74,90 @@ function useRecords() {
                 sumTutorialCalorie += parseFloat(item.tutorialCalorieConsumption)
                 return item.tutorialCalorieConsumption || 0
             }));
-            console.log("sumDuration", sumDuration);
             setDurationSum(sumDuration)
             setCalorieSum(sumCalorie)
             setTutorialCalorieSum(sumTutorialCalorie)
+
+            const groupedByWeek = records.reduce((acc, record) => {
+                const weekStart = startOfWeek(new Date(record.date)).toISOString();
+                if (!acc[weekStart]) {
+                    acc[weekStart] = { steps: 0, duration: 0, distance: 0, calories: 0, count: 0 };
+                }
+                acc[weekStart].steps += record.steps;
+                acc[weekStart].duration += record.duration;
+                acc[weekStart].distance += record.distance;
+                acc[weekStart].calories += record.calorieConsumption;
+                acc[weekStart].count += 1;
+                return acc;
+            }, {});
+
+            // Group by Month
+            const groupedByMonth = records.reduce((acc, record) => {
+                const monthStart = startOfMonth(new Date(record.date)).toISOString();
+                if (!acc[monthStart]) {
+                    acc[monthStart] = { steps: 0, duration: 0, distance: 0, calories: 0, count: 0 };
+                }
+                acc[monthStart].steps += record.steps;
+                acc[monthStart].duration += record.duration;
+                acc[monthStart].distance += record.distance;
+                acc[monthStart].calories += record.calorieConsumption;
+                acc[monthStart].count += 1;
+                return acc;
+            }, {});
+
+            // Group by Year
+            const groupedByYear = records.reduce((acc, record) => {
+                const yearStart = startOfYear(new Date(record.date)).toISOString();
+                if (!acc[yearStart]) {
+                    acc[yearStart] = { steps: 0, duration: 0, distance: 0, calories: 0, count: 0 };
+                }
+                acc[yearStart].steps += record.steps;
+                acc[yearStart].duration += record.duration;
+                acc[yearStart].distance += record.distance;
+                acc[yearStart].calories += record.calorieConsumption;
+                acc[yearStart].count += 1;
+                return acc;
+            }, {});
+
+            // Convert the grouped data to arrays for charting
+            setWeeklyData(Object.entries(groupedByWeek).map(([date, data]) => ({
+                week: format(new Date(date), 'yyyy-MM-dd'),
+                ...data,
+            })));
+
+            setMonthlyData(Object.entries(groupedByMonth).map(([date, data]) => ({
+                month: format(new Date(date), 'yyyy-MM'),
+                ...data,
+            })));
+
+            setYearlyData(Object.entries(groupedByYear).map(([date, data]) => ({
+                year: format(new Date(date), 'yyyy'),
+                ...data,
+            })));
+
         }
     }, [records]);
 
+    useEffect(() => {
+        // console.log("yearlyData", yearlyData);
+        // console.log("week", weeklyData);
+        // console.log("month", monthlyData);
+    }, [yearlyData, weeklyData, monthlyData])
+
     // 返回状态和设置方法
     return {
-        durationSum,
-        calorieSum,
-        tutorialCalorieSum,
+        durationSum, durationArr,
+        calorieSum, calorieArr,
+        tutorialCalorieSum, tutorialCalorieArr,
         dateArr,
-        durationArr,
-        stepArr, distanceArr, calorieArr, tutorialCalorieArr, maxSteps, maxDuration, maxCalorie, maxDistance, maxStepsDate, maxDurationDate, maxCalorieDate, maxDistanceDate,
+        stepArr,
+        distanceArr,
+        maxSteps, maxStepsDate,
+        maxDuration, maxDurationDate,
+        maxCalorie, maxCalorieDate,
+        maxDistance, maxDistanceDate,
+
+        weeklyData, monthlyData, yearlyData
     };
 }
 

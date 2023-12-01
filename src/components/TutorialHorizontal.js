@@ -9,8 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../redux/userSlice';
 import { setSessions } from '../redux/SessionSlice';
 import useIsTutorialHasAlr from '../hooks/useIsTutorialHasAlr';
+import useUserTheme from '../hooks/useUserTheme';
+import APPTHEME from '../constants/COLORS/APPTHEME';
 const TutorialHorizontal = ({ tutorial, withCalender }) => {
     const { userSelectDay } = useSelector(state => state.calendar)
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
     const { cover, level, lowerEstimateColorie, higherEstimateColorie, name, duration, _id } = tutorial
@@ -39,7 +43,7 @@ const TutorialHorizontal = ({ tutorial, withCalender }) => {
             onPress={() => navigate('SpecificTutorial', { tutorial })}
             style={{
                 borderRadius: SIZE.CardBorderRadius,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
                 overflow: 'hidden',
                 marginBottom: SIZE.NormalMargin,
                 alignItems: 'center',
@@ -59,11 +63,10 @@ const TutorialHorizontal = ({ tutorial, withCalender }) => {
                 </ImageBackground>
                 <View
                     style={{
-                        backgroundColor: 'white',
                         flex: 1,
                         padding: 4,
                     }}>
-                    <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10 }}>
+                    <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10, color: currentTheme.fontColor }}>
                         {name}
                     </Text>
                     <View style={{ flexDirection: 'row', gap: 6 }}>
@@ -76,7 +79,7 @@ const TutorialHorizontal = ({ tutorial, withCalender }) => {
             {withCalender && <TouchableOpacity
                 onPress={handleAddToCalendar}
             >
-                {ICON.addToCalender(22, COLORS.black)}
+                {ICON.addToCalender(22, COLORS.commentText)}
             </TouchableOpacity>}
         </TouchableOpacity >
     )

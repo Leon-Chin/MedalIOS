@@ -1,4 +1,4 @@
-import { FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useRef } from 'react'
 import COLORS from '../../constants/COLORS'
 import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons';
@@ -9,8 +9,13 @@ import { Avatar } from '@rneui/base';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import PostBlogModal from './components/PostBlogModal';
+import useUserTheme from '../../hooks/useUserTheme';
+import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { ICON } from '../../constants/SVG/ICON';
 
 const Community = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
     const scrollViewRef = useRef();
     const { currentUser } = useSelector(state => state.user)
@@ -31,10 +36,14 @@ const Community = () => {
         if (searchText) {
             const query = { params: searchText }
             await searchblog(query).then((blogs) => {
-                setSearchedBlogs(blogs)
+                if (blogs.status !== false) {
+                    setSearchedBlogs(blogs)
+                } else {
+                    Alert.alert('出现异常请稍后重试')
+                }
             }).catch(err => {
                 console.log(err);
-                message.error('error happens, can not get the blogs')
+                Alert.alert('出现异常请稍后重试')
             })
         } else {
             setSearchedBlogs([])
@@ -53,7 +62,7 @@ const Community = () => {
 
     const [postBlogModalVisible, setPostBlogVisible] = useState(false)
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ paddingHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center', height: 60, paddingBottom: 10, width: '100%' }}>
                 <TouchableOpacity
                     onPress={() => navigate('MyBlogsOverview')}
@@ -63,9 +72,10 @@ const Community = () => {
                 <TextInput
                     placeholder='Search the blog'
                     value={searchText}
+                    placeholderTextColor={currentTheme.commentFontColor}
                     onChangeText={setSearchText}
                     clearButtonMode='always'
-                    style={{ flex: 1, paddingHorizontal: 20, paddingVertical: 6, backgroundColor: '#fff', height: 50, fontSize: 18, borderRadius: 16 }}
+                    style={{ flex: 1, paddingHorizontal: 20, paddingVertical: 6, backgroundColor: currentTheme.contentColor, height: 50, fontSize: 18, borderRadius: 16 }}
                 />
                 <TouchableOpacity
                     onPress={() => handleSearchBlogs()}
@@ -86,16 +96,16 @@ const Community = () => {
                             getRecommandBlogs()
                             scrollToTop()
                         }}
-                        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 50, backgroundColor: '#fff', borderRadius: 12 }}
+                        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 50, backgroundColor: currentTheme.contentColor, borderRadius: 12 }}
                     >
-                        <Text>Refresh to get more</Text><MaterialIcons name="refresh" size={18} color="#333" />
+                        <Text style={{ color: currentTheme.fontColor }}>Refresh to get more</Text>
+                        {ICON.refresh(24, currentTheme.fontColor)}
                     </TouchableOpacity>}
             />
             <View style={{ height: 50 }}></View>
             <TouchableOpacity
                 onPress={() => {
                     setPostBlogVisible(true)
-                    // scrollToTop()
                 }}
                 style={{ justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 100, right: 20, width: 50, height: 50, backgroundColor: COLORS.primary, borderRadius: 25, zIndex: 1 }}
             >

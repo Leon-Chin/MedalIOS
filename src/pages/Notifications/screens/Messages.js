@@ -4,8 +4,12 @@ import { getunreadedmessage } from '../../../api/user.api';
 import { useEffect } from 'react';
 import MessageNotification from '../Components/MessageNotification';
 import COLORS from '../../../constants/COLORS';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const Messages = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [loading, setLoading] = useState(false);
     const [unreadedMsgs, setUnreadedMsgs] = useState([])
     const getNotice = async () => {
@@ -20,7 +24,7 @@ const Messages = () => {
     }, [])
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             {unreadedMsgs.length === 0 ?
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.commentText }}>

@@ -12,7 +12,11 @@ export const chartOption = (dateArr, weightArr, weightTarget, heightArr, BMIArr,
                 },
             },
         },
-        legend: {},
+        legend: {
+            textStyle: {
+                color: COLORS.commentText
+            }
+        },
         toolbox: {
             show: true,
             feature: {

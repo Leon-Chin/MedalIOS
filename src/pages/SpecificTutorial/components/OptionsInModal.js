@@ -8,8 +8,12 @@ import { createsession } from '../../../api/session.api'
 import { loginSuccess } from '../../../redux/userSlice'
 import { setSessions } from '../../../redux/SessionSlice'
 import { addtutorialtofavor } from '../../../api/tutorial.api'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const OptionsInModal = ({ handleModelClose, tutorial }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { cover, level, colorie, brief, name, duration, _id } = tutorial
     const { userSelectDay } = useSelector(state => state.calendar)
     const isExit = useCheckFavorTutorialIsExist(_id)
@@ -57,19 +61,19 @@ const OptionsInModal = ({ handleModelClose, tutorial }) => {
                 onPress={handleAddTutorialTofavor}
                 style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>收藏</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>收藏</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={handleAddToCalendar}
                 style={{ height: 50, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>添加到{formatTimeToChinese(userSelectDay)}待练</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>添加到{formatTimeToChinese(userSelectDay)}待练</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={handleModelClose}
                 style={{ height: 50, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                <Text style={{ fontSize: 16, }}>取消</Text>
+                <Text style={{ fontSize: 16, color: currentTheme.fontColor }}>取消</Text>
             </TouchableOpacity>
         </View>
     )

@@ -4,9 +4,13 @@ import { Video, ResizeMode } from 'expo-av'
 import { FormatTimestamp } from '../../../utils/chatMessageFormat'
 import COLORS from '../../../constants/COLORS'
 import SIZE from '../../../constants/SIZE'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const { width, height } = Dimensions.get('screen')
 const Message = ({ owner, message }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const videoPlayer = useRef(null)
     const [playbackInstanceInfo, setPlaybackInstanceInfo] = useState({
         position: 0,
@@ -33,10 +37,17 @@ const Message = ({ owner, message }) => {
     const { msgValue, createdAt, msgType } = message
     const [msgWidth, setMsgWidth] = useState(message.msgWidth > message.msgHeight ? 280 : 200)
     return (
-        <View style={[owner ? styles.owner : styles.sender, styles.messageContainer]}>
-            <View style={[styles.message, msgType === 'text' && (!owner ? styles.msgSender : styles.msgOwner)]}>
+        <View style={{
+            alignItems: owner ? 'flex-end' : 'flex-start',
+            width: 'auto',
+            paddingHorizontal: 10,
+            paddingVertical: 6,
+            marginBottom: 10,
+            width: 'auto',
+        }}>
+            <View style={[styles.message, msgType === 'text' && ({ backgroundColor: owner ? COLORS.primary : currentTheme.contentColor })]}>
                 <Pressable onLongPress={() => { }}>
-                    {msgType === 'text' && <Text style={{ fontSize: SIZE.NormalTitle, color: owner ? COLORS.backgroundGray : COLORS.black }}>{msgValue}</Text>}
+                    {msgType === 'text' && <Text style={{ fontSize: SIZE.NormalTitle, color: owner ? COLORS.backgroundGray : currentTheme.fontColor }}>{msgValue}</Text>}
                     {msgType === 'image' && <View style={{ width: msgWidth, height: (msgWidth * message.msgHeight / message.msgWidth) }}>
                         <Image source={{ uri: msgValue }} resizeMode='contain' style={{ width: '100%', flex: 1 }} />
                     </View>}
@@ -64,30 +75,12 @@ const Message = ({ owner, message }) => {
 export default Message
 
 const styles = StyleSheet.create({
-    msgOwner: {
-        backgroundColor: COLORS.primary,
-    },
     message: {
         width: 'auto',
         maxWidth: width * 0.8,
         paddingHorizontal: SIZE.NormalMargin,
         paddingVertical: SIZE.LittleMargin,
         borderRadius: SIZE.CardBorderRadius,
-    },
-    msgSender: {
-        backgroundColor: COLORS.white
-    },
-    messageContainer: {
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        marginBottom: 10,
-        width: 'auto',
-    },
-    sender: {
-        alignItems: 'flex-start',
-    },
-    owner: {
-        alignItems: 'flex-end',
     },
     date: {
         fontSize: 10,

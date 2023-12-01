@@ -10,8 +10,12 @@ import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const DurationCard = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const duration = useTodayExerciseDuration()
     const { currentUser } = useSelector(state => state.user)
     const [prevGoal, setPrevGoal] = useState()
@@ -21,7 +25,7 @@ const DurationCard = () => {
     }, [currentUser])
     const { navigate } = useNavigation()
     return (
-        <View style={{ marginHorizontal: '3%', marginBottom: 10, backgroundColor: '#fff', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
+        <View style={{ marginHorizontal: '3%', marginBottom: 10, backgroundColor: currentTheme.contentColor, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ marginBottom: SIZE.NormalMargin, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                     {/* icon */}
@@ -40,8 +44,8 @@ const DurationCard = () => {
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                    <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold' }}>{secToMin(duration)}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>min </Text>
+                    <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{secToMin(duration)}</Text>
+                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>min </Text>
                 </View>
                 <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevGoal ? secToSpecificMin(prevGoal) : "--"}min</Text>
             </View>

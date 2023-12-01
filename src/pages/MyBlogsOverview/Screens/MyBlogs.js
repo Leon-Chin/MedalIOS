@@ -8,8 +8,12 @@ import SIZE from '../../../constants/SIZE';
 import BlogCardWithID from '../../../components/BlogCardWithID';
 import { getmyblog } from '../../../api/user.api';
 import BlogCard from '../../../components/BlogCard';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const MyBlogs = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const [blogs, setBlogs] = useState([])
 
@@ -27,7 +31,7 @@ const MyBlogs = () => {
     }, [currentUser])
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <ScrollView style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin }}>
                 {blogs.map((item, index) => <BlogCard blog={item} key={index} />)}
             </ScrollView>

@@ -3,29 +3,17 @@ import React from 'react'
 import COLORS from '../../../constants/COLORS'
 import { ICON } from '../../../constants/SVG/ICON';
 import { useNavigation } from '@react-navigation/native';
-import { getlatestmeasurement } from '../../../api/measurement';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import useMeasurement from '../../../hooks/useMeasurement';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const PersonalData = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
-    // const [latestMeasurement, setLatestMeasurement] = useState({})
     const { latestMeasurement } = useMeasurement()
-    // const getLatestMeasurement = async () => {
-    //     await getlatestmeasurement().then(res => {
-    //         if (res.status !== false) {
-    //             setLatestMeasurement(res)
-    //         } else {
-    //             Alert.alert("出现异常请稍后重试")
-    //         }
-    //     })
-    // }
-    // useEffect(() => {
-    //     getLatestMeasurement()
-    // }, [])
     return (
-        <View style={{ marginHorizontal: '3%', marginBottom: 10, backgroundColor: '#fff', borderRadius: 12, paddingVertical: 12, paddingHorizontal: 14 }}>
+        <View style={{ marginHorizontal: '3%', marginBottom: 10, backgroundColor: currentTheme.contentColor, borderRadius: 12, paddingVertical: 12, paddingHorizontal: 14 }}>
             {/* title */}
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 14 }}>
                 <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
@@ -42,34 +30,34 @@ const PersonalData = () => {
                 </View>
             </View>
             <View style={{ marginBottom: 10 }}>
-                <Text style={{ marginBottom: 8, fontSize: 14 }}>体重</Text>
+                <Text style={{ marginBottom: 8, fontSize: 14, color: currentTheme.fontColor }}>体重</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 2 }}>
-                    {latestMeasurement?.weight ? <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{latestMeasurement.weight}</Text> :
-                        <Text style={{ fontSize: 26, fontWeight: 'bold' }}>--</Text>
+                    {latestMeasurement?.weight ? <Text style={{ fontSize: 26, fontWeight: 'bold', color: currentTheme.fontColor }}>{latestMeasurement.weight}</Text> :
+                        <Text style={{ fontSize: 26, fontWeight: 'bold', color: currentTheme.fontColor }}>--</Text>
                     }
-                    <Text>Kg</Text>
+                    <Text style={{ color: currentTheme.fontColor }}>Kg</Text>
                 </View>
             </View>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, gap: 6 }}>
-                    <Text>BMI</Text>
-                    {latestMeasurement?.BMI ? <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{latestMeasurement.BMI}</Text> :
+                    <Text style={{ color: currentTheme.fontColor }}>BMI</Text>
+                    {latestMeasurement?.BMI ? <Text style={{ fontWeight: 'bold', fontSize: 16, color: currentTheme.fontColor }}>{latestMeasurement.BMI}</Text> :
                         <Text style={{ fontWeight: 'bold', fontSize: 16 }}>--</Text>}
                 </View>
                 <View style={{ flex: 1, gap: 6 }}>
-                    <Text>体脂率</Text>
+                    <Text style={{ color: currentTheme.fontColor }}>体脂率</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 3 }}>
-                        {latestMeasurement?.bodyFatRate ? <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{latestMeasurement.bodyFatRate}</Text> :
+                        {latestMeasurement?.bodyFatRate ? <Text style={{ fontWeight: 'bold', fontSize: 16, color: currentTheme.fontColor }}>{latestMeasurement.bodyFatRate}</Text> :
                             <Text style={{ fontWeight: 'bold', fontSize: 16 }}>--</Text>}
-                        <Text>%</Text>
+                        <Text style={{ color: currentTheme.fontColor }}>%</Text>
                     </View>
                 </View>
                 <View style={{ flex: 1, gap: 6 }}>
-                    <Text>身高</Text>
+                    <Text style={{ color: currentTheme.fontColor }}>身高</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 3 }}>
-                        {latestMeasurement?.height ? <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{latestMeasurement.height}</Text> :
-                            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>--</Text>}
-                        <Text>cm</Text>
+                        {latestMeasurement?.height ? <Text style={{ fontWeight: 'bold', fontSize: 16, color: currentTheme.fontColor }}>{latestMeasurement.height}</Text> :
+                            <Text style={{ fontWeight: 'bold', fontSize: 16, color: currentTheme.fontColor }}>--</Text>}
+                        <Text style={{ color: currentTheme.fontColor }}>cm</Text>
                     </View>
                 </View>
             </View>

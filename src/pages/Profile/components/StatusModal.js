@@ -7,9 +7,13 @@ import { ICON } from '../../../constants/SVG/ICON'
 import COLORS from '../../../constants/COLORS'
 import { Modal, StyleSheet, Text, SafeAreaView, TouchableOpacity, View, Alert, TextInput } from 'react-native'
 import SIZE from '../../../constants/SIZE'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const StatusModal = ({ visible, setVisible }) => {
     const dispatch = useDispatch()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [updatedPersonalStatus, setUpdatedPersonalStatus] = useState()
     const { currentUser } = useSelector(state => state.user)
     const { _id, name, personalStatus, age, preferedTheme, preferedLanguage, gender, avator, birthday, hpNum } = currentUser
@@ -36,7 +40,7 @@ const StatusModal = ({ visible, setVisible }) => {
             visible={visible}
             style={{ flex: 1 }}
         >
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZE.NormalMargin, justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>
@@ -56,19 +60,20 @@ const StatusModal = ({ visible, setVisible }) => {
                                 onPress={() => {
                                     updatedPersonalStatus && handleUpdate()
                                 }}
-                                style={{ backgroundColor: updatedPersonalStatus ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
+                                style={{ backgroundColor: (updatedPersonalStatus && (updatedPersonalStatus !== personalStatus)) ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: updatedPersonalStatus ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: (updatedPersonalStatus && (updatedPersonalStatus !== personalStatus)) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View>
                         <TextInput
                             placeholder='更改个性签名'
+                            placeholderTextColor={COLORS.commentText}
                             onChangeText={setUpdatedPersonalStatus}
                             defaultValue={personalStatus}
                             multiline={true}
-                            style={{ padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, marginBottom: SIZE.NormalMargin, height: 500 }}
+                            style={{ color: currentTheme.fontColor, padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, marginBottom: SIZE.NormalMargin, height: 500 }}
                         />
                     </View>
                 </View>

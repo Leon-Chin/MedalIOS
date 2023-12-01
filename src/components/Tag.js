@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import useUserTheme from '../hooks/useUserTheme'
+import APPTHEME from '../constants/COLORS/APPTHEME'
 
 const Tag = ({ content }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
         <View style={styles.tagContainer}>
             {content.map((item, index) => <View key={index} style={styles.tag}>
-                <Text >{item}</Text>
+                <Text style={{ color: currentTheme.fontColor }}>{item}</Text>
             </View>)}
         </View>
     )

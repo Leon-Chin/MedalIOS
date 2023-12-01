@@ -10,8 +10,12 @@ import { useNavigation } from '@react-navigation/native'
 import { Swipeable } from 'react-native-gesture-handler';
 import SIZE from '../../../constants/SIZE'
 import { ICON } from '../../../constants/SVG/ICON'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 const ConversationItem = ({ conversation, deleteConversation }) => {
     const { currentUser } = useSelector(state => state.user)
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
     const { _id } = currentUser
     const [contact, setContact] = useState()
@@ -67,7 +71,7 @@ const ConversationItem = ({ conversation, deleteConversation }) => {
                 {contact ? <Avatar size={50} rounded source={{ uri: contact.avator }} /> : <FontAwesome5 name="user-circle" size={24} color="black" />}
                 <View style={{ flex: 1, marginLeft: 10, }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold' }}>{contact.name}</Text>}
+                        {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>{contact.name}</Text>}
                         <Text style={{ color: COLORS.commentText, fontSize: 14 }}>{formatDateTime(conversation.updatedAt)}</Text>
                     </View>
                     <View>

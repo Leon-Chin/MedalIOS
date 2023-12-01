@@ -10,8 +10,12 @@ import { useSelector } from 'react-redux'
 import { Avatar } from '@rneui/base'
 import { secToMin } from '../../../utils/funcs'
 import { formatTimeForChartSoloItem } from '../../../utils/formatTime'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const AfterExcercise = ({ route }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const tutorial = route.params.tutorial
     const data = route.params.data
@@ -26,28 +30,28 @@ const AfterExcercise = ({ route }) => {
         })
     }
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ marginHorizontal: '3%' }}>
-                <View style={{ padding: SIZE.NormalMargin, backgroundColor: COLORS.white, marginVertical: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius }}>
+                <View style={{ padding: SIZE.NormalMargin, backgroundColor: currentTheme.contentColor, marginVertical: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: SIZE.NormalMargin }}>
                         <Avatar
                             size={36}
                             rounded
                             source={{ uri: currentUser?.avator }}
                         />
-                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.black }}>{currentUser.name}</Text>
+                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{currentUser.name}</Text>
                     </View>
-                    <View style={{ padding: SIZE.NormalMargin, marginBottom: SIZE.NormalMargin, backgroundColor: COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius }}>
+                    <View style={{ padding: SIZE.NormalMargin, marginBottom: SIZE.NormalMargin, backgroundColor: currentTheme.backgroundColor, borderRadius: SIZE.CardBorderRadius }}>
                         <Text style={{ color: COLORS.commentText }}>教程名称: </Text>
                         <View style={{ marginVertical: SIZE.NormalMargin }}>
-                            <Text numberOfLines={2} style={{ color: COLORS.black, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{name}</Text>
+                            <Text numberOfLines={2} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{name}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', gap: SIZE.NormalMargin, alignItems: 'center' }}>
                             <View style={{ paddingHorizontal: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: COLORS.primary }}>
                                 <Text numberOfLines={1} style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{level}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                                <Text numberOfLines={1} style={{ color: COLORS.black, fontSize: SIZE.NormalTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{duration}</Text>
+                                <Text numberOfLines={1} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{duration}</Text>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}> min</Text>
                             </View>
                         </View>
@@ -66,15 +70,15 @@ const AfterExcercise = ({ route }) => {
                         <View style={{ flex: 1, gap: 3 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}>训练时长: </Text>
-                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: COLORS.black }}>{secToMin(data.exerciseDuration)}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{secToMin(data.exerciseDuration)}</Text>
                             </View>
                             <View>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}>训练开始时间</Text>
-                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: COLORS.black }}>{formatTimeForChartSoloItem(data.startTime)}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(data.startTime)}</Text>
                             </View>
                             <View>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}>训练结束时间</Text>
-                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: COLORS.black }}>{formatTimeForChartSoloItem(data.endTime)}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(data.endTime)}</Text>
                             </View>
                         </View>
                     </View>
@@ -83,7 +87,7 @@ const AfterExcercise = ({ route }) => {
                     <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>接着做一个伸展运动吧，更有效缓解疲劳</Text>
                     <TouchableOpacity
                         onPress={navigateToCool}
-                        style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: SIZE.NormalMargin, backgroundColor: COLORS.white, marginTop: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius }}>
+                        style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: SIZE.NormalMargin, backgroundColor: currentTheme.contentColor, marginTop: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius }}>
                         <View style={{ flexDirection: 'row', alignItems: "center", gap: SIZE.NormalMargin }}>
                             <ImageBackground
                                 source={{ uri: PIC.cooldown }}
@@ -94,12 +98,12 @@ const AfterExcercise = ({ route }) => {
                                 }}>
                             </ImageBackground>
                             <View>
-                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.black }}>
+                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>
                                     {EXERCISETYPE.cooldown.label}
                                 </Text>
                             </View>
                         </View>
-                        {ICON.right(24, COLORS.black)}
+                        {ICON.right(24, currentTheme.fontColor)}
                     </TouchableOpacity>
                 </View>
             </View>

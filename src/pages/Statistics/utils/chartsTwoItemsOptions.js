@@ -15,7 +15,11 @@ export const chartsTwoItemsOptions = (dateArr, dataArr1, title1, dataArr2, title
         grid: {
             left: '46',
         },
-        legend: {},
+        legend: {
+            textStyle: {
+                color: COLORS.commentText
+            }
+        },
         toolbox: {
             show: true,
             feature: {

@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { BottomSheetModalProvider, } from '@gorhom/bottom-sheet';
 import styles from './style'
 import CardTitle from '../../components/CardTitle'
@@ -9,9 +9,14 @@ import SIZE from '../../constants/SIZE';
 import { useEffect, useState } from 'react';
 import MoreOptionsModal from './components/MoreOptionsModal';
 import BeforeStartExerciseModal from './components/BeforeStartExerciseModal';
-
+import useUserTheme from '../../hooks/useUserTheme';
+import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { ICON } from '../../constants/SVG/ICON';
+const { width } = Dimensions.get('window')
 
 const SpecificTutorial = ({ route }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     useEffect(() => {
         setTutorial(route.params.tutorial)
     }, [route.params])
@@ -22,7 +27,10 @@ const SpecificTutorial = ({ route }) => {
 
     return (
         <BottomSheetModalProvider>
-            <View style={styles.container}>
+            <View style={{
+                flex: 1,
+                backgroundColor: currentTheme.backgroundColor
+            }}>
                 <NavigationHeader setVisible={setMoreOptionsModalVisible} />
                 {/* cover of the tutorial */}
                 <Image
@@ -30,40 +38,61 @@ const SpecificTutorial = ({ route }) => {
                     style={styles.image}
                 />
                 {/* detail of the tutorial */}
-                <View style={styles.details} >
+                <View style={{
+                    flex: 1,
+                    marginTop: -50,
+                    borderTopRightRadius: 25,
+                    borderTopLeftRadius: 25,
+                    width: width,
+                    backgroundColor: currentTheme.contentColor,
+                    paddingHorizontal: 16
+                }} >
                     <CardTitle title={name} />
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         style={{ flex: 1 }}
                     >
-                        <View style={styles.tutorialIntro}>
-                            <View style={styles.tutorialIntroLeft}>
+                        <View style={{
+                            paddingVertical: 10,
+                            backgroundColor: currentTheme.backgroundColor,
+                            paddingHorizontal: SIZE.NormalMargin,
+                            borderRadius: SIZE.CardBorderRadius,
+                            marginBottom: SIZE.NormalMargin,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }}>
+                            <View style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: 'row',
+                            }}>
                                 <View style={{ marginRight: 6 }}>
-                                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', }}>{level}</Text>
+                                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', color: currentTheme.fontColor }}>{level}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', }}>{duration} </Text><Text>min</Text>
+                                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', color: currentTheme.fontColor }}>{duration} </Text><Text style={{ color: currentTheme.fontColor }}>min</Text>
                                 </View>
                             </View>
                             <View style={styles.tutorialIntroRight}>
                                 <View style={{ marginRight: 6 }}>
-                                    <Text>{tutorial.users.length} <Text style={styles.commentText}>人练过</Text></Text>
+                                    <Text style={{ color: currentTheme.fontColor }}>{tutorial.users.length} <Text style={{ color: currentTheme.fontColor }}>人练过</Text></Text>
                                 </View>
-                                <View><Text>暂无评分</Text></View>
+                                <View><Text style={{ color: currentTheme.fontColor }}>暂无评分</Text></View>
                                 {/* {rate.length === 0 ? <View className="specificTutorialPage-detail-statistic-rate"><View className='commentText'>暂无评分</View></View> : <View className="specificTutorialPage-detail-statistic-rate">评分 9.0</View>} */}
                             </View>
                         </View>
-                        <Text style={styles.tutorialDescription}>{tutorial.description}</Text>
+                        <Text style={{ textAlign: 'justify', marginBottom: 10, color: currentTheme.fontColor }}>{tutorial.description}</Text>
                         <View style={styles.estimateColorie}>
-                            <Text style={{ fontWeight: 500, fontSize: 16 }}>预估消耗(千卡)</Text>
+                            <Text style={{ fontWeight: 500, fontSize: 16, color: currentTheme.fontColor }}>预估消耗(千卡)</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ fontWeight: 600 }}>
+                                <Text style={{ fontWeight: 600, color: currentTheme.fontColor }}>
                                     {tutorial.lowerEstimateColorie}~{tutorial.higherEstimateColorie}
                                 </Text>
-                                <MaterialCommunityIcons name="fire" size={24} color="black" />
+                                <MaterialCommunityIcons name="fire" size={24} color={currentTheme.fontColor} />
                             </View>
                         </View>
-                        <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Equipments Requirement:</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 10, color: currentTheme.fontColor }}>Equipments Requirement:</Text>
                         <View style={styles.equipments}>
                             <Tag content={tutorial.equipments} />
                         </View>

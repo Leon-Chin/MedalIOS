@@ -16,17 +16,21 @@ import { chartsOneItemOptions } from '../../../utils/chartsOneItemOptions';
 import SIZE from '../../../../../constants/SIZE';
 import COLORS from '../../../../../constants/COLORS';
 import debounceFunc from '../../../../../utils/debounceFunc';
+import useUserTheme from '../../../../../hooks/useUserTheme';
+import APPTHEME from '../../../../../constants/COLORS/APPTHEME';
 
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get("screen")
 const StepChart = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { stepArr, dateArr } = useRecords()
     const skiaRef = useRef(null);
     useEffect(() => {
         let chart;
         const initChart = () => {
             if (skiaRef.current) {
-                chart = echarts.init(skiaRef.current, 'light', {
+                chart = echarts.init(skiaRef.current, 'vintage', {
                     renderer: 'svg',
                     width: width * 0.9,
                     height: 300,
@@ -42,7 +46,7 @@ const StepChart = () => {
             marginTop: SIZE.NormalMargin,
             padding: SIZE.LargerMargin,
             borderRadius: SIZE.CardBorderRadius,
-            backgroundColor: COLORS.white
+            backgroundColor: currentTheme.contentColor
         }}>
             <SvgChart ref={skiaRef} />
         </View>

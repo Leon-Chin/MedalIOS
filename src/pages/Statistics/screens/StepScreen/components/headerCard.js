@@ -1,4 +1,4 @@
-import { Alert, Dimensions, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, AppRegistry, Dimensions, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import SIZE from '../../../../../constants/SIZE'
 import COLORS from '../../../../../constants/COLORS'
 import { ICON } from '../../../../../constants/SVG/ICON'
@@ -9,8 +9,12 @@ import { updatesteptarget } from '../../../../../api/user.api'
 import LinearGradient from 'react-native-linear-gradient'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginSuccess } from '../../../../../redux/userSlice'
+import useUserTheme from '../../../../../hooks/useUserTheme'
+import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
 const { width } = Dimensions.get('screen')
 const HeaderCard = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [stepModalGoalVisible, setStepModalGoalVisible] = useState(false)
     const { currentUser } = useSelector(state => state.user)
     const dispatch = useDispatch()
@@ -40,24 +44,24 @@ const HeaderCard = () => {
         }
     }
     return (
-        <View style={{ backgroundColor: '#fff', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
+        <View style={{ backgroundColor: currentTheme.contentColor, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
             <View style={{ marginBottom: SIZE.NormalMargin }}>
                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>今日数据</Text>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ marginRight: SIZE.NormalMargin }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: SIZE.NormalMargin }}>
-                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: COLORS.black, }}>总步数</Text>
+                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: currentTheme.fontColor, }}>总步数</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                        <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: COLORS.black }}>{steps}</Text>
+                        <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{steps}</Text>
                         <Text style={{ color: COLORS.commentText, fontSize: SIZE.ExtarSmallTitle }}>步</Text>
                     </View>
                 </View>
-                <View style={{ width: 2, backgroundColor: COLORS.backgroundGray, height: SIZE.ExtraLargerTitle }}></View>
+                <View style={{ width: 2, backgroundColor: COLORS.commentText, height: SIZE.ExtraLargerTitle }}></View>
                 <View style={{ flex: 3, marginLeft: SIZE.NormalMargin }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: SIZE.NormalMargin }}>
-                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: COLORS.black, }}>目标步数</Text>
+                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: currentTheme.fontColor, }}>目标步数</Text>
                         <TouchableOpacity
                             onPress={() => setStepModalGoalVisible(true)}
                             style={{ flexDirection: "row", gap: 4 }}

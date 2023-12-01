@@ -2,10 +2,14 @@ import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import COLORS from '../../../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 const couple = require('../../../../assets/images/couple.jpg');
 
 const AllTutorialsCard = () => {
     const navigation = useNavigation()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
         <TouchableOpacity
             onPress={() => { navigation.navigate('AllTutorials') }}
@@ -15,13 +19,13 @@ const AllTutorialsCard = () => {
                 height: 100,
                 paddingVertical: 4,
                 paddingHorizontal: 10,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 borderRadius: 10,
             }}>
             <View>
-                <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
                     {'全部课程'}
                 </Text>
                 <Text style={{ fontSize: 10, marginTop: 6, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>

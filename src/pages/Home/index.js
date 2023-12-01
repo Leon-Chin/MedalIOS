@@ -12,10 +12,15 @@ import StepCounter from './components/StepCounter';
 import DistanceCounter from './components/DistanceCounter';
 import ColorieCard from './components/ColorieCard';
 import TimeCard from './components/TimeCard';
+import useUserTheme from '../../hooks/useUserTheme';
+import APPTHEME from '../../constants/COLORS/APPTHEME';
+
 const Home = () => {
     const { navigate } = useNavigation()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ marginHorizontal: '3%', marginBottom: 10 }}>
                 <Header />
             </View>
@@ -27,7 +32,14 @@ const Home = () => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ columnGap: 10 }}
-                        renderItem={({ item, index }) => <TouchableOpacity onPress={() => { navigate(item.name) }}><ExerciseLogo key={index} exerciseName={item.name}>{item.icon}</ExerciseLogo></TouchableOpacity>}
+                        renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
+                            navigate("AllTutorials", {
+                                selectType: {
+                                    name: item.name,
+                                    value: item.value,
+                                }
+                            })
+                        }}><ExerciseLogo key={index} exerciseName={item.name}>{item.icon}</ExerciseLogo></TouchableOpacity>}
                     />
                 </View>
                 <View style={{ marginHorizontal: '3%', marginBottom: 10, flexDirection: 'row' }}>

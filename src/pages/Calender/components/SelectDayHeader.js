@@ -4,8 +4,12 @@ import SIZE from '../../../constants/SIZE'
 import COLORS from '../../../constants/COLORS'
 import { ICON } from '../../../constants/SVG/ICON'
 import { DateToMonthDay } from '../../../utils/formatTime'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const SelectDayHeader = ({ isToday, setSelectDay, selectDay }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const goToPreviousDay = () => {
         setSelectDay(prevDay => new Date(prevDay.setDate(prevDay.getDate() - 1)));
     };
@@ -20,20 +24,20 @@ const SelectDayHeader = ({ isToday, setSelectDay, selectDay }) => {
                 <TouchableOpacity
                     onPress={goToPreviousDay}
                 >
-                    {ICON.left(24, 'black')}
+                    {ICON.left(24, currentTheme.fontColor)}
                 </TouchableOpacity>
-                <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.black }}>{DateToMonthDay(selectDay)}</Text>
+                <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{DateToMonthDay(selectDay)}</Text>
                 <TouchableOpacity
                     onPress={goToNextDay}
                 >
-                    {ICON.right(24, 'black')}
+                    {ICON.right(24, currentTheme.fontColor)}
                 </TouchableOpacity>
             </View>
             {!isToday &&
                 <TouchableOpacity
                     onPress={() => setSelectDay(new Date())}
-                    style={{ backgroundColor: COLORS.white, borderRadius: SIZE.CardBorderRadius, flexDirection: 'row', justifyContent: 'center', padding: SIZE.NormalMargin, }}>
-                    <Text>回到今天</Text>
+                    style={{ backgroundColor: currentTheme.contentColor, borderRadius: SIZE.CardBorderRadius, flexDirection: 'row', justifyContent: 'center', padding: SIZE.NormalMargin, }}>
+                    <Text style={{ color: currentTheme.fontColor }}>回到今天</Text>
                 </TouchableOpacity>
             }
         </View>

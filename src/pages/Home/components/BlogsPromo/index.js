@@ -5,11 +5,12 @@ import BlogCard from '../../../../components/BlogCard'
 import { useNavigation } from '@react-navigation/native'
 import { getrandomblog } from '../../../../api/user.api'
 import COLORS from '../../../../constants/COLORS'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons'; 
 
 const BlogsPromo = () => {
     const { navigate } = useNavigation()
     const [blogs, setBlogs] = useState([])
+    
     const getRecommandBlogs = async () => {
         const blogs = await getrandomblog()
         setBlogs(blogs)
@@ -22,7 +23,7 @@ const BlogsPromo = () => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Label>Blog</Label>
                 <TouchableOpacity onPress={() => navigate('Community')} >
-                    <Text style={{ opacity: 0.5, fontSize: 12, }}>View All</Text>
+                    <Text style={{ opacity: 0.5, fontSize: 12, color: COLORS.commentText }}>View All</Text>
                 </TouchableOpacity>
             </View>
             {blogs ? blogs?.map((blog, index) => <BlogCard key={index} blog={blog} />) : <View />}

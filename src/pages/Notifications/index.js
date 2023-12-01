@@ -12,12 +12,15 @@ import COLORS from '../../constants/COLORS';
 import { ICON } from '../../constants/SVG/ICON';
 import TabSettingModel from './Components/TabSettingModel';
 import { useSelector } from 'react-redux';
+import useUserTheme from '../../hooks/useUserTheme';
+import APPTHEME from '../../constants/COLORS/APPTHEME';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Notifications = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { systemMsgsTabShow, messagesTabShow, todosTabShow } = useSelector(state => state.notificationTab)
-    console.log(systemMsgsTabShow, messagesTabShow, todosTabShow);
     const [loading, setLoading] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [unreadedMsgs, setUnreadedMsgs] = useState([])
@@ -36,6 +39,10 @@ const Notifications = () => {
 
     useEffect(() => {
         getNotice();
+        const interval = setInterval(getNotice, 3000)
+        return () => {
+            clearInterval(interval)
+        }
     }, [])
     useEffect(() => {
     }, [notifications, unreadedMsgs, todo]);
@@ -45,7 +52,8 @@ const Notifications = () => {
             <Tab.Navigator
                 initialRouteName="Todos"
                 screenOptions={{
-                    tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold', textTransform: 'none' },
+                    tabBarStyle: { backgroundColor: currentTheme.contentColor },
+                    tabBarLabelStyle: { fontSize: 14, color: currentTheme.fontColor, fontWeight: 'bold', textTransform: 'none' },
                 }}
             >
                 {systemMsgsTabShow && <Tab.Screen

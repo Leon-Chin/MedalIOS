@@ -7,10 +7,14 @@ import COLORS from '../../../constants/COLORS';
 import { logout } from '../../../redux/userSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 
 const LogoutModal = ({ visible, setVisible }) => {
     const dispatch = useDispatch()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     useEffect(() => {
         visible && handlePresentModalPress()
     }, [visible])
@@ -33,6 +37,7 @@ const LogoutModal = ({ visible, setVisible }) => {
             index={0}
             enablePanDownToClose={false}
             snapPoints={snapPoints}
+            backgroundStyle={{ backgroundColor: currentTheme.contentColor }}
         >
             <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
@@ -50,7 +55,7 @@ const LogoutModal = ({ visible, setVisible }) => {
                     onPress={handleClose}
                     style={{ height: 50, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <Text style={{ fontSize: 18 }}>取消</Text>
+                    <Text style={{ fontSize: 18, color: COLORS.commentText }}>取消</Text>
                 </TouchableOpacity>
             </View>
         </BottomSheetModal>

@@ -9,10 +9,14 @@ import { fuzzysearchuser } from '../../../api/user.api'
 import ContactHorizontal from '../../../components/ContactHorizontal'
 import { useSelector } from 'react-redux'
 import ContactHorizontalWithID from '../../../components/ContactHorizontalWithID'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const SubscribeContactModal = ({ visible, setVisible }) => {
     const { currentUser } = useSelector(state => state.user)
     const [searchText, setSearchText] = useState('')
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [searchedUsers, setSearchedUsers] = useState([])
     const handleSearchUser = async () => {
         if (searchText) {
@@ -33,9 +37,9 @@ const SubscribeContactModal = ({ visible, setVisible }) => {
     return (
         <Modal
             visible={visible}
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}
         >
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZE.NormalMargin, justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>
@@ -54,7 +58,8 @@ const SubscribeContactModal = ({ visible, setVisible }) => {
                     <View>
                         <TextInput
                             placeholder={'搜索用户名， 用户ID, 邮箱'}
-                            style={{ backgroundColor: COLORS.backgroundGray, padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius }}
+                            placeholderTextColor={COLORS.commentText}
+                            style={{ backgroundColor: currentTheme.contentColor, color: currentTheme.fontColor, padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, marginBottom: SIZE.NormalMargin }}
                             onChangeText={setSearchText}
                             returnKeyType={'done'}
                             onSubmitEditing={handleSearchUser}

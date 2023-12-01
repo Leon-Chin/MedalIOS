@@ -11,10 +11,14 @@ import { storage } from '../../../../firebase'
 import { postblog, updateblog } from '../../../api/user.api'
 import { Video, ResizeMode } from 'expo-av';
 import { useNavigation } from '@react-navigation/native'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const { width } = Dimensions.get('screen')
 
 const EditBlogModal = ({ visible, setVisible, blog }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
     const [title, setTitle] = useState(blog.title)
     const [content, setContent] = useState(blog.content)
@@ -128,7 +132,7 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
             visible={visible}
             style={{ flex: 1 }}
         >
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZE.NormalMargin, justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>
@@ -157,20 +161,22 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
                             <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.commentText }}>博客标题</Text>
                             <TextInput
                                 onChangeText={setTitle}
+                                placeholderTextColor={COLORS.commentText}
                                 returnKeyType='done'
                                 defaultValue={title + ''}
                                 placeholder='添加标题让更多有需要的人看到你吧'
-                                style={{ borderRadius: SIZE.CardBorderRadius, height: 50 }}
+                                style={{ borderRadius: SIZE.CardBorderRadius, color: currentTheme.fontColor, height: 50 }}
                             />
                         </View>
                         <View>
                             <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>博客内容</Text>
                             <TextInput
                                 placeholder='发一下你的运动时刻想法或者运动技巧吧'
+                                placeholderTextColor={COLORS.commentText}
                                 multiline={true}
                                 defaultValue={content + ''}
                                 onChangeText={setContent}
-                                style={{ borderRadius: SIZE.CardBorderRadius, marginBottom: SIZE.NormalMargin, height: 130 }}
+                                style={{ borderRadius: SIZE.CardBorderRadius, color: currentTheme.fontColor, marginBottom: SIZE.NormalMargin, height: 130 }}
                             />
                         </View>
 

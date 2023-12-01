@@ -7,8 +7,12 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import SIZE from '../../../constants/SIZE';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const MyExercisesCard = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const [favoriteTutorials, setFavoriteTutorials] = useState([])
     const [practicedTutorials, setPracticedTutorials] = useState([])
@@ -22,8 +26,8 @@ const MyExercisesCard = () => {
     }, [currentUser])
     const { navigate } = useNavigation()
     return (
-        <View style={{ backgroundColor: '#fff', marginHorizontal: '3%', marginBottom: 10, padding: '3%', borderRadius: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercises</Text>
+        <View style={{ backgroundColor: currentTheme.contentColor, marginHorizontal: '3%', marginBottom: 10, padding: '3%', borderRadius: 20 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: currentTheme.fontColor }}>Exercises</Text>
             <View style={{ flexDirection: 'row', height: 80, justifyContent: 'space-around' }}>
                 <TouchableOpacity
                     onPress={() => navigate('ExercisesOverview', { screen: 'FavoriteTutorial' })}
@@ -41,12 +45,12 @@ const MyExercisesCard = () => {
                         <Entypo name="add-to-list" size={30} color="#fff" />
                     </View>
                     <View style={{ marginLeft: 20 }}>
-                        <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                        <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
                             {'收藏课程'}
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
-                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{favoriteTutorials.length}</Text>
-                            <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{favoriteTutorials.length}</Text>
+                            <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light', }}>
                                 {`节课程`}
                             </Text>
                         </View>
@@ -68,12 +72,12 @@ const MyExercisesCard = () => {
                         <Entypo name="list" size={30} color="#fff" />
                     </View>
                     <View style={{ marginLeft: 20 }}>
-                        <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                        <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
                             {'练过课程'}
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
-                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{practicedTutorials.length}</Text>
-                            <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{practicedTutorials.length}</Text>
+                            <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light', }}>
                                 {`节课程`}
                             </Text>
                         </View>

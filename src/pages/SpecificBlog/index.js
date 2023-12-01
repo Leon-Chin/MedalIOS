@@ -15,9 +15,13 @@ import { ICON } from '../../constants/SVG/ICON';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { loginSuccess } from '../../redux/userSlice';
 import EditBlogModal from './Components/EditBlogModal';
+import useUserTheme from '../../hooks/useUserTheme';
+import APPTHEME from '../../constants/COLORS/APPTHEME';
 
 const { width: ScreenWidth, height: ScreenHeight } = Dimensions.get('screen')
 const SpecificBlog = ({ route }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
     // bottem sheet
     const bottomSheetModalRef = useRef(null);
@@ -173,16 +177,16 @@ const SpecificBlog = ({ route }) => {
     }
     return (
         <BottomSheetModalProvider>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' >
                     <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-                        <View style={{ position: 'absolute', zIndex: 999, top: 0, height: 100, width: '100%', paddingHorizontal: '3%', backgroundColor: '#fff', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', paddingBottom: 10 }}>
+                        <View style={{ position: 'absolute', zIndex: 999, top: 0, height: 100, width: '100%', paddingHorizontal: '3%', backgroundColor: currentTheme.contentColor, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', paddingBottom: 10 }}>
                             <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <SpecificBlogHeaderLeft blog={blog} user={user} />
                                 <TouchableOpacity
                                     style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                                     onPress={() => handlePresentModalPress()}>
-                                    {ICON.more(24, COLORS.black)}
+                                    {ICON.more(24, currentTheme.fontColor)}
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -205,21 +209,21 @@ const SpecificBlog = ({ route }) => {
                             </View>
                             }
                             <View style={{ marginHorizontal: '3%' }}>
-                                <Text style={{ fontSize: 24, fontWeight: 'bold', marginVertical: 10 }}>{blog.title}</Text>
-                                <Text style={{ marginBottom: 10 }}>{blog.content}</Text>
+                                <Text style={{ fontSize: 24, fontWeight: 'bold', marginVertical: 10, color: currentTheme.fontColor }}>{blog.title}</Text>
+                                <Text style={{ marginBottom: 10, color: currentTheme.fontColor }}>{blog.content}</Text>
                                 <Tag content={blog.tags} />
                                 <Text style={{ color: COLORS.commentText, fontSize: 12, marginVertical: 10 }}>{FormattedTime(new Date(blog.createdAt))}</Text>
                             </View>
                             <View style={{ marginHorizontal: '3%', opacity: 0.4, height: 0.8, backgroundColor: COLORS.commentText }}></View>
                             <View style={{ marginHorizontal: '3%', paddingVertical: 10, }}>
-                                <Text style={{ color: COLORS.black, marginBottom: 10 }}>共「<Text style={{ fontWeight: 'bold' }}>{comments && comments.length}</Text>」条评论</Text>
+                                <Text style={{ color: currentTheme.fontColor, marginBottom: 10 }}>共「<Text style={{ fontWeight: 'bold' }}>{comments && comments.length}</Text>」条评论</Text>
                                 {comments && comments.map((item, index) => <OneComment key={index} comment={item} />)}
                             </View>
                         </ScrollView>
                         <View style={{
                             height: 70,
                             flexDirection: 'row',
-                            backgroundColor: '#fff',
+                            backgroundColor: currentTheme.contentColor,
                             paddingBottom: 10,
                         }}>
                             <View style={{ flex: 0.7, justifyContent: 'center', alignItems: "center" }}>
@@ -229,7 +233,9 @@ const SpecificBlog = ({ route }) => {
                                         width: 240,
                                         borderRadius: 20,
                                         padding: 10,
+                                        color: currentTheme.fontColor
                                     }}
+                                    placeholderTextColor={COLORS.commentText}
                                     value={commentText}
                                     onChangeText={(commentText) => setCommentText(commentText)}
                                     returnKeyType='send'
@@ -243,14 +249,14 @@ const SpecificBlog = ({ route }) => {
                                     style={{ justifyContent: 'center', alignItems: "center", marginHorizontal: 4 }}
                                 >
                                     <AntDesign name={liked ? "like1" : 'like2'} size={26} color={liked ? COLORS.primary : COLORS.black} />
-                                    {likedNum === 0 ? <Text style={{ fontSize: 12 }}>Like</Text> : <Text style={{ fontSize: 12, marginLeft: 4 }}>{likedNum}</Text>}
+                                    {likedNum === 0 ? <Text style={{ fontSize: 12, color: COLORS.commentText }}>Like</Text> : <Text style={{ fontSize: 12, marginLeft: 4, color: currentTheme.fontColor }}>{likedNum}</Text>}
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => handleFavoriteBlog()}
                                     style={{ justifyContent: 'center', alignItems: "center", marginHorizontal: 4 }}
                                 >
                                     <AntDesign name={favorited ? "star" : 'staro'} size={26} color={favorited ? COLORS.primary : COLORS.black} />
-                                    {favoritedNum === 0 ? <Text style={{ fontSize: 12 }}>Favor</Text> : <Text style={{ fontSize: 12, marginLeft: 4 }}>{favoritedNum}</Text>}
+                                    {favoritedNum === 0 ? <Text style={{ fontSize: 12, color: COLORS.commentText }}>Favor</Text> : <Text style={{ fontSize: 12, marginLeft: 4, color: currentTheme.fontColor }}>{favoritedNum}</Text>}
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -262,6 +268,7 @@ const SpecificBlog = ({ route }) => {
                 index={0}
                 enablePanDownToClose
                 snapPoints={snapPoints}
+                backgroundStyle={{ backgroundColor: currentTheme.contentColor }}
             >
                 <View style={{ flex: 1 }}>
 
@@ -273,8 +280,8 @@ const SpecificBlog = ({ route }) => {
                             }}
                             style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                         >
-                            <Text style={{ fontSize: 18, color: COLORS.black, fontWeight: 'bold' }}>编辑</Text>
-                            {ICON.edit(24, COLORS.black)}
+                            <Text style={{ fontSize: 18, color: currentTheme.fontColor, fontWeight: 'bold' }}>编辑</Text>
+                            {ICON.edit(24, currentTheme.fontColor)}
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={handleDeleteBlog}

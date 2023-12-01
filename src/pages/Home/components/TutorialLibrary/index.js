@@ -4,9 +4,11 @@ import Label from '../../../../components/Label'
 import TutorialVerticalView from '../../../../components/TutorialVerticalView'
 import { getalltutorial } from '../../../../api/user.api'
 import { useNavigation } from '@react-navigation/native'
+import COLORS from '../../../../constants/COLORS'
 const TutorialLibrary = () => {
     const [tutorials, setTutorials] = useState([])
     const { navigate } = useNavigation()
+
     const getLibs = async (type) => {
         await getalltutorial().then(res => {
             setTutorials(res)
@@ -20,7 +22,7 @@ const TutorialLibrary = () => {
     }, [])
     if (tutorials.length === 0) {
         // loading
-        return <View><Text>Loading</Text></View>
+        return <View><Text style={{ color: COLORS.commentText }}>Loading</Text></View>
     } else {
         return (
             <>
@@ -32,7 +34,7 @@ const TutorialLibrary = () => {
                     }}>
                     <Label>精选</Label>
                     <Pressable onPress={() => navigate('AllTutorials')}>
-                        <Text style={{ opacity: 0.5, fontSize: 12, }}>View All</Text>
+                        <Text style={{ opacity: 0.5, fontSize: 12, color: COLORS.commentText }}>View All</Text>
                     </Pressable>
                 </View>
                 <View style={{ flexDirection: 'row' }}>

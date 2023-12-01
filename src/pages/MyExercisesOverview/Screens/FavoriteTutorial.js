@@ -5,8 +5,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import TutorialHorizontalWithID from '../../../components/TutorialHorizontalWithID';
 import SIZE from '../../../constants/SIZE';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const FavoriteTutorial = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const [favoriteTutorials, setFavoriteTutorials] = useState([])
     const [practicedTutorials, setPracticedTutorials] = useState([])
@@ -20,7 +24,7 @@ const FavoriteTutorial = () => {
     }, [currentUser])
     const { navigate } = useNavigation()
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <ScrollView style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin }}>
                 {favoriteTutorials.map((item, index) => <TutorialHorizontalWithID tutorialID={item} key={index} />)}
             </ScrollView>

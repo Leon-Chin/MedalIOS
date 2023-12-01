@@ -9,11 +9,14 @@ import StepCard from './components/StepCard';
 import DistanceCard from './components/DistanceCard';
 import CalorieCard from './components/CalorieCard';
 import DurationCard from './components/DurationCard';
+import useUserTheme from '../../hooks/useUserTheme';
+import APPTHEME from '../../constants/COLORS/APPTHEME';
 
 const Statistics = () => {
-
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <TodayRecord />
             <PersonalData />
             <AllDataCard />

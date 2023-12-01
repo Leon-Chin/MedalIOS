@@ -10,7 +10,11 @@ import { loginSuccess } from '../redux/userSlice';
 import { setSessions } from '../redux/SessionSlice';
 import useIsTutorialHasAlr from '../hooks/useIsTutorialHasAlr';
 import { getspecifictutorial } from '../api/tutorial.api';
+import useUserTheme from '../hooks/useUserTheme';
+import APPTHEME from '../constants/COLORS/APPTHEME';
 const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
     const [tutorial, setTutorial] = useState({})
@@ -52,7 +56,7 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
             onPress={() => navigate('SpecificTutorial', { tutorial })}
             style={{
                 borderRadius: SIZE.CardBorderRadius,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
                 overflow: 'hidden',
                 marginBottom: SIZE.NormalMargin,
                 alignItems: 'center',
@@ -72,11 +76,10 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
                 </ImageBackground>
                 <View
                     style={{
-                        backgroundColor: 'white',
                         flex: 1,
                         padding: 4,
                     }}>
-                    <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10 }}>
+                    <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10, color: currentTheme.fontColor }}>
                         {name && name}
                     </Text>
                     <View style={{ flexDirection: 'row', gap: 6 }}>

@@ -9,8 +9,12 @@ import { updatecalorietarget, updatedistancetarget, updatesteptarget } from '../
 import LinearGradient from 'react-native-linear-gradient'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginSuccess } from '../../../../../redux/userSlice'
+import useUserTheme from '../../../../../hooks/useUserTheme'
+import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
 const { width } = Dimensions.get('screen')
 const HeaderCard = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [ModalGoalVisible, setModalGoalVisible] = useState(false)
     const { currentUser } = useSelector(state => state.user)
     const dispatch = useDispatch()
@@ -39,24 +43,24 @@ const HeaderCard = () => {
         }
     }
     return (
-        <View style={{ backgroundColor: '#fff', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
+        <View style={{ backgroundColor: currentTheme.contentColor, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
             <View style={{ marginBottom: SIZE.NormalMargin }}>
                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>今日数据</Text>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ marginRight: SIZE.NormalMargin }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: SIZE.NormalMargin }}>
-                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: COLORS.black, }}>卡路里消耗</Text>
+                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: currentTheme.fontColor, }}>卡路里消耗</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                        <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: COLORS.black }}>{calorie}</Text>
+                        <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{calorie}</Text>
                         <Text style={{ color: COLORS.commentText, fontSize: SIZE.ExtarSmallTitle }}>kcal</Text>
                     </View>
                 </View>
-                <View style={{ width: 2, backgroundColor: COLORS.backgroundGray, height: SIZE.ExtraLargerTitle }}></View>
+                <View style={{ width: 2, backgroundColor: COLORS.commentText, height: SIZE.ExtraLargerTitle }}></View>
                 <View style={{ flex: 3, marginLeft: SIZE.NormalMargin }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: SIZE.NormalMargin }}>
-                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: COLORS.black, }}>目标卡路里消耗</Text>
+                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: currentTheme.fontColor, }}>目标卡路里消耗</Text>
                         <TouchableOpacity
                             onPress={() => setModalGoalVisible(true)}
                             style={{ flexDirection: "row", gap: 4 }}

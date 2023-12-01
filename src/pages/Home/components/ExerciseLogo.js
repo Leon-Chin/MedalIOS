@@ -2,15 +2,24 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import COLORS from '../../../constants/COLORS';
 import { useIntl } from 'react-intl';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const ExerciseLogo = ({ children, exerciseName }) => {
     const { formatMessage } = useIntl()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
         <View style={styles.container}>
             <View style={styles.logoCard}>
                 {children}
             </View>
-            <Text style={styles.exerciseName}>{exerciseName}</Text>
+            <Text style={{
+                marginTop: 6,
+                fontSize: 18,
+                fontWeight: '700',
+                color: currentTheme.fontColor
+            }}>{exerciseName}</Text>
         </View>
     )
 }
@@ -32,9 +41,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    exerciseName: {
-        marginTop: 6,
-        fontSize: 18,
-        fontWeight: '700'
-    }
 })

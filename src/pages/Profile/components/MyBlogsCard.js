@@ -7,11 +7,15 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import SIZE from '../../../constants/SIZE';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const MyBlogsCard = () => {
     const { navigate } = useNavigation()
     const { currentUser } = useSelector(state => state.user)
     const [likeBlogs, setLikeBlogs] = useState([])
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [favoriteBlogs, setFavoriteBlogs] = useState([])
     useEffect(() => {
         if (currentUser?.likeBlogs && currentUser?.likeBlogs.length !== 0) {
@@ -22,8 +26,8 @@ const MyBlogsCard = () => {
         }
     }, [currentUser])
     return (
-        <View style={{ backgroundColor: '#fff', marginHorizontal: '3%', marginBottom: 10, padding: '3%', borderRadius: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>My Blogs</Text>
+        <View style={{ backgroundColor: currentTheme.contentColor, marginHorizontal: '3%', marginBottom: 10, padding: '3%', borderRadius: 20 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: currentTheme.fontColor }}>My Blogs</Text>
             <View style={{ flexDirection: 'row', height: 80 }}>
                 <TouchableOpacity
                     onPress={() => navigate('MyBlogsOverview', { screen: 'LikeBlogs' })}
@@ -41,11 +45,11 @@ const MyBlogsCard = () => {
                         <Feather name="file-text" size={30} color="#fff" />
                     </View>
                     <View style={{ marginLeft: 20 }}>
-                        <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                        <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
                             {'点赞blog'}
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
-                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{likeBlogs.length}</Text>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{likeBlogs.length}</Text>
                             <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
                                 {`个blog`}
                             </Text>
@@ -68,11 +72,11 @@ const MyBlogsCard = () => {
                         <Feather name="file-plus" size={30} color="#fff" />
                     </View>
                     <View style={{ marginLeft: 20 }}>
-                        <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                        <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
                             {'收藏blogs'}
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
-                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{favoriteBlogs.length}</Text>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{favoriteBlogs.length}</Text>
                             <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
                                 {`个blog`}
                             </Text>

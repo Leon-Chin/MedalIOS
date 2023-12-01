@@ -7,22 +7,28 @@ import Communication from '../pages/Communication';
 import Profile from '../pages/Profile';
 import MyExercise from '../pages/Calender';
 import COLORS from '../constants/COLORS';
+import APPTHEME from '../constants/COLORS/APPTHEME';
+import useUserTheme from '../hooks/useUserTheme';
 
 const Tab = createBottomTabNavigator();
-const screenOptions = {
-    tabBarShowLabel: false,
-    tabBarHideOnKeyboard: true,
-    headerShown: false,
-    tabBarStyle: {
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        left: 0,
-        elevation: 0,
-        height: 80
-    }
-}
 const BottomNavigationBar = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
+    const screenOptions = {
+        tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
+        headerShown: false,
+        tabBarStyle: {
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            left: 0,
+            elevation: 0,
+            height: 80,
+            backgroundColor: currentTheme.contentColor,
+            borderTopColor: currentTheme.contentColor,
+        }
+    }
     return (
         <Tab.Navigator screenOptions={screenOptions}>
             <Tab.Screen
@@ -32,7 +38,7 @@ const BottomNavigationBar = () => {
                     tabBarIcon: ({ focused }) => <View style={
                         focused ? { width: 40, height: 40, borderRadius: 20, backgroundColor: COLORS.primary, display: 'flex', justifyContent: 'center', alignItems: 'center' } : { width: 40, height: 40, borderRadius: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }
                     }>
-                        <AntDesign name="home" size={24} color={focused ? '#fff' : 'black'} />
+                        <AntDesign name="home" size={24} color={focused ? '#fff' : currentTheme.fontColor} />
                     </View>
                 }}
             />
@@ -44,7 +50,7 @@ const BottomNavigationBar = () => {
                         <View style={
                             focused ? { width: 40, height: 40, borderRadius: 20, backgroundColor: COLORS.primary, display: 'flex', justifyContent: 'center', alignItems: 'center' } : { width: 40, height: 40, borderRadius: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }
                         }>
-                            <Entypo name="picasa" size={24} color={focused ? "#fff" : "black"} />
+                            <Entypo name="picasa" size={24} color={focused ? "#fff" : currentTheme.fontColor} />
                         </View>,
                 }}
             />
@@ -56,7 +62,7 @@ const BottomNavigationBar = () => {
                         <View style={
                             focused ? { width: 40, height: 40, borderRadius: 20, backgroundColor: COLORS.primary, display: 'flex', justifyContent: 'center', alignItems: 'center' } : { width: 40, height: 40, borderRadius: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }
                         }>
-                            <MaterialIcons name="date-range" size={28} color={focused ? "#fff" : "black"} />
+                            <MaterialIcons name="date-range" size={28} color={focused ? "#fff" : currentTheme.fontColor} />
                         </View>
                 }}
             />
@@ -68,7 +74,7 @@ const BottomNavigationBar = () => {
                         <View style={
                             focused ? { width: 40, height: 40, borderRadius: 20, backgroundColor: COLORS.primary, display: 'flex', justifyContent: 'center', alignItems: 'center' } : { width: 40, height: 40, borderRadius: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }
                         }>
-                            <AntDesign name='message1' size={24} color={focused ? "#fff" : "black"} />
+                            <AntDesign name='message1' size={24} color={focused ? "#fff" : currentTheme.fontColor} />
                         </View>,
                 }}
             />
@@ -79,7 +85,7 @@ const BottomNavigationBar = () => {
                     tabBarIcon: ({ focused }) => <View style={
                         focused ? { width: 40, height: 40, borderRadius: 20, backgroundColor: COLORS.primary, display: 'flex', justifyContent: 'center', alignItems: 'center' } : { width: 40, height: 40, borderRadius: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }
                     }>
-                        <Ionicons name={focused ? "person" : "person-outline"} size={24} color={focused ? "#fff" : "black"} />
+                        <Ionicons name={focused ? "person" : "person-outline"} size={24} color={focused ? "#fff" : currentTheme.fontColor} />
                     </View>
                 }}
             />

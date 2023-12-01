@@ -7,7 +7,12 @@ import { useNavigation } from '@react-navigation/native'
 import { getunreadedmessage } from '../../../../api/user.api'
 import { getnotifications } from '../../../../api/notification.api'
 import useUncompletedTutorials from '../../../../hooks/useUncompletedTutorials'
+import useUserTheme from '../../../../hooks/useUserTheme'
+import APPTHEME from '../../../../constants/COLORS/APPTHEME'
+import { ICON } from '../../../../constants/SVG/ICON'
 const Notification = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { formatMessage } = useIntl()
     const navigation = useNavigation()
     const [allNotifications, setAllNotifications] = useState(0)
@@ -43,21 +48,10 @@ const Notification = () => {
             setUnreadedMsgs(res)
         })
     }, [unreadedMsgs])
-    const getMsgValue = (msg) => {
-        switch (msg.msgType) {
-            case 'text':
-                return msg.msgValue
-            case 'image':
-                return '[picture]'
-            case 'video':
-                return '[video]'
-            default:
-                break;
-        }
-    }
+
     return (
         <TouchableOpacity onPress={() => { navigation.navigate('Notifications') }}>
-            <Ionicons name="notifications" size={24} color="black" />
+            {ICON.notification(24, currentTheme.fontColor)}
             {allNotifications !== 0 && <Badge status='error' value={allNotifications} containerStyle={{ position: 'absolute', top: -10, left: 12 }} />}
         </TouchableOpacity>
     )

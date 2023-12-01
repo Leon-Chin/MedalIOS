@@ -14,11 +14,15 @@ import LogoutModal from '../components/LogoutModal';
 import LanguageModal from '../components/LanguageModal';
 import ModeModal from '../components/ModeModal';
 import FeedbackModal from '../components/FeedbackModal';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { ICON } from '../../../constants/SVG/ICON';
 
 const Setting = () => {
     const { navigate } = useNavigation()
     const dispatch = useDispatch()
-
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const bottomSheetModalRef = useRef(null);
     // variables
     const snapPoints = useMemo(() => ['25%'], []);
@@ -34,33 +38,33 @@ const Setting = () => {
 
     return (
         <BottomSheetModalProvider>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
 
                 <TouchableOpacity
                     onPress={() => setLanguageModalVisible(true)}
-                    style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: '#fff', marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '500' }}>Language</Text>
-                    <Entypo name="chevron-right" size={18} color="black" />
+                    style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>Language</Text>
+                    {ICON.right(18, currentTheme.fontColor)}
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => setModeModalVisible(true)}
-                    style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: '#fff', marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '500' }}>Mode</Text>
-                    <Entypo name="chevron-right" size={18} color="black" />
+                    style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>Mode</Text>
+                    {ICON.right(18, currentTheme.fontColor)}
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => setFeedbackModalVisible(true)}
-                    style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: '#fff', marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '500' }}>反馈</Text>
-                    <Entypo name="chevron-right" size={18} color="black" />
+                    style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>反馈</Text>
+                    {ICON.right(18, currentTheme.fontColor)}
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => { setLogoutModalVisible(true) }}
-                    style={{ width: '100%', height: 60, backgroundColor: '#fff', marginBottom: 2, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '500' }}>Logout</Text>
+                    style={{ width: '100%', height: 60, backgroundColor: currentTheme.contentColor, marginBottom: 2, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>Logout</Text>
                 </TouchableOpacity>
 
                 <LogoutModal visible={logoutModalVisible} setVisible={setLogoutModalVisible} />

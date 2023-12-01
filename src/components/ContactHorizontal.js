@@ -9,7 +9,11 @@ import { loginSuccess } from '../redux/userSlice';
 import { addcontactbyid, createconversation } from '../api/user.api';
 import GENDER from '../constants/GENDER';
 import { useEffect } from 'react';
+import useUserTheme from '../hooks/useUserTheme';
+import APPTHEME from '../constants/COLORS/APPTHEME';
 const ContactHorizontal = ({ contact, setVisible }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
@@ -48,7 +52,7 @@ const ContactHorizontal = ({ contact, setVisible }) => {
             onPress={() => { }}
             style={{
                 borderRadius: SIZE.CardBorderRadius,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
                 overflow: 'hidden',
                 marginBottom: SIZE.NormalMargin,
                 alignItems: 'center',
@@ -72,7 +76,7 @@ const ContactHorizontal = ({ contact, setVisible }) => {
                         padding: 4,
                         height: '100%'
                     }}>
-                    <Text style={{ color: COLORS.black, fontWeight: 'bold', marginBottom: 10 }}>
+                    <Text style={{ color: currentTheme.fontColor, fontWeight: 'bold', marginBottom: 10 }}>
                         {name}
                     </Text>
                     <Text>

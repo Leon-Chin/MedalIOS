@@ -8,13 +8,18 @@ import MyBlogsCard from './components/MyBlogsCard';
 import OverallExerciseCard from './components/OverallExerciseCard'
 import BodyMetric from './components/BodyMetric'
 import { useNavigation } from '@react-navigation/native';
+import useUserTheme from '../../hooks/useUserTheme';
+import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { ICON } from '../../constants/SVG/ICON';
 
 const Profile = () => {
     const { currentUser } = useSelector((state => state.user))
     const { navigate } = useNavigation()
     const { _id, name, personalStatus, age, preferedTheme, preferedLanguage, gender, avator, birthday, hpNum } = currentUser
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ marginHorizontal: '3%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
                 <TouchableOpacity onPress={() => navigate('PersonalDetails')} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Avatar source={{ uri: avator }} rounded size={52} />
@@ -27,7 +32,7 @@ const Profile = () => {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('Setting')}>
-                    <Ionicons name="settings-outline" size={24} color="black" />
+                    {ICON.setting(24, currentTheme.fontColor)}
                 </TouchableOpacity>
             </View>
             <MyExercisesCard />

@@ -7,12 +7,14 @@ import { ICON } from '../../../constants/SVG/ICON'
 import COLORS from '../../../constants/COLORS'
 import { Modal, StyleSheet, Text, SafeAreaView, TouchableOpacity, View, Alert, TextInput } from 'react-native'
 import SIZE from '../../../constants/SIZE'
-import { DatePickerIOSBase } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { DatePickerIOSComponent } from 'react-native'
 import { checkTwoDaysIsEqual } from '../../../utils/checkIsToday'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const BirthdayModal = ({ visible, setVisible }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
     const [updatedBirthday, setUpdatedBirthday] = useState()
     const { currentUser } = useSelector(state => state.user)
@@ -43,7 +45,7 @@ const BirthdayModal = ({ visible, setVisible }) => {
             visible={visible}
             style={{ flex: 1 }}
         >
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZE.NormalMargin, justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>
@@ -70,9 +72,9 @@ const BirthdayModal = ({ visible, setVisible }) => {
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: SIZE.LargerMargin }}>
-                        {/* <DatePickerIOSBase /> */}
-                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.black }}>生日日期</Text>
+                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>生日日期</Text>
                         <DateTimePicker
+                            themeVariant={theme}
                             testID="dateTimePicker"
                             value={updatedBirthday}
                             mode="date"

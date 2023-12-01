@@ -24,9 +24,13 @@ import { deletemeasurement } from '../../../api/measurement';
 import { loginSuccess } from '../../../redux/userSlice';
 import { setLatestMeasurement, setMeasurements } from '../../../redux/MeasurementSlice';
 import useMeasurement from '../../../hooks/useMeasurement';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get('screen')
-const StatisticChart = ({ getData }) => {
+const StatisticChart = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { allMeasurements } = useMeasurement()
     const { currentUser } = useSelector(state => state.user)
     const dispatch = useDispatch()
@@ -34,7 +38,7 @@ const StatisticChart = ({ getData }) => {
     const { heightArr, weightArr, BMIArr, dateArr, bodyFatRateArr } = useMeasurements(allMeasurements)
     const [reversedMeasurements, setReversedMeasurements] = useState([])
     const [collapsed, setCollapsed] = useState(true)
-    
+
     const skiaRef = useRef(null);
     useEffect(() => {
         if (allMeasurements?.length !== 0) {
@@ -61,7 +65,6 @@ const StatisticChart = ({ getData }) => {
                 dispatch(loginSuccess(res.user))
                 dispatch(setLatestMeasurement(res.measurement))
                 dispatch(setMeasurements(res.updatedMeasurements))
-                getData()
             } else {
                 Alert.alert("出现异常请稍后重试")
             }
@@ -69,19 +72,31 @@ const StatisticChart = ({ getData }) => {
     }
 
     return (
-        <View style={styles.cardContainer}>
+        <View style={{
+            marginHorizontal: '3%',
+            marginTop: SIZE.NormalMargin,
+            padding: SIZE.NormalMargin,
+            borderRadius: SIZE.CardBorderRadius,
+            backgroundColor: currentTheme.contentColor
+        }}>
             <SvgChart ref={skiaRef} />
             <TouchableOpacity
                 onPress={() => setCollapsed(!collapsed)}
-                style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: collapsed ? COLORS.primary : COLORS.backgroundGray }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: collapsed ? COLORS.white : COLORS.black }}>数据记录</Text>
-                {collapsed ? ICON.right(24, COLORS.white) : ICON.down(24, collapsed ? COLORS.white : COLORS.black)}
+                style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: collapsed ? COLORS.primary : currentTheme.backgroundColor }}>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: collapsed ? COLORS.white : currentTheme.fontColor }}>数据记录</Text>
+                {collapsed ? ICON.right(24, COLORS.white) : ICON.down(24, collapsed ? COLORS.white : currentTheme.fontColor)}
             </TouchableOpacity>
-            {!collapsed && <View style={styles.records}>
+            {!collapsed && <View>
                 {reversedMeasurements?.length !== 0 && reversedMeasurements?.map((item, index) => {
-                    return <View style={styles.record} key={index}>
+                    return <View style={{
+                        backgroundColor: currentTheme.backgroundColor,
+                        borderRadius: SIZE.CardBorderRadius,
+                        padding: SIZE.NormalMargin,
+                        marginTop: SIZE.NormalMargin,
+                        gap: SIZE.NormalMargin
+                    }} key={index}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.black }}>{formatTimeForChartSoloItem(item.date)}数据</Text>
+                            <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(item.date)}数据</Text>
                             <TouchableOpacity
                                 onPress={() => { handleDeleteMeasurement(item._id) }}
                             >
@@ -102,23 +117,3 @@ const StatisticChart = ({ getData }) => {
 }
 
 export default StatisticChart
-
-const styles = StyleSheet.create({
-    cardContainer: {
-        marginHorizontal: '3%',
-        marginTop: SIZE.NormalMargin,
-        padding: SIZE.NormalMargin,
-        borderRadius: SIZE.CardBorderRadius,
-        backgroundColor: COLORS.white
-    },
-    records: {
-
-    },
-    record: {
-        backgroundColor: COLORS.backgroundGray,
-        borderRadius: SIZE.CardBorderRadius,
-        padding: SIZE.NormalMargin,
-        marginTop: SIZE.NormalMargin,
-        gap: SIZE.NormalMargin
-    }
-})

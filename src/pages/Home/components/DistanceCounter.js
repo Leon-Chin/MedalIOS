@@ -3,10 +3,14 @@ import { useNavigation } from '@react-navigation/native';
 import COLORS from '../../../constants/COLORS';
 import { ICON } from '../../../constants/SVG/ICON';
 import useHealthKit from '../../../hooks/useHealthkit';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const DistanceCounter = () => {
     const { navigate } = useNavigation()
     const { distance } = useHealthKit()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
         <View
             style={{
@@ -15,7 +19,7 @@ const DistanceCounter = () => {
                 height: 80,
                 paddingVertical: 6,
                 paddingHorizontal: 10,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 borderRadius: 10,
@@ -34,7 +38,7 @@ const DistanceCounter = () => {
             </View>
             <View style={{ flex: 1, width: '100%', paddingHorizontal: '6%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 4 }}>
-                    <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{(distance / 1000).toFixed(2)}</Text>
+                    <Text style={{ fontSize: 24, fontWeight: 'bold', color: currentTheme.fontColor }}>{(distance / 1000).toFixed(2)}</Text>
                     <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>km</Text>
                 </View>
             </View>

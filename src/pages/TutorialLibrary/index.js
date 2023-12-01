@@ -9,8 +9,12 @@ import { getalltutorial } from '../../api/user.api'
 import { useEffect } from 'react'
 import TutorialVerticalView from '../../components/TutorialVerticalView'
 import { getspecifictypetutorials } from '../../api/tutorial.api'
+import useUserTheme from '../../hooks/useUserTheme'
+import APPTHEME from '../../constants/COLORS/APPTHEME'
 
 const TutorialLibrary = ({ route }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
     const [selectedType, setSelectedType] = useState()
     useEffect(() => {
@@ -56,7 +60,7 @@ const TutorialLibrary = ({ route }) => {
     }, [])
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ paddingHorizontal: '3%', paddingVertical: 10, overflow: 'visible' }}>
                 <FlatList
                     data={TutorialsInLibrary}
@@ -69,7 +73,7 @@ const TutorialLibrary = ({ route }) => {
             <View style={{ flex: 1, marginHorizontal: '3%' }}>
                 {!selectedType &&
                     <View>
-                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin }}>为您精选</Text>
+                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>为您精选</Text>
                         <FlatList
                             data={tutorials}
                             renderItem={({ item, index }) => <TutorialVerticalView key={index} tutorial={item} />}
@@ -80,7 +84,7 @@ const TutorialLibrary = ({ route }) => {
                 }
                 {selectedType &&
                     <View>
-                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin }}>{selectedType.name}</Text>
+                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>{selectedType.name}</Text>
                         <FlatList
                             data={specificTypeTutorials}
                             renderItem={({ item, index }) => <TutorialVerticalView key={index} tutorial={item} />}

@@ -1,13 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import COLORS from '../constants/COLORS'
+import useUserTheme from '../hooks/useUserTheme'
+import APPTHEME from '../constants/COLORS/APPTHEME'
 
 const CardTitle = ({ title, extra }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
         <View style={styles.cardTitle}>
             <View style={styles.cardTitleLeft}>
                 <View style={styles.cardTitleLine}></View>
-                <Text style={styles.titleContent}>{title}</Text>
+                <Text style={{
+                    fontSize: 28,
+                    fontWeight: '600',
+                    color: currentTheme.fontColor
+                }}>{title}</Text>
             </View>
             <View style={styles.extra}>
                 {extra}

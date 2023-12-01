@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import SIZE from '../../../constants/SIZE'
 import NoTutorialToday from './NoTutorialToday'
@@ -9,16 +9,23 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { getalltutorial } from '../../../api/user.api'
 import TutorialHorizontal from '../../../components/TutorialHorizontal'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const PersonalRecommend = ({ selectDay }) => {
     const { navigate } = useNavigation()
     const [recommandTutorials, setRecommandTutorials] = useState()
-
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const getRecommandTutorials = async () => {
         await getalltutorial().then(res => {
-            setRecommandTutorials(res)
+            if (res.status !== false) {
+                setRecommandTutorials(res)
+            } else {
+                Alert.alert("出现异常请稍后重试")
+            }
         }).catch(err => {
-            console.log(err);
+            Alert.alert("出现异常请稍后重试")
         })
     }
     useEffect(() => {
@@ -28,7 +35,7 @@ const PersonalRecommend = ({ selectDay }) => {
     return (
         <>
             <View style={{ paddingHorizontal: 20, marginBottom: SIZE.NormalMargin }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>个性化推荐</Text>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>个性化推荐</Text>
             </View>
             <TouchableOpacity
                 style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10, borderRadius: SIZE.CardBorderRadius, backgroundColor: COLORS.primary, marginBottom: 10, }}

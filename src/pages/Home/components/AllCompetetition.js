@@ -7,9 +7,13 @@ import {
 } from 'react-native';
 import COLORS from '../../../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 const model = require('../../../../assets/images/model.png');
 const AllCompetitionsCard = () => {
     const navigation = useNavigation()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
         <TouchableOpacity
             onPress={() => { navigation.navigate('AllCompetitions') }}
@@ -19,13 +23,13 @@ const AllCompetitionsCard = () => {
                 height: 100,
                 paddingVertical: 8,
                 paddingHorizontal: 10,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 borderRadius: 10,
             }}>
             <View>
-                <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
                     {'赛事'}
                 </Text>
                 <Text style={{ fontSize: 10, marginTop: 6, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>

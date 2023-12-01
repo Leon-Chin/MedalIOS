@@ -34,5 +34,9 @@ export const ICON = {
     frowno: (size, color) => <AntDesign name="frowno" size={size} color={color} />,
     personalize: (size, color) => <MaterialIcons name="collections-bookmark" size={size} color={color} />,
     all: (size, color) => <MaterialCommunityIcons name="folder-multiple" size={size} color={color} />,
-    contact: (size, color) => <AntDesign name="contacts" size={size} color={color} />
+    contact: (size, color) => <AntDesign name="contacts" size={size} color={color} />,
+    notification: (size, color) => <Ionicons name="notifications" size={size} color={color} />,
+    refresh: (size, color) => <MaterialIcons name="refresh" size={size} color={color} />,
+    send: (size, color) => <FontAwesome name="send" size={size} color={color} />,
+    setting: (size, color) => <Ionicons name="settings-outline" size={size} color={color} />
 }

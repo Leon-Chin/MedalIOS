@@ -8,8 +8,12 @@ import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 import COLORS from '../constants/COLORS'
 import { Video, ResizeMode } from 'expo-av';
 import SIZE from '../constants/SIZE'
+import useUserTheme from '../hooks/useUserTheme'
+import APPTHEME from '../constants/COLORS/APPTHEME'
 
 const BlogCard = ({ blog }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const { userID, title, likesUsers, imgUrl, blogType, videoUrl, width, height } = blog
     const { navigate } = useNavigation()
@@ -46,7 +50,7 @@ const BlogCard = ({ blog }) => {
             style={{
                 borderRadius: SIZE.CardBorderRadius,
                 marginBottom: 10,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
             }}
             onPress={() => navigate('SpecificBlog', { blog, user })}>
             <View style={{ flex: 1, borderTopLeftRadius: 15, borderTopRightRadius: 15, overflow: 'hidden' }}>
@@ -67,26 +71,29 @@ const BlogCard = ({ blog }) => {
             </View>
             <View
                 style={{
-                    backgroundColor: 'white',
+                    backgroundColor: currentTheme.contentColor,
                     width: '100%',
                     padding: 10,
                     borderRadius: 15,
                     overflow: 'hidden'
                 }}>
                 <View style={{ marginBottom: 10 }}>
-                    <Text numberOfLines={2} style={{ marginBottom: 2, fontSize: 18, fontWeight: '500' }}>
+                    <Text numberOfLines={2} style={{ marginBottom: 2, fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>
                         {title}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => { user?._id && navigate('UserPage', { userID: user._id }) }}
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
                         {user ? <Avatar
                             size={36}
                             rounded
                             source={{ uri: user?.avator }}
                         /> : <Ionicons name="person-circle-sharp" size={36} color="black" />}
                         {user && <Text style={{ marginLeft: 4, fontSize: 16, fontWeight: '600', color: COLORS.commentText }}>{user.name}</Text>}
-                    </View>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleLikeBlog(blog._id)}><AntDesign name="like1" size={24} color={liked ? COLORS.primary : COLORS.commentText} /></TouchableOpacity>
                 </View>
             </View>

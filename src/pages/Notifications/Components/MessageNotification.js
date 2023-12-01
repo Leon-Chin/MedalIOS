@@ -7,8 +7,12 @@ import { useState } from 'react';
 import dayjs from 'dayjs'
 import COLORS from '../../../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const MessageNotification = ({ message }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
     const [unreadedMsg, setUnreadedMsg] = useState(message)
     const [contact, setContact] = useState()
@@ -38,17 +42,16 @@ const MessageNotification = ({ message }) => {
     return (
         <TouchableOpacity
             onPress={() => navigate('SpecificConversationPage', { conversationID: unreadedMsg.conversationId, contact })}
-            style={{ backgroundColor: '#fff', marginVertical: 6, marginHorizontal: '3%', padding: 10, borderRadius: 12, }}>
+            style={{ backgroundColor: currentTheme.contentColor, marginVertical: 6, marginHorizontal: '3%', padding: 10, borderRadius: 12, }}>
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
                 <Avatar source={{ uri: unreadedMsg?.senderDetail?.avator }} size={36} rounded />
-                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{unreadedMsg?.senderDetail?.name}</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: currentTheme.fontColor }}>{unreadedMsg?.senderDetail?.name}</Text>
             </View>
             <View>
                 <Text
                     numberOfLines={2}
-                    style={{ fontSize: 18, color: '#333', marginVertical: 6 }}>
+                    style={{ fontSize: 18, color: COLORS.commentText, marginVertical: 6 }}>
                     {getMsgValue(unreadedMsg)}
-                    {/* dsfahalskdj;lakjsdf;ladjfoiadsjfalsdjfasd;jflkdsjflkjkkkkkkkksdfasdfasdfasdfasfsdaffdsaifhsaiodfhasodifhasdoifhasoidfhasdoifhasoidfapsfiasdpfoi */}
                 </Text>
             </View>
             <View style={{ flexDirection: 'row-reverse' }}>

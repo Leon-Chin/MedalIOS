@@ -11,9 +11,13 @@ import GENDER from '../constants/GENDER';
 import { useEffect } from 'react';
 import PIC from '../constants/PIC';
 import { Swipeable } from 'react-native-gesture-handler';
+import useUserTheme from '../hooks/useUserTheme';
+import APPTHEME from '../constants/COLORS/APPTHEME';
 const ContactHorizontalWithID = ({ contactID, setVisible }) => {
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [contact, setContact] = useState({ name: "", gender: "", avator: null })
     const { name, gender, avator } = contact
     const getUser = async () => {
@@ -58,13 +62,19 @@ const ContactHorizontalWithID = ({ contactID, setVisible }) => {
     return (
         <Swipeable renderRightActions={rightActions}>
             <TouchableOpacity
-                onPress={() => { }}
+                onPress={() => {
+                    console.log("dianjil");
+                    setVisible(false)
+                    navigate('UserPage', { userID: contactID })
+                }}
+
                 style={{
                     borderRadius: SIZE.CardBorderRadius,
-                    backgroundColor: '#fff',
+                    backgroundColor: currentTheme.contentColor,
                     overflow: 'hidden',
                     alignItems: 'center',
                     gap: 10,
+                    marginBottom: SIZE.NormalMargin,
                     padding: 10,
                     flexDirection: 'row'
                 }}
@@ -84,7 +94,7 @@ const ContactHorizontalWithID = ({ contactID, setVisible }) => {
                             padding: 4,
                             height: '100%'
                         }}>
-                        <Text style={{ color: COLORS.black, fontWeight: 'bold', marginBottom: 10 }}>
+                        <Text style={{ color: currentTheme.fontColor, fontWeight: 'bold', marginBottom: 10 }}>
                             {name}
                         </Text>
                         <Text>

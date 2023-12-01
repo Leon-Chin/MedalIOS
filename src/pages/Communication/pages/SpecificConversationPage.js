@@ -13,8 +13,12 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import * as ImagePicker from 'expo-image-picker'
 import { storage } from '../../../../firebase'
 import { ICON } from '../../../constants/SVG/ICON'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 const SpecificConversationPage = ({ route }) => {
     const { currentUser } = useSelector(state => state.user)
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { contact, conversationID } = route.params
     const [currentConversationMessages, setCurrentConversationMessages] = useState([])
     const [arrivalMessage, setArrivalMessage] = useState()
@@ -137,7 +141,7 @@ const SpecificConversationPage = ({ route }) => {
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding'>
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <SpecificConversationHeader contact={contact} />
                 <View style={{ flex: 1 }}>
                     <FlatList
@@ -153,20 +157,20 @@ const SpecificConversationPage = ({ route }) => {
                         <TouchableOpacity
                             onPress={pickImage}
                         >
-                            {ICON.picture(24, COLORS.black)}
+                            {ICON.picture(24, currentTheme.fontColor)}
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={pickVideo}
                         >
-                            {ICON.video(24, COLORS.black)}
+                            {ICON.video(24, currentTheme.fontColor)}
                         </TouchableOpacity>
                     </View>
-                    <TextInput onChangeText={(text) => setMessage(text)} value={message} style={{ flex: 1, padding: 10, borderWidth: 0.2, borderRadius: 8, marginHorizontal: 8, borderColor: 'gray' }} placeholder='input' />
+                    <TextInput onChangeText={(text) => setMessage(text)} value={message} style={{ flex: 1, padding: 10, borderWidth: 0.2, color: currentTheme.fontColor, borderRadius: 8, marginHorizontal: 8, borderColor: COLORS.commentText, backgroundColor: currentTheme.contentColor }} />
                     <TouchableOpacity
                         onPress={() => sendMessage('text', message)}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 10, paddingHorizontal: 14, backgroundColor: COLORS.primary, borderRadius: 20 }}>
-                            <FontAwesome name="send" size={16} color="#fff" />
+                            {ICON.send(16, COLORS.white)}
                         </View>
                     </TouchableOpacity>
                 </View>

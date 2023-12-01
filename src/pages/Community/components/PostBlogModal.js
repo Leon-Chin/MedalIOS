@@ -10,11 +10,14 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { storage } from '../../../../firebase'
 import { postblog } from '../../../api/user.api'
 import { Video, ResizeMode } from 'expo-av';
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const { width } = Dimensions.get('screen')
 
 const PostBlogModal = ({ visible, setVisible }) => {
-
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [title, setTitle] = useState()
     const [content, setContent] = useState()
     const [tags, setTags] = useState([])
@@ -103,7 +106,9 @@ const PostBlogModal = ({ visible, setVisible }) => {
             }
         }
         try {
+            console.log("handledItems", handledItems);
             await postblog(handledItems).then(res => {
+                console.log("res", res);
                 if (res.status !== false) {
                     Alert.alert("发布成功")
                     setVisible(false)
@@ -116,6 +121,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
                 }
             })
         } catch (error) {
+            console.log("error", error);
             Alert.alert("出现异常请稍后重试")
         }
     }
@@ -128,7 +134,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
             visible={visible}
             style={{ flex: 1 }}
         >
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZE.NormalMargin, justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>
@@ -146,7 +152,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
                         <View>
                             <TouchableOpacity
                                 onPress={() => { (title && content) && postBlog() }}
-                                style={{ backgroundColor: (title && content) ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
+                                style={{ backgroundColor: (title && content) ? COLORS.primary : currentTheme.contentColor, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
                                 <Text style={{ fontSize: SIZE.NormalTitle, color: (title && content) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>发布</Text>
                             </TouchableOpacity>
@@ -158,17 +164,19 @@ const PostBlogModal = ({ visible, setVisible }) => {
                             <TextInput
                                 onChangeText={setTitle}
                                 returnKeyType='done'
+                                placeholderTextColor={COLORS.commentText}
                                 placeholder='添加标题让更多有需要的人看到你吧'
-                                style={{ borderRadius: SIZE.CardBorderRadius, height: 50 }}
+                                style={{ borderRadius: SIZE.CardBorderRadius, color: currentTheme.fontColor, height: 50 }}
                             />
                         </View>
                         <View>
                             <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>博客内容</Text>
                             <TextInput
                                 placeholder='发一下你的运动时刻想法或者运动技巧吧'
+                                placeholderTextColor={COLORS.commentText}
                                 multiline={true}
                                 onChangeText={setContent}
-                                style={{ borderRadius: SIZE.CardBorderRadius, marginBottom: SIZE.NormalMargin, height: 130 }}
+                                style={{ borderRadius: SIZE.CardBorderRadius, color: currentTheme.fontColor, marginBottom: SIZE.NormalMargin, height: 130 }}
                             />
                         </View>
 
@@ -182,7 +190,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
                                         setBlogType("picture")
                                     }
                                 }}
-                                style={{ backgroundColor: blogType === 'picture' ? COLORS.primary : COLORS.backgroundGray, padding: SIZE.NormalMargin, borderTopLeftRadius: SIZE.CardBorderRadius, borderBottomLeftRadius: SIZE.CardBorderRadius, }}
+                                style={{ backgroundColor: blogType === 'picture' ? COLORS.primary : currentTheme.contentColor, padding: SIZE.NormalMargin, borderTopLeftRadius: SIZE.CardBorderRadius, borderBottomLeftRadius: SIZE.CardBorderRadius, }}
                             >
 
                                 {ICON.picture(24, blogType === 'picture' ? COLORS.white : COLORS.gray)}
@@ -195,7 +203,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
                                         setBlogType("video")
                                     }
                                 }}
-                                style={{ backgroundColor: blogType === 'video' ? COLORS.primary : COLORS.backgroundGray, padding: SIZE.NormalMargin, borderTopRightRadius: SIZE.CardBorderRadius, borderBottomRightRadius: SIZE.CardBorderRadius, }}>
+                                style={{ backgroundColor: blogType === 'video' ? COLORS.primary : currentTheme.contentColor, padding: SIZE.NormalMargin, borderTopRightRadius: SIZE.CardBorderRadius, borderBottomRightRadius: SIZE.CardBorderRadius, }}>
                                 {ICON.video(24, blogType === 'video' ? COLORS.white : COLORS.gray)}
                             </TouchableOpacity>
                         </View>

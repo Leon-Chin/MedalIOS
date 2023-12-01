@@ -1,8 +1,6 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
-    Image,
     ImageBackground,
     Text,
     TouchableOpacity,
@@ -10,17 +8,21 @@ import {
 } from 'react-native';
 import COLORS from '../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
+import useUserTheme from '../hooks/useUserTheme';
+import APPTHEME from '../constants/COLORS/APPTHEME';
 
 const TutorialVerticalView = ({ tutorial }) => {
     const { navigate } = useNavigation()
     const { cover, level, colorie, brief, name, duration, _id } = tutorial
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
         <TouchableOpacity onPress={() => navigate('SpecificTutorial', { tutorial })}>
             <View
                 style={{
                     flex: 1,
                     borderRadius: 15,
-                    backgroundColor: '#fff',
+                    backgroundColor: currentTheme.contentColor,
                     overflow: 'hidden',
                     marginBottom: 10
                 }}>
@@ -87,16 +89,16 @@ const TutorialVerticalView = ({ tutorial }) => {
                 </View>
                 <View
                     style={{
-                        backgroundColor: 'white',
+                        backgroundColor: currentTheme.contentColor,
                         width: '100%',
                         padding: 10,
                         borderRadius: 15,
                         overflow: 'hidden'
                     }}>
-                    <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10 }}>
+                    <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10, color: currentTheme.fontColor }}>
                         {name}
                     </Text>
-                    <Text numberOfLines={1} style={{ marginBottom: 2 }}>
+                    <Text numberOfLines={1} style={{ marginBottom: 2, color: currentTheme.fontColor }}>
                         {brief}
                     </Text>
                 </View>

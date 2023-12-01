@@ -7,8 +7,12 @@ import COLORS from '../../../constants/COLORS';
 import { useSelector } from 'react-redux';
 import { FormattedTime } from '../../../utils/formatTime'
 import { useNavigation } from '@react-navigation/native';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const OneComment = ({ comment }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { likedUsers } = comment
     const { currentUser } = useSelector(state => state.user)
     const [liked, setLiked] = useState(likedUsers.includes(currentUser._id))
@@ -33,15 +37,15 @@ const OneComment = ({ comment }) => {
         }
     }
     return (
-        <View style={{ backgroundColor: '#fff', marginBottom: 8, padding: 10, borderRadius: 10, }}>
+        <View style={{ backgroundColor: currentTheme.contentColor, marginBottom: 8, padding: 10, borderRadius: 10, }}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={{ flex: 1 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 8 }}>
                         <Avatar source={{ uri: comment?.commentUserInfo?.avator }} size={24} rounded />
-                        <Text style={{ fontSize: 16 }}>{comment?.commentUserInfo?.name}</Text>
+                        <Text style={{ fontSize: 16, color: currentTheme.fontColor }}>{comment?.commentUserInfo?.name}</Text>
                     </View>
                     <View style={{}}>
-                        <Text>{comment.content}</Text>
+                        <Text style={{ color: currentTheme.fontColor }}>{comment.content}</Text>
                     </View>
                 </View>
             </View>

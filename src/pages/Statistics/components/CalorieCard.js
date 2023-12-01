@@ -10,8 +10,12 @@ import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const CalorieCard = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { calorie } = useHealthKit()
     const { currentUser } = useSelector(state => state.user)
     const { navigate } = useNavigation()
@@ -21,7 +25,7 @@ const CalorieCard = () => {
         currentUser?.calorieTarget && setPrevGoal(currentUser.calorieTarget)
     }, [currentUser])
     return (
-        <View style={{ marginHorizontal: '3%', marginBottom: 10, backgroundColor: '#fff', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
+        <View style={{ marginHorizontal: '3%', marginBottom: 10, backgroundColor: currentTheme.contentColor, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 }}>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ marginBottom: SIZE.NormalMargin, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
@@ -41,8 +45,8 @@ const CalorieCard = () => {
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                    <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold' }}>{calorie}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>kcal </Text>
+                    <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{calorie}</Text>
+                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>kcal </Text>
                 </View>
                 <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevGoal ? prevGoal : "--"}kcal</Text>
             </View>

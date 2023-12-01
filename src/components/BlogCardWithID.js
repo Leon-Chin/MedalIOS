@@ -9,8 +9,12 @@ import COLORS from '../constants/COLORS'
 import { Video, ResizeMode } from 'expo-av';
 import SIZE from '../constants/SIZE'
 import { ICON } from '../constants/SVG/ICON'
+import useUserTheme from '../hooks/useUserTheme'
+import APPTHEME from '../constants/COLORS/APPTHEME'
 
 const BlogCardWithID = ({ blogID }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const [blog, setBlog] = useState({})
     const { userID, title, likesUsers, imgUrl, blogType, videoUrl, width, height } = blog
@@ -62,7 +66,7 @@ const BlogCardWithID = ({ blogID }) => {
             style={{
                 borderRadius: SIZE.CardBorderRadius,
                 marginBottom: 10,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
             }}
             onPress={() => navigate('SpecificBlog', { blog, user })}>
             {Object.keys(blog).length !== 0 && <View style={{ flex: 1, borderTopLeftRadius: 15, borderTopRightRadius: 15, overflow: 'hidden' }}>
@@ -83,7 +87,7 @@ const BlogCardWithID = ({ blogID }) => {
             </View>}
             {Object.keys(blog).length !== 0 ? <View
                 style={{
-                    backgroundColor: 'white',
+                    backgroundColor: currentTheme.contentColor,
                     width: '100%',
                     padding: 10,
                     borderRadius: 15,
@@ -91,7 +95,7 @@ const BlogCardWithID = ({ blogID }) => {
                 }}
             >
                 <View style={{ marginBottom: 10 }}>
-                    <Text numberOfLines={2} style={{ marginBottom: 2, fontSize: 18, fontWeight: '500' }}>
+                    <Text numberOfLines={2} style={{ marginBottom: 2, fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>
                         {title && title}
                     </Text>
                 </View>
@@ -107,7 +111,6 @@ const BlogCardWithID = ({ blogID }) => {
                     <TouchableOpacity onPress={() => handleLikeBlog(blog._id)}><AntDesign name="like1" size={24} color={liked ? COLORS.primary : COLORS.commentText} /></TouchableOpacity>
                 </View>
             </View> : <View style={{
-                backgroundColor: COLORS.white,
                 width: '100%',
                 borderRadius: 15,
                 overflow: 'hidden',

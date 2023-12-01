@@ -11,72 +11,54 @@ import AddStatisticBtn from '../components/AddStatisticBtn'
 import UploadMeasurementModal from '../components/UploadMeasurementModal'
 import UploadWeightTargetModal from '../components/UploadWeightTargetModal'
 import useMeasurement from '../../../hooks/useMeasurement'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 const { width } = Dimensions.get("screen")
 
 const HeightWeight = () => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const { latestMeasurement, allMeasurements } = useMeasurement()
-    // const [latestMeasurement, setLatestMeasurement] = useState({})
-    // const getLatestMeasurement = async () => {
-    //     await getlatestmeasurement().then(res => {
-    //         if (res.status !== false) {
-    //             setLatestMeasurement(res)
-    //         } else {
-    //             Alert.alert("出现异常请稍后重试")
-    //         }
-    //     })
-    // }
-
-    const getLatestMeasurement = async () => {
-    }
-    // const [allMeasurements, setAllMeasurement] = useState([])
-    // const getAllMeasurements = async () => {
-    //     await getmeasurements().then(res => {
-    //         if (res.status !== false) {
-    //             setAllMeasurement(res)
-    //         } else {
-    //             Alert.alert("出现异常请稍后重试")
-    //         }
-    //     })
-    // }
-    const getData = () => {
-        // getAllMeasurements()
-        // getLatestMeasurement()
-    }
-    useEffect(() => {
-        // getData()
-    }, [])
-
     const [UploadMeasurementModalVisible, setUploadMeasurementModalVisible] = useState(false)
     const [UploadWeightTargetModalVisible, setUploadWeightModalVisible] = useState(false)
 
     return (
         <BottomSheetModalProvider>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
                 <ScrollView style={{ flex: 1 }}>
                     <StatisticHeader latestMeasurement={latestMeasurement} />
                     <SpecificStatisticDetail setUploadWeightModalVisible={setUploadWeightModalVisible} latestMeasurement={latestMeasurement} />
-                    <StatisticChart getData={getData} allMeasurements={allMeasurements} />
+                    <StatisticChart allMeasurements={allMeasurements} />
                     {/* 体重介绍 */}
                     <View>
                         <Text style={{ marginHorizontal: '3%', marginTop: SIZE.LargerMargin, fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>体重介绍</Text>
-                        <View style={styles.cardContainer}>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                            marginHorizontal: '3%',
+                            marginTop: SIZE.NormalMargin,
+                            padding: SIZE.NormalMargin,
+                            borderRadius: SIZE.CardBorderRadius,
+                            backgroundColor: currentTheme.contentColor
+                        }}>
                             <View style={{ flex: 1 }}>
-                                <Text style={{ color: COLORS.black }}>
+                                <Text style={{ color: currentTheme.fontColor }}>
                                     BMI（Body Mass Index，身体质量指数）是通过体重（千克）除以身高（米）的平方来计算的。
                                 </Text>
-                                <Text style={{ color: COLORS.black }}>
+                                <Text style={{ color: currentTheme.fontColor }}>
                                     根据世界卫生组织（WHO）的标准，BMI可以分为几个不同的等级，用以评估个体的体重状况：
                                 </Text>
-                                <Text style={{ color: COLORS.black }}>
+                                <Text style={{ color: currentTheme.fontColor }}>
                                     低于18.5：体重过轻
                                 </Text>
-                                <Text style={{ color: COLORS.black }}>
+                                <Text style={{ color: currentTheme.fontColor }}>
                                     18.5至24.9：正常范围
                                 </Text>
-                                <Text style={{ color: COLORS.black }}>
+                                <Text style={{ color: currentTheme.fontColor }}>
                                     25至29.9：超重
                                 </Text>
-                                <Text style={{ color: COLORS.black }}>
+                                <Text style={{ color: currentTheme.fontColor }}>
                                     30及以上：肥胖
                                 </Text>
                             </View>
@@ -86,7 +68,7 @@ const HeightWeight = () => {
                 </ScrollView>
                 <AddStatisticBtn handlePresentModalPress={() => setUploadMeasurementModalVisible(true)} />
             </View >
-            <UploadMeasurementModal latestMeasurement={latestMeasurement} getLatestMeasurement={getLatestMeasurement} setVisible={setUploadMeasurementModalVisible} visible={UploadMeasurementModalVisible} />
+            <UploadMeasurementModal setVisible={setUploadMeasurementModalVisible} visible={UploadMeasurementModalVisible} />
             <UploadWeightTargetModal visible={UploadWeightTargetModalVisible} setVisible={setUploadWeightModalVisible} />
         </BottomSheetModalProvider>
 

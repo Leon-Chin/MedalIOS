@@ -2,7 +2,11 @@ import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import COLORS from '../../../constants/COLORS'
 import SIZE from '../../../constants/SIZE'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 const Percentage = ({ current, target }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const [percentage, setPercentage] = useState()
     const [lineBackcolor, setLineBackcolor] = useState(COLORS.gray)
     useEffect(() => {
@@ -22,7 +26,7 @@ const Percentage = ({ current, target }) => {
     }, [current, target])
     return (
         <View style={styles.container}>
-            <View style={{ height: 10, borderRadius: 4, backgroundColor: COLORS.backgroundGray }}>
+            <View style={{ height: 10, borderRadius: 4, backgroundColor: currentTheme.backgroundColor }}>
                 <View style={{ height: '100%', width: `${percentage * 100}%`, borderRadius: 4, backgroundColor: lineBackcolor }} />
             </View>
         </View>
@@ -33,7 +37,6 @@ export default Percentage
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.white,
         paddingVertical: SIZE.NormalMargin,
         borderRadius: SIZE.CardBorderRadius,
     }

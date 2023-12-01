@@ -5,10 +5,14 @@ import COLORS from '../../../constants/COLORS';
 import { ICON } from '../../../constants/SVG/ICON';
 import useTodayExerciseDuration from '../../../hooks/useTodayExerciseDuration';
 import { secToMin } from '../../../utils/funcs';
+import useUserTheme from '../../../hooks/useUserTheme';
+import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const TimeCard = () => {
     const { navigate } = useNavigation()
     const duration = useTodayExerciseDuration()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     return (
         <View
             style={{
@@ -17,7 +21,7 @@ const TimeCard = () => {
                 height: 80,
                 paddingVertical: 6,
                 paddingHorizontal: 10,
-                backgroundColor: '#fff',
+                backgroundColor: currentTheme.contentColor,
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 borderRadius: 10,
@@ -36,10 +40,7 @@ const TimeCard = () => {
             </View>
             <View style={{ flex: 1, width: '100%', paddingHorizontal: '6%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 4 }}>
-                    {
-                        duration ? <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{secToMin(duration)}</Text> :
-                            <Text style={{ fontSize: 24, fontWeight: 'bold' }}>--</Text>
-                    }
+                    <Text style={{ fontSize: 24, fontWeight: 'bold', color: currentTheme.fontColor }}>{duration ? secToMin(duration) : "--"}</Text>
                     <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>min</Text>
                 </View>
             </View>

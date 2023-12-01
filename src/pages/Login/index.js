@@ -27,8 +27,10 @@ export default function Login() {
     const { navigate } = useNavigation()
     const registerUser = async () => {
         dispatch(loginStart())
+        console.log("sigUpInfo", sigUpInfo);
         await usersignup(sigUpInfo)
             .then((res) => {
+                console.log("res", res);
                 console.log('token', res.token);
                 AsyncStorage.setItem('token', res.token)
                 dispatch(loginSuccess(res.user))
@@ -159,7 +161,7 @@ export default function Login() {
                         placeholder={formatMessage({ id: 'app.login.email' })}
                         onFocus={() => setFocusedemail(true)}
                         onBlur={() => setFocusedemail(false)}
-                        onChangeText={(password) => setSignUpInfo({ ...sigUpInfo, password })}
+                        onChangeText={(email) => setSignUpInfo({ ...sigUpInfo, email })}
                         required
                     />
                     <TextInput

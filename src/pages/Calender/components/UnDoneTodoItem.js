@@ -8,8 +8,12 @@ import { deletesession } from '../../../api/session.api'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from '../../../redux/userSlice'
 import { setSessions } from '../../../redux/SessionSlice'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const UnDoneTodoItem = ({ tutorial }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
     const handleDelete = async () => {
@@ -24,12 +28,12 @@ const UnDoneTodoItem = ({ tutorial }) => {
     return (
         <TouchableOpacity
             onPress={() => navigate("SpecificTutorial", { tutorial })}
-            style={{ marginBottom: SIZE.NormalMargin, padding: 10, flexDirection: 'row', gap: 10, borderRadius: SIZE.CardBorderRadius, backgroundColor: COLORS.white }}
+            style={{ marginBottom: SIZE.NormalMargin, padding: 10, flexDirection: 'row', gap: 10, borderRadius: SIZE.CardBorderRadius, backgroundColor: currentTheme.contentColor }}
         >
             <View style={{ height: '100%', width: 6, borderRadius: 3, backgroundColor: COLORS.primary }}></View>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ flex: 1 }}>
-                    <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, marginBottom: SIZE.LittleMargin }}>{tutorial.name}</Text>
+                    <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, marginBottom: SIZE.LittleMargin, color: currentTheme.fontColor }}>{tutorial.name}</Text>
                     <Text numberOfLines={1} style={{ fontSize: 12, color: COLORS.commentText }}>{tutorial.brief} </Text>
                 </View>
                 <TouchableOpacity

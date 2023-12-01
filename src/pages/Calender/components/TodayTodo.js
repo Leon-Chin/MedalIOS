@@ -10,8 +10,12 @@ import { useEffect } from 'react'
 import UnDoneTodoItem from './UnDoneTodoItem'
 import DoneTodoItem from './DoneTodoItem'
 import { useIntl } from 'react-intl'
+import useUserTheme from '../../../hooks/useUserTheme'
+import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const TodayTodo = ({ selectDay }) => {
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
     const yetDoneTutorial = useUncompletedTutorials(selectDay)
     const doneTutorial = useCompletedTutorials(selectDay)
     const { formatMessage } = useIntl()
@@ -23,14 +27,14 @@ const TodayTodo = ({ selectDay }) => {
     return (
         <View style={{ marginBottom: SIZE.LargerMargin }}>
             <View style={{ paddingHorizontal: 20, marginBottom: SIZE.NormalMargin }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{formatMessage({ id: 'todaySessions' })}</Text>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'todaySessions' })}</Text>
             </View>
             {!noTutorial && <Percentage selectDay={selectDay} />}
             {noTutorial && <NoTutorialToday />}
-            {yetDoneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin }}>未完成</Text>
+            {yetDoneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>未完成</Text>
                 {yetDoneTutorial.map((tutorial, index) => <UnDoneTodoItem tutorial={tutorial} key={index} />)}
             </>}
-            {doneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin }}>已完成</Text>
+            {doneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>已完成</Text>
                 {doneTutorial.map((tutorial, index) => <DoneTodoItem tutorial={tutorial} key={index} />)}
             </>}
         </View>

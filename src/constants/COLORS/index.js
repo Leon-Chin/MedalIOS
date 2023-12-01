@@ -14,5 +14,6 @@ const COLORS = {
     pinkToGray: "#f2f0f5",
     littleGray: '#ebf3f9',
     red: '#CC3333',
+    contentBlack: '#1d1d1d'
 }
 export default COLORS
