@@ -1,4 +1,4 @@
-import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -11,15 +11,11 @@ import { useNavigation } from '@react-navigation/native'
 import SIZE from '../../../constants/SIZE'
 import { loginSuccess } from '../../../redux/userSlice'
 import BlogCard from '../../../components/BlogCard'
-import useRecordsAnalysis from '../../../hooks/useRecordsAnalysis'
 import UserRecordSum from '../components/UserRecordSum'
 import { formatTimeToChinese } from '../../../utils/formatTime'
 import UserBestRecord from '../components/UserBestRecord'
 import ContactOptionsModal from '../components/ContactOptionsModal'
-import {
-    BottomSheetModal,
-    BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 

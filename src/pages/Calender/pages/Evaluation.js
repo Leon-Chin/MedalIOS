@@ -64,7 +64,6 @@ const Evaluation = () => {
                         <ProgressLine questionNo={questionNo} />
                     </View>
                     {EvaluationQuestions.map((item, index) => <EvaluationQuestion key={index} questionNo={questionNo} EvaluationItem={item} setEvaluationAnswer={setEvaluationAnswer} />)}
-                    {/* <EvaluationQuestion questionNo={questionNo} setEvaluationAnswer={setEvaluationAnswer} /> */}
                     {!isLastQuestion ? <View style={styles.nextBtnArea}>
                         <TouchableOpacity
                             style={styles.nextBtn}
@@ -86,7 +85,6 @@ const Evaluation = () => {
                         </TouchableOpacity>
                     </View>}
                 </View>
-
             </SafeAreaView>
         </LinearGradient >
     )

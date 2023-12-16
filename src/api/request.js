@@ -2,8 +2,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://medal.onrender.com/api',
-    // baseURL: 'http://localhost:3001/api',
+    // baseURL: 'https://medal.onrender.com/api',
+    baseURL: 'http://localhost:3001/api',
     // timeout: 6000,
 });
 

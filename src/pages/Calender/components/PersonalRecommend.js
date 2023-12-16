@@ -1,7 +1,6 @@
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import SIZE from '../../../constants/SIZE'
-import NoTutorialToday from './NoTutorialToday'
 import COLORS from '../../../constants/COLORS'
 import { ICON } from '../../../constants/SVG/ICON'
 import { useNavigation } from '@react-navigation/native'
@@ -14,9 +13,9 @@ import APPTHEME from '../../../constants/COLORS/APPTHEME'
 
 const PersonalRecommend = ({ selectDay }) => {
     const { navigate } = useNavigation()
-    const [recommandTutorials, setRecommandTutorials] = useState()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
+    const [recommandTutorials, setRecommandTutorials] = useState()
     const getRecommandTutorials = async () => {
         await getalltutorial().then(res => {
             if (res.status !== false) {

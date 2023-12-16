@@ -67,7 +67,6 @@ const ContactHorizontalWithID = ({ contactID, setVisible }) => {
                     setVisible(false)
                     navigate('UserPage', { userID: contactID })
                 }}
-
                 style={{
                     borderRadius: SIZE.CardBorderRadius,
                     backgroundColor: currentTheme.contentColor,

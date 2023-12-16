@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
-import EvaluationQuestions from '../../../constants/EvaluationQuestions'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import COLORS from '../../../constants/COLORS'
 import SIZE from '../../../constants/SIZE'
+import { useEffect } from 'react'
 
 const EvaluationQuestion = ({ questionNo, EvaluationItem, setEvaluationAnswer }) => {
     const { question, answers, type, id } = EvaluationItem
@@ -14,8 +14,9 @@ const EvaluationQuestion = ({ questionNo, EvaluationItem, setEvaluationAnswer })
 
     const handleSelectAnswer = (answer, index) => {
         setSelectedIndex(index)
-        selectedAnswer[type] = answer.en
+        selectedAnswer[type] = answer.value
         const finalAnswer = selectedAnswer
+        console.log("finalAnswer", finalAnswer);
         setEvaluationAnswer(prev => {
             return { ...prev, ...finalAnswer }
         })
@@ -24,7 +25,7 @@ const EvaluationQuestion = ({ questionNo, EvaluationItem, setEvaluationAnswer })
         return (
             <View style={styles.questionContainer}>
                 <Text style={styles.question}>
-                    {!currentUser.preferedLanguage === 'en_US' ? question.en : question.zh}
+                    {currentUser.preferedLanguage === 'en_US' ? question.en : question.zh}
                 </Text>
                 {answers.map(
                     (answer, index) =>
@@ -34,7 +35,7 @@ const EvaluationQuestion = ({ questionNo, EvaluationItem, setEvaluationAnswer })
                             onPress={() => handleSelectAnswer(answer, index)}
                         >
                             <Text style={[styles.answer, selectedIndex === index && { color: COLORS.white }]}>
-                                {answer.en}
+                                {currentUser.preferedLanguage === 'en_US' ? answer.en : answer.zh}
                             </Text>
                         </TouchableOpacity>
                 )}

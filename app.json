@@ -35,6 +35,11 @@
     "plugins": [
       "expo-localization",
       "react-native-health"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4301719b-90d0-415a-bd91-41a2acf1f707"
+      }
+    }
   }
 }
