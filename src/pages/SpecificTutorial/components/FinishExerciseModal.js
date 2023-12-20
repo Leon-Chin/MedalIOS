@@ -54,6 +54,7 @@ const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, wat
                 dispatch(setSessions(res.updatedSessions))
                 navigation.dispatch(StackActions.replace("AfterExercise", { tutorial, data }))
             } else {
+                console.log(res);
                 Alert.alert("出现异常，请稍后重试")
             }
         })

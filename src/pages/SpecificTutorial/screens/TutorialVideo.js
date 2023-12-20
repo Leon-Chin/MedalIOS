@@ -60,11 +60,6 @@ const TutorialVideo = ({ route }) => {
         }
     };
 
-    // 可以在这里使用 useEffect 来处理 watchedTime 的变化
-    useEffect(() => {
-        // 处理 watchedTime 的变化，例如发送到服务器
-        console.log(watchedTime);
-    }, [watchedTime]);
     const [finishTutorialVisible, setFinishTutorialVisible] = useState(false)
     const handleFinish = () => {
         setFinishTutorialVisible(true)

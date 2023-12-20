@@ -12,7 +12,6 @@ import {
 import { SVGRenderer, SvgChart } from '@wuba/react-native-echarts';
 import * as echarts from 'echarts/core';
 import SIZE from '../../../../../constants/SIZE';
-import COLORS from '../../../../../constants/COLORS';
 import debounceFunc from '../../../../../utils/debounceFunc';
 import { chartsOneItemOptions } from '../../../utils/chartsOneItemOptions';
 import useUserTheme from '../../../../../hooks/useUserTheme';

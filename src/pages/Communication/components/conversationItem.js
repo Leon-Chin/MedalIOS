@@ -20,10 +20,12 @@ const ConversationItem = ({ conversation, deleteConversation }) => {
     const { _id } = currentUser
     const [contact, setContact] = useState()
     const [unreadNum, setUnreadNum] = useState(0)
+    const [alreadySubscribed, setAlreadySubscribed] = useState(true)
     useEffect(() => {
         if (Object.keys(conversation).length !== 0) {
             const contactIndex = conversation.members.indexOf(_id) === 1 ? 0 : 1
             const contactID = conversation.members[contactIndex]
+            setAlreadySubscribed(currentUser.contactsUsers.includes(contactID))
             const getContactInfo = async () => {
                 const res = await getuser(contactID)
                 setContact(res)
@@ -52,7 +54,7 @@ const ConversationItem = ({ conversation, deleteConversation }) => {
         }
     }
 
-    const rightActions = (dragX) => {
+    const rightActions = () => {
         return (
             <View style={{ backgroundColor: 'red', justifyContent: 'center' }}>
                 <Text style={{ color: COLORS.white, padding: 20, fontSize: SIZE.NormalTitle, fontWeight: '500' }} onPress={() => deleteConversation(conversation._id)}>
@@ -71,7 +73,7 @@ const ConversationItem = ({ conversation, deleteConversation }) => {
                 {contact ? <Avatar size={50} rounded source={{ uri: contact.avator }} /> : <FontAwesome5 name="user-circle" size={24} color="black" />}
                 <View style={{ flex: 1, marginLeft: 10, }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>{contact.name}</Text>}
+                        {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>{contact.name} {!alreadySubscribed && <Text style={{ fontSize: 10, color: COLORS.commentText }}>[未关注]</Text>}</Text>}
                         <Text style={{ color: COLORS.commentText, fontSize: 14 }}>{formatDateTime(conversation.updatedAt)}</Text>
                     </View>
                     <View>

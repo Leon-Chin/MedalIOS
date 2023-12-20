@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import SIZE from '../../../constants/SIZE'
@@ -22,6 +22,8 @@ const DoneTodoItem = ({ tutorial }) => {
                 const { user, updatedSessions } = res
                 dispatch(loginSuccess(user))
                 dispatch(setSessions(updatedSessions))
+            } else {
+                Alert.alert('出现异常请重试')
             }
         })
     }
@@ -32,9 +34,9 @@ const DoneTodoItem = ({ tutorial }) => {
         >
             <View style={{ height: '100%', width: 6, borderRadius: 3, backgroundColor: COLORS.primary }}></View>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <View style={{ flex: 1 }}>
-                    <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, marginBottom: SIZE.LittleMargin, color: currentTheme.fontColor }}>{tutorial.name}</Text>
-                    <Text numberOfLines={1} style={{ fontSize: 12, color: COLORS.commentText }}>{tutorial.brief} </Text>
+                <View style={{ flex: 1, gap: SIZE.LittleMargin, }}>
+                    <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{tutorial.name}</Text>
+                    {tutorial?.brief && <Text numberOfLines={1} style={{ fontSize: 12, color: COLORS.commentText }}>{tutorial?.brief} </Text>}
                 </View>
                 <View style={{ flexDirection: 'row', gap: SIZE.NormalMargin, alignItems: 'center' }}>
                     {ICON.doneCircle(22, COLORS.green)}

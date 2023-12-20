@@ -6,13 +6,17 @@ import MusicPlayer from '../../../components/MusicPlayer';
 import { ICON } from '../../../constants/SVG/ICON';
 import ElapsedTimeDisplay from './ElapsedTimeDisplay';
 import { StackActions, useNavigation } from '@react-navigation/native';
-import { useIsFocused } from '@react-navigation/native';
 import { getElapsedMinute } from '../../../utils/getDuration';
+import { finishsessionoutside } from '../../../api/session.api';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../../redux/userSlice';
+import { setSessions } from '../../../redux/SessionSlice';
 
 const Walk = () => {
+    const [startTime, setStartTime] = useState()
     const [focused, setFocused] = useState(true)
     const navigation = useNavigation()
-
+    const dispatch = useDispatch()
     useEffect(() => {
         navigation.setOptions({ gestureEnabled: false })
     }, [navigation]);
@@ -21,7 +25,6 @@ const Walk = () => {
     starter.setHours(18, 0, 0, 0)
     const [pedemeterAvailable, setPedometerAvailable] = useState(false);
     const [currentStepCount, setCurrentStepCount] = useState(0);
-    const [startTime, setStartTime] = useState(new Date());
     const [elapsedTime, setElapsedTime] = useState('00:00:00');
     // const [distanceTravelled, setDistanceTravelled] = useState(0);
     // const { distance, calorie } = useSpecificTimeKit(starter);
@@ -49,20 +52,30 @@ const Walk = () => {
         setStartTime(null);
     };
 
-    const handleFinish = () => {
-        const duration = getElapsedMinute(startTime)
+    const handleFinish = async () => {
+        const duration = getElapsedMinute(startTime).minutes
         if (duration < 2 || currentStepCount < 100) {
             Alert.alert("时间过短｜步数过少", "数据太小无法记录")
             return;
         }
         const ExerciseData = {
-            duration,
-            steps: currentStepCount,
+            exerciseDuration: getElapsedMinute(startTime).seconds,
+            startTime: startTime,
+            endTime: new Date(),
+            // calorieConsumption: 
+            step: currentStepCount,
         }
-        stopPedometer()
-        setFocused(false)
-        navigation.dispatch({
-            ...StackActions.replace('AfterExercise', { ExerciseData })
+        const tutorial = {
+            name: "Walk",
+        }
+        await finishsessionoutside(tutorial, ExerciseData, new Date()).then(res => {
+            if (res && res.status !== false) {
+                stopPedometer()
+                setFocused(false)
+                dispatch(loginSuccess(res.user))
+                dispatch(setSessions(res.updatedSessions))
+                navigation.dispatch(StackActions.replace("AfterExercise", { tutorial, data: ExerciseData }))
+            }
         })
     }
     const handleGoback = () => {
@@ -70,14 +83,8 @@ const Walk = () => {
         Alert.alert(
             '放弃步行记录？',
             '如果你离开，步行记录将会丢失。',
-            [
-                { text: '取消', style: 'cancel', onPress: () => { } },
-                {
-                    text: '放弃',
-                    style: 'destructive',
-                    // 如果用户确认放弃，则触发默认行为
-                    onPress: () => navigation.goBack()
-                },
+            [{ text: '取消', style: 'cancel', onPress: () => { } },
+            { text: '放弃', style: 'destructive', onPress: () => navigation.goBack() },// 如果用户确认放弃，则触发默认行为
             ]
         );
 
@@ -145,7 +152,7 @@ const Walk = () => {
                 </View>
             </View>
             {/* music component */}
-            <View style={{ marginHorizontal: '3%', height: 70, borderRadius: 20, backgroundColor: '#426990', opacity: 0.4 }}>
+            <View style={{ marginHorizontal: '3%', height: 100, borderRadius: 20, backgroundColor: '#426990', opacity: 0.4 }}>
                 <MusicPlayer focused={focused} />
             </View>
         </SafeAreaView >

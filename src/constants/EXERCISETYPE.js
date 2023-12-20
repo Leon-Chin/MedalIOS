@@ -27,5 +27,13 @@ const EXERCISETYPE = {
         label: "Spinning",
         value: "spinning"
     },
+    run: {
+        label: "Run",
+        value: "run"
+    },
+    walk: {
+        label: "Walk",
+        value: "walk"
+    },
 }
 export default EXERCISETYPE

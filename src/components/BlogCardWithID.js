@@ -68,7 +68,7 @@ const BlogCardWithID = ({ blogID }) => {
                 marginBottom: 10,
                 backgroundColor: currentTheme.contentColor,
             }}
-            onPress={() => navigate('SpecificBlog', { blog, user })}>
+            onPress={() => Object.keys(blog).length !== 0 && navigate('SpecificBlog', { blog, user })}>
             {Object.keys(blog).length !== 0 && <View style={{ flex: 1, borderTopLeftRadius: 15, borderTopRightRadius: 15, overflow: 'hidden' }}>
                 {(blogType && blogType === 'video') && <Video
                     style={{ height: 300 }}

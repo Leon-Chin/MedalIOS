@@ -5,3 +5,4 @@ export const getsessions = () => request('get', `/session/`);
 export const deletesession = (id) => request('delete', `/session/${id}`);
 
 export const finishsession = (tutorialId, data) => request('put', `/session/finishsession/${tutorialId}`, data);
+export const finishsessionoutside = (tutorial, data, date) => request('post', `/session/finishsessionoutside`, { data, tutorial, date });

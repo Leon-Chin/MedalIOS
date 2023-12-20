@@ -13,11 +13,11 @@ const TutorialsInLibrary = [
         value: "recommand",
         icon: ICON.personalize(30, COLORS.white)
     },
-    {
-        name: 'Rope',
-        value: EXERCISETYPE.rope.value,
-        icon: exerciseLogo.rope(30)
-    },
+    // {
+    //     name: 'Rope',
+    //     value: EXERCISETYPE.rope.value,
+    //     icon: exerciseLogo.rope(30)
+    // },
     {
         name: 'Yoga',
         value: EXERCISETYPE.yoga.value,

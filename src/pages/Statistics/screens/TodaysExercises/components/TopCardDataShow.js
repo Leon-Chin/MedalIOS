@@ -3,16 +3,12 @@ import React from 'react'
 import COLORS from '../../../../../constants/COLORS'
 import SIZE from '../../../../../constants/SIZE'
 import { secToSpecificMin } from '../../../../../utils/funcs'
-import { useEffect } from 'react'
 import useUserTheme from '../../../../../hooks/useUserTheme'
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
 
 const TopCardDataShow = ({ duration, date, calorie, distance, step }) => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
-    useEffect(() => {
-        console.log(duration, date, calorie, distance, step);
-    }, [duration, date, calorie, distance, step])
     return (
         <View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -30,7 +26,7 @@ const TopCardDataShow = ({ duration, date, calorie, distance, step }) => {
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'baseline', gap: SIZE.LittleMargin }}>
                     <Text style={{ color: COLORS.commentText, fontSize: 12, fontWeight: 'bold' }}>消耗</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline', }}>
-                        <Text style={{ color: currentTheme.fontColor, fontSize: SIZE.SmallTitle, fontWeight: 'bold' }}>{calorie !== undefined ? calorie : "--"}</Text>
+                        <Text style={{ color: currentTheme.fontColor, fontSize: SIZE.SmallTitle, fontWeight: 'bold' }}>{calorie !== undefined ? calorie.toFixed(1) : "--"}</Text>
                         <Text style={{ color: COLORS.commentText, fontSize: 12, fontWeight: 'bold' }}>kcal</Text>
                     </View>
                 </View>

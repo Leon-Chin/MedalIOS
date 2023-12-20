@@ -45,16 +45,20 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
         })
     }
     const handleStartExercise = async () => {
-        await participateTutorial(tutorial._id).then(res => {
-            if (res.status !== false) {
-                handleModelClose()
-                dispatch(loginSuccess(res.user))
-                setTutorial(res.updatedTutorial)
-                navigate("TutorialVideo", { tutorial })
-            } else {
-                Alert.alert("出现异常，请稍后重试")
-            }
-        })
+        if (tutorial.type === EXERCISETYPE.walk.value) {
+            navigate("Walk")
+        } else {
+            await participateTutorial(tutorial._id).then(res => {
+                if (res.status !== false) {
+                    handleModelClose()
+                    dispatch(loginSuccess(res.user))
+                    setTutorial(res.updatedTutorial)
+                    navigate("TutorialVideo", { tutorial })
+                } else {
+                    Alert.alert("出现异常，请稍后重试")
+                }
+            })
+        }
     }
 
     return (

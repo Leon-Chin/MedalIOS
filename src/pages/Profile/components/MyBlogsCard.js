@@ -13,9 +13,9 @@ import APPTHEME from '../../../constants/COLORS/APPTHEME';
 const MyBlogsCard = () => {
     const { navigate } = useNavigation()
     const { currentUser } = useSelector(state => state.user)
-    const [likeBlogs, setLikeBlogs] = useState([])
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
+    const [likeBlogs, setLikeBlogs] = useState([])
     const [favoriteBlogs, setFavoriteBlogs] = useState([])
     useEffect(() => {
         if (currentUser?.likeBlogs && currentUser?.likeBlogs.length !== 0) {

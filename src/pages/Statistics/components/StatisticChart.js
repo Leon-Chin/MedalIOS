@@ -26,6 +26,7 @@ import { setLatestMeasurement, setMeasurements } from '../../../redux/Measuremen
 import useMeasurement from '../../../hooks/useMeasurement';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import UpdateMeasurementModal from './UpdateMeasurementModal';
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get('screen')
 const StatisticChart = () => {
@@ -38,7 +39,8 @@ const StatisticChart = () => {
     const { heightArr, weightArr, BMIArr, dateArr, bodyFatRateArr } = useMeasurements(allMeasurements)
     const [reversedMeasurements, setReversedMeasurements] = useState([])
     const [collapsed, setCollapsed] = useState(true)
-
+    const [updateMeasurementModalVisible, setUpdateMeasurementModalVisible] = useState(false)
+    const [selectedMeasurement, setSelectedMeasurement] = useState({})
     const skiaRef = useRef(null);
     useEffect(() => {
         if (allMeasurements?.length !== 0) {
@@ -70,7 +72,10 @@ const StatisticChart = () => {
             }
         })
     }
-
+    const handleEditMeasurement = (measurement) => {
+        setSelectedMeasurement(measurement)
+        setUpdateMeasurementModalVisible(true)
+    }
     return (
         <View style={{
             marginHorizontal: '3%',
@@ -97,11 +102,18 @@ const StatisticChart = () => {
                     }} key={index}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(item.date)}数据</Text>
-                            <TouchableOpacity
-                                onPress={() => { handleDeleteMeasurement(item._id) }}
-                            >
-                                {ICON.delete(24, COLORS.gray)}
-                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row' }}>
+                                <TouchableOpacity
+                                    onPress={() => handleEditMeasurement(item)}
+                                >
+                                    {ICON.edit(24, COLORS.gray)}
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => { handleDeleteMeasurement(item._id) }}
+                                >
+                                    {ICON.delete(24, COLORS.gray)}
+                                </TouchableOpacity>
+                            </View>
                         </View>
                         <View style={{ flexDirection: 'row', gap: 2, }}>
                             <View style={{ flex: 1 }}><Text style={{ color: COLORS.commentText }}>体重: {item.weight}</Text></View>
@@ -112,6 +124,7 @@ const StatisticChart = () => {
                     </View>
                 })}
             </View>}
+            <UpdateMeasurementModal visible={updateMeasurementModalVisible} setVisible={setUpdateMeasurementModalVisible} measurement={selectedMeasurement} />
         </View >
     )
 }

@@ -1,5 +1,4 @@
-import { ScrollView, Text, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { ScrollView, View } from 'react-native'
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -18,7 +17,6 @@ const LikeBlogs = () => {
             setLikeBlogs(currentUser.likeBlogs)
         }
     }, [currentUser])
-    const { navigate } = useNavigation()
     return (
         <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <ScrollView style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin }}>

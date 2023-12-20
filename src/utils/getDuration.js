@@ -8,7 +8,8 @@ export const getElapsedMinute = (startTime) => {
     const now = new Date();
     let elapsed = now - startTime; // 毫秒数
     let minutes = Math.floor(elapsed / (1000 * 60));
-    return minutes
+    let seconds = Math.floor(elapsed / (1000));
+    return { minutes, seconds }
 };
 
 export const formatElapsedTime = (elapsed) => {

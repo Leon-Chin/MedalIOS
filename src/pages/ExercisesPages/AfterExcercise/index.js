@@ -19,7 +19,8 @@ const AfterExcercise = ({ route }) => {
     const { currentUser } = useSelector(state => state.user)
     const tutorial = route.params.tutorial
     const data = route.params.data
-    const { cover, level, colorie, brief, name, duration, _id } = tutorial
+    // console.log("route.params", route.params);
+    const { step, distance, calorieConsumption, exerciseDuration, startTime, endTime } = data
     const { navigate } = useNavigation()
     const navigateToCool = () => {
         navigate("AllTutorials", {
@@ -44,22 +45,22 @@ const AfterExcercise = ({ route }) => {
                     <View style={{ padding: SIZE.NormalMargin, marginBottom: SIZE.NormalMargin, backgroundColor: currentTheme.backgroundColor, borderRadius: SIZE.CardBorderRadius }}>
                         <Text style={{ color: COLORS.commentText }}>教程名称: </Text>
                         <View style={{ marginVertical: SIZE.NormalMargin }}>
-                            <Text numberOfLines={2} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{name}</Text>
+                            <Text numberOfLines={2} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{tutorial?.name}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', gap: SIZE.NormalMargin, alignItems: 'center' }}>
-                            <View style={{ paddingHorizontal: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: COLORS.primary }}>
-                                <Text numberOfLines={1} style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{level}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                                <Text numberOfLines={1} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{duration}</Text>
+                            {tutorial?.level && <View style={{ paddingHorizontal: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: COLORS.primary }}>
+                                <Text numberOfLines={1} style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{tutorial?.level}</Text>
+                            </View>}
+                            {tutorial?.duration && <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                                <Text numberOfLines={1} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{tutorial?.duration}</Text>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}> min</Text>
-                            </View>
+                            </View>}
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ flex: 1, justifyContent: 'center', gap: SIZE.NormalMargin }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, justifyContent: 'center' }}>
-                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.colorieOrange }}>{data.calorieConsumption}</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.colorieOrange }}>{calorieConsumption ? calorieConsumption : '--'}</Text>
                                 {ICON.fire(SIZE.NormalTitle, COLORS.colorieOrange)}
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -70,15 +71,23 @@ const AfterExcercise = ({ route }) => {
                         <View style={{ flex: 1, gap: 3 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}>训练时长: </Text>
-                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{secToMin(data.exerciseDuration)}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{secToMin(exerciseDuration)}</Text>
                             </View>
+                            {step && <View>
+                                <Text numberOfLines={1} style={{ color: COLORS.commentText }}>步数</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{step}</Text>
+                            </View>}
+                            {distance && <View>
+                                <Text numberOfLines={1} style={{ color: COLORS.commentText }}>距离</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{distance}m</Text>
+                            </View>}
                             <View>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}>训练开始时间</Text>
-                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(data.startTime)}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(startTime)}</Text>
                             </View>
                             <View>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}>训练结束时间</Text>
-                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(data.endTime)}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(endTime)}</Text>
                             </View>
                         </View>
                     </View>

@@ -20,6 +20,7 @@ const UnDoneTodoItem = ({ tutorial }) => {
         await deletesession(tutorial.sessionID).then(res => {
             if (res.status !== false) {
                 const { user, updatedSessions } = res
+                console.log("res.updatedSessions", res.updatedSessions);
                 dispatch(loginSuccess(user))
                 dispatch(setSessions(updatedSessions))
             }
