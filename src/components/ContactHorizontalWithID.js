@@ -13,6 +13,8 @@ import PIC from '../constants/PIC';
 import { Swipeable } from 'react-native-gesture-handler';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../constants/ERRORMessage';
 const ContactHorizontalWithID = ({ contactID, setVisible }) => {
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
@@ -25,7 +27,7 @@ const ContactHorizontalWithID = ({ contactID, setVisible }) => {
             if (res.status !== false) {
                 setContact(res)
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE);
             }
         })
     }
@@ -41,7 +43,7 @@ const ContactHorizontalWithID = ({ contactID, setVisible }) => {
                 navigate('SpecificConversationPage', { conversationID: conversation._id, contact })
             } else {
                 console.log(res);
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE);
             }
         })
     }
@@ -50,7 +52,7 @@ const ContactHorizontalWithID = ({ contactID, setVisible }) => {
             if (res.status !== false) {
                 dispatch(loginSuccess(res))
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE);
             }
         })
     }

@@ -10,6 +10,8 @@ import { setSessions } from '../../../redux/SessionSlice'
 import { addtutorialtofavor } from '../../../api/tutorial.api'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { AddSuccess_MESSAGE, AlreadyFavorTutorial_MESSAGE, AlreadyHave_MESSAGE, ERROR_MESSAGE, FavorSuccess_MESSAGE } from '../../../constants/ERRORMessage'
 
 const OptionsInModal = ({ handleModelClose, tutorial }) => {
     const theme = useUserTheme()
@@ -23,34 +25,34 @@ const OptionsInModal = ({ handleModelClose, tutorial }) => {
 
     const handleAddToCalendar = async () => {
         if (isTodayHasAlr) {
-            Alert.alert("今日已有这个训练了")
+            Toast.show(AlreadyHave_MESSAGE)
         } else {
             const newSession = {
                 date: new Date(userSelectDay),
                 tutorial: _id,
             }
             await createsession(newSession).then(res => {
-                if (res.status === false) {
-                    Alert.alert("出现异常, 请稍后再试")
-                } else {
+                if (res && res.status !== false) {
                     dispatch(loginSuccess(res.user))
                     dispatch(setSessions(res.updatedSessions))
                     handleModelClose
-                    Alert.alert('添加成功')
+                    Toast.show(AddSuccess_MESSAGE)
+                } else {
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         }
     }
     const handleAddTutorialTofavor = async () => {
         if (isExit) {
-            Alert.alert("你已收藏教程")
+            Toast.show(AlreadyFavorTutorial_MESSAGE)
         } else {
             await addtutorialtofavor(_id).then(res => {
-                if (res.status === false) {
-                    Alert.alert("出现异常，请稍后再试")
-                } else {
+                if (res && res.status !== false) {
                     dispatch(loginSuccess(res))
-                    Alert.alert('收藏成功')
+                    Toast.show(FavorSuccess_MESSAGE)
+                } else {
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         }

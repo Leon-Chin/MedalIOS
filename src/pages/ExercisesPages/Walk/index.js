@@ -11,6 +11,8 @@ import { finishsessionoutside } from '../../../api/session.api';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../redux/userSlice';
 import { setSessions } from '../../../redux/SessionSlice';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
 
 const Walk = () => {
     const [startTime, setStartTime] = useState()
@@ -55,7 +57,7 @@ const Walk = () => {
     const handleFinish = async () => {
         const duration = getElapsedMinute(startTime).minutes
         if (duration < 2 || currentStepCount < 100) {
-            Alert.alert("时间过短｜步数过少", "数据太小无法记录")
+            Toast.show(CanNotFinish_MESSAGE)
             return;
         }
         const ExerciseData = {

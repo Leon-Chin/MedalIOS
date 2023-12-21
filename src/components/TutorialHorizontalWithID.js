@@ -12,6 +12,8 @@ import useIsTutorialHasAlr from '../hooks/useIsTutorialHasAlr';
 import { getspecifictutorial } from '../api/tutorial.api';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { AddSuccess_MESSAGE, AlreadyHave_MESSAGE, ERROR_MESSAGE } from '../constants/ERRORMessage';
 const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -24,7 +26,7 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
 
     const handleAddToCalendar = async () => {
         if (isTodayHasAlr) {
-            Alert.alert("今日已有这个训练了")
+            Toast.show(AlreadyHave_MESSAGE)
         } else {
             const newSession = {
                 date: new Date(userSelectDay),
@@ -34,9 +36,9 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
                 if (res && res.status !== false) {
                     dispatch(loginSuccess(res.user))
                     dispatch(setSessions(res.updatedSessions))
-                    Alert.alert("添加成功")
+                    Toast.show(AddSuccess_MESSAGE)
                 } else {
-                    Alert.alert("出现异常, 请稍后再试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         }
@@ -46,7 +48,7 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
             if (res.status !== false) {
                 setTutorial(res)
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }

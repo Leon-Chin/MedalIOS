@@ -15,6 +15,8 @@ import { storage } from '../../../../firebase'
 import { ICON } from '../../../constants/SVG/ICON'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 const SpecificConversationPage = ({ route }) => {
     const { currentUser } = useSelector(state => state.user)
     const theme = useUserTheme()
@@ -128,7 +130,7 @@ const SpecificConversationPage = ({ route }) => {
             console.log(progress.toFixed(2));
         },
             (error) => {
-                Alert.alert('出现异常')
+                Toast.show(ERROR_MESSAGE)
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {

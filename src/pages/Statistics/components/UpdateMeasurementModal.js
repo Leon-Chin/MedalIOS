@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux'
 import { setLatestMeasurement, setMeasurements } from '../../../redux/MeasurementSlice'
 import { loginSuccess } from '../../../redux/userSlice'
 import { isEmptyObj } from '../../../utils/getDuration'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../constants/ERRORMessage'
 const { width } = Dimensions.get("screen")
 
 const UpdateMeasurementModal = ({ visible, setVisible, measurement }) => {
@@ -60,11 +62,11 @@ const UpdateMeasurementModal = ({ visible, setVisible, measurement }) => {
                     dispatch(setMeasurements(res))
                     handlePresentModalClose()
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         } else {
-            Alert.alert("请输入完成信息")
+            Toast.show(PleaseInput_MESSAGE)
         }
     }
     useEffect(() => {

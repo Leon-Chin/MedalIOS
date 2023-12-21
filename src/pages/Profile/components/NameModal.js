@@ -9,6 +9,8 @@ import { Modal, StyleSheet, Text, SafeAreaView, TouchableOpacity, View, Alert, T
 import SIZE from '../../../constants/SIZE'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 
 const NameModal = ({ visible, setVisible }) => {
     const dispatch = useDispatch()
@@ -28,11 +30,11 @@ const NameModal = ({ visible, setVisible }) => {
                     dispatch(loginSuccess(res))
                     setVisible(false)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
             .catch(error => {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             })
     }
     return (

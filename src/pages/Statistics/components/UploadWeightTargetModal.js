@@ -7,6 +7,8 @@ import { calculateBMI } from '../../../utils/BMICalculate'
 import { updateweighttarget } from '../../../api/user.api'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from '../../../redux/userSlice'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../constants/ERRORMessage'
 const { width } = Dimensions.get("screen")
 
 const UploadWeightTargetModal = ({ visible, setVisible }) => {
@@ -18,14 +20,14 @@ const UploadWeightTargetModal = ({ visible, setVisible }) => {
                 weightTarget: parseFloat(weightTarget),
             }
             await updateweighttarget(data).then(res => {
-                if (res.status !== false) {
+                if (res && res.status !== false) {
                     dispatch(loginSuccess(res))
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         } else {
-            Alert.alert("请输入完成信息")
+            Toast.show(PleaseInput_MESSAGE)
         }
     }
 

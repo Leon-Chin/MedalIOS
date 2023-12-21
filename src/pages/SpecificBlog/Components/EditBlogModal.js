@@ -13,6 +13,8 @@ import { Video, ResizeMode } from 'expo-av';
 import { useNavigation } from '@react-navigation/native'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 
 const { width } = Dimensions.get('screen')
 
@@ -64,7 +66,7 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
             console.log(progress.toFixed(2));
         },
             (error) => {
-                Alert.alert('出现异常')
+                Toast.show(ERROR_MESSAGE)
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -101,7 +103,7 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
             } else if (blogType === 'text') {
                 handledItems = { ...handledItems }
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
                 return
             }
         }
@@ -116,11 +118,11 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
                     setTitle(null)
                     setContent(null)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         } catch (error) {
-            Alert.alert("出现异常请稍后重试")
+            Toast.show(ERROR_MESSAGE)
         }
     }
     const handleDeletePic = (deletedImg) => {

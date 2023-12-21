@@ -18,6 +18,8 @@ import MyExercisesCard from '../Profile/components/MyExercisesCard'
 import SIZE from '../../constants/SIZE'
 import NothingMore from '../../components/NothingMore'
 import { useNavigation } from '@react-navigation/native'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../constants/ERRORMessage'
 
 const MyExercise = () => {
     const dispatch = useDispatch()
@@ -44,9 +46,9 @@ const MyExercise = () => {
             if (res && res.status !== false) {
                 dispatch(setSessions(res))
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
-        }).catch(err => Alert.alert("出现异常请稍后重试"))
+        }).catch(err => Toast.show(ERROR_MESSAGE))
         setRefreshing(false);
     };
 

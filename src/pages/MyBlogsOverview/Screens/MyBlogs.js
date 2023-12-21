@@ -1,15 +1,14 @@
-import { Alert, ScrollView, Text, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { ScrollView, View } from 'react-native'
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import TutorialHorizontalWithID from '../../../components/TutorialHorizontalWithID';
 import SIZE from '../../../constants/SIZE';
-import BlogCardWithID from '../../../components/BlogCardWithID';
 import { getmyblog } from '../../../api/user.api';
 import BlogCard from '../../../components/BlogCard';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
 
 const MyBlogs = () => {
     const theme = useUserTheme()
@@ -22,7 +21,7 @@ const MyBlogs = () => {
             if (res.status !== false) {
                 setBlogs(res)
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }

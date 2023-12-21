@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux'
 import ContactHorizontalWithID from '../../../components/ContactHorizontalWithID'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PleaseInputSearchContent_MESSAGE } from '../../../constants/ERRORMessage'
 
 const SubscribeContactModal = ({ visible, setVisible }) => {
     const { currentUser } = useSelector(state => state.user)
@@ -25,13 +27,13 @@ const SubscribeContactModal = ({ visible, setVisible }) => {
                     setSearchText('')
                     setSearchedUsers(res)
                 } else {
-                    Alert.alert("出现异常请稍后再试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             }).catch(err => {
-                Alert.alert("出现异常请稍后再试")
+                Toast.show(ERROR_MESSAGE)
             })
         } else {
-            Alert.alert('请输入你所要查找的内容')
+            Toast.show(PleaseInputSearchContent_MESSAGE)
         }
     }
     return (

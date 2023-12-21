@@ -11,6 +11,8 @@ import { updateuserinfo } from '../../../api/user.api'
 import { loginSuccess } from '../../../redux/userSlice'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 
 const LanguageModal = ({ visible, setVisible }) => {
     const [language, setLanguage] = useState()
@@ -30,11 +32,11 @@ const LanguageModal = ({ visible, setVisible }) => {
                     dispatch(loginSuccess(res))
                     setVisible(false)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
             .catch(error => {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             })
     }
     return (

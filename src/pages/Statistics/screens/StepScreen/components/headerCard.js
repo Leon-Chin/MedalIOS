@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loginSuccess } from '../../../../../redux/userSlice'
 import useUserTheme from '../../../../../hooks/useUserTheme'
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../../../constants/ERRORMessage'
 const { width } = Dimensions.get('screen')
 const HeaderCard = () => {
     const theme = useUserTheme()
@@ -36,11 +38,11 @@ const HeaderCard = () => {
                     dispatch(loginSuccess(res))
                     setStepModalGoalVisible(false)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         } else {
-            Alert.alert("请输入有效值")
+            Toast.show(PleaseInput_MESSAGE)
         }
     }
     return (

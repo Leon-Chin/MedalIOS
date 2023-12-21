@@ -18,6 +18,8 @@ import ContactOptionsModal from '../components/ContactOptionsModal'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 
 const UserPage = ({ route }) => {
     const theme = useUserTheme()
@@ -40,7 +42,7 @@ const UserPage = ({ route }) => {
                 setUser(res)
                 setRecords(res.records)
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }
@@ -51,7 +53,7 @@ const UserPage = ({ route }) => {
                 const conversation = res.conversation
                 navigate('SpecificConversationPage', { conversationID: conversation._id, contact: user })
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }
@@ -60,7 +62,7 @@ const UserPage = ({ route }) => {
             if (res.status !== false) {
                 dispatch(loginSuccess(res))
             } else {
-                Alert.alert('出现异常请稍后重试')
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }
@@ -69,7 +71,7 @@ const UserPage = ({ route }) => {
             if (res.status !== false) {
                 dispatch(loginSuccess(res))
             } else {
-                Alert.alert('出现异常请稍后重试')
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }

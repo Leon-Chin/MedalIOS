@@ -12,6 +12,8 @@ import useTodayExerciseDuration from '../../../../../hooks/useTodayExerciseDurat
 import { secToMin, secToSpecificMin } from '../../../../../utils/funcs'
 import useUserTheme from '../../../../../hooks/useUserTheme'
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../../../constants/ERRORMessage'
 const { width } = Dimensions.get('screen')
 const HeaderCard = () => {
     const theme = useUserTheme()
@@ -32,16 +34,16 @@ const HeaderCard = () => {
                 durationTarget: parseInt(Goal) * 60
             }
             await updatedurationtarget(data).then(res => {
-                if (res.status !== false) {
+                if (res && res.status !== false) {
                     console.log(res.durationTarget);
                     dispatch(loginSuccess(res))
                     setModalGoalVisible(false)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         } else {
-            Alert.alert("请输入有效值")
+            Toast.show(PleaseInput_MESSAGE)
         }
     }
     return (

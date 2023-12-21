@@ -27,6 +27,8 @@ import useMeasurement from '../../../hooks/useMeasurement';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
 import UpdateMeasurementModal from './UpdateMeasurementModal';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get('screen')
 const StatisticChart = () => {
@@ -63,12 +65,12 @@ const StatisticChart = () => {
 
     const handleDeleteMeasurement = async (measurementID) => {
         await deletemeasurement(measurementID).then(res => {
-            if (res.status !== false) {
+            if (res && res.status !== false) {
                 dispatch(loginSuccess(res.user))
                 dispatch(setLatestMeasurement(res.measurement))
                 dispatch(setMeasurements(res.updatedMeasurements))
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }

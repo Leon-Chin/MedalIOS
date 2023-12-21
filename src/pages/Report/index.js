@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { createreport } from '../../api/user.api'
 import useUserTheme from '../../hooks/useUserTheme'
 import APPTHEME from '../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PleaseInput_MESSAGE, ThanksForFeedback_MESSAGE } from '../../constants/ERRORMessage'
+import COLORS from '../../constants/COLORS'
 
 const Report = ({ route }) => {
     const theme = useUserTheme()
@@ -13,27 +16,25 @@ const Report = ({ route }) => {
     const handleReport = async () => {
         reportReason ? await createreport({ type, targetID: target._id, content: reportReason })
             .then(() => {
-                // message.success('We received your report, we will inform you the results later')
-                Alert.alert('We received your report, we will inform you the results later')
+                Toast.show(ThanksForFeedback_MESSAGE)
                 setReportReason('')
             }).catch(err => {
-                // console.log(err);
-                Alert.alert('error happens, failed to report')
-            }) : Alert.alert('please write the reason of the report')
+                Toast.show(ERROR_MESSAGE)
+            }) : Toast.show(PleaseInput_MESSAGE)
     }
     return (
-        <View style={{ flex: 1, }}>
+        <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ flex: 1, marginHorizontal: '3%', marginVertical: '3%', }}>
-
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Report Reason:</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, color: currentTheme.fontColor }}>Report Reason:</Text>
                 <TextInput
                     placeholder='Please Enter'
+                    placeholderTextColor={COLORS.commentText}
                     returnKeyType='send'
                     multiline
                     blurOnSubmit
                     onChangeText={(reportReason) => setReportReason(reportReason)}
                     value={reportReason}
-                    style={{ height: 200, backgroundColor: currentTheme.contentColor, padding: 10, borderRadius: 10 }}
+                    style={{ height: 200, backgroundColor: currentTheme.contentColor, padding: 10, borderRadius: 10, color: currentTheme.fontColor }}
                     onSubmitEditing={() => handleReport()}
                 />
             </View>

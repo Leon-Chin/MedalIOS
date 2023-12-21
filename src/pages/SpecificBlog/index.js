@@ -17,6 +17,8 @@ import { loginSuccess } from '../../redux/userSlice';
 import EditBlogModal from './Components/EditBlogModal';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
 
 const { width: ScreenWidth, height: ScreenHeight } = Dimensions.get('screen')
 const SpecificBlog = ({ route }) => {
@@ -87,10 +89,10 @@ const SpecificBlog = ({ route }) => {
                     getWholeBlogInfo(usersReqs, comments)
                 }
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         }).catch(err => {
-            Alert.alert("出现异常请稍后重试")
+            Toast.show(ERROR_MESSAGE)
         })
     }
     const getWholeBlogInfo = async (userReq, comments) => {
@@ -98,7 +100,7 @@ const SpecificBlog = ({ route }) => {
             if (res.status !== false) {
                 setComments(comments.map((comment, i) => { return { ...comment, commentUserInfo: res[i] } }))
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }
@@ -110,10 +112,10 @@ const SpecificBlog = ({ route }) => {
                 setLikeNum(likedNum - 1)
                 setLiked(false)
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         }).catch((err) => {
-            Alert.alert("出现异常请稍后重试")
+            Toast.show(ERROR_MESSAGE)
         }) : await likeblog(blogID).then((res) => {
             if (res.status !== false) {
                 console.log("res", res);
@@ -123,7 +125,7 @@ const SpecificBlog = ({ route }) => {
                 setLiked(true)
             }
         }).catch((err) => {
-            Alert.alert("出现异常请稍后重试")
+            Toast.show(ERROR_MESSAGE)
         })
     }
     const handleFavoriteBlog = async () => {
@@ -135,7 +137,7 @@ const SpecificBlog = ({ route }) => {
                     setFavorited(false)
                 }
             }).catch((err) => {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }) : await favoriteblog(blogID)
                 .then((res) => {
                     if (res.status !== false) {
@@ -144,7 +146,7 @@ const SpecificBlog = ({ route }) => {
                         setFavorited(true)
                     }
                 }).catch((err) => {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 })
     }
 
@@ -156,10 +158,10 @@ const SpecificBlog = ({ route }) => {
                     getBlogComments()
                     setCommentText('')
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             }).catch(error => {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             })
     };
     const [editModalVisible, setEditModalVisible] = useState(false)
@@ -171,7 +173,7 @@ const SpecificBlog = ({ route }) => {
                 goBack()
                 dispatch(loginSuccess(res))
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }

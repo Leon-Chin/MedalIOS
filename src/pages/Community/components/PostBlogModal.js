@@ -12,6 +12,8 @@ import { postblog } from '../../../api/user.api'
 import { Video, ResizeMode } from 'expo-av';
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PublicSuccess_MESSAGE } from '../../../constants/ERRORMessage'
 
 const { width } = Dimensions.get('screen')
 
@@ -64,7 +66,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
             console.log(progress.toFixed(2));
         },
             (error) => {
-                Alert.alert('出现异常')
+                Toast.show(ERROR_MESSAGE)
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -101,7 +103,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
             } else if (blogType === 'text') {
                 handledItems = { ...handledItems }
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
                 return
             }
         }
@@ -110,19 +112,19 @@ const PostBlogModal = ({ visible, setVisible }) => {
             await postblog(handledItems).then(res => {
                 console.log("res", res);
                 if (res.status !== false) {
-                    Alert.alert("发布成功")
+                    Toast.show(PublicSuccess_MESSAGE)
                     setVisible(false)
                     setBlogImgs([])
                     setBlogVideo({})
                     setTitle(null)
                     setContent(null)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         } catch (error) {
             console.log("error", error);
-            Alert.alert("出现异常请稍后重试")
+            Toast.show(ERROR_MESSAGE)
         }
     }
     const handleDeletePic = (deletedImg) => {

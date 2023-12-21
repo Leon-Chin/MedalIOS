@@ -10,6 +10,8 @@ import { loginSuccess } from '../../../redux/userSlice'
 import { setSessions } from '../../../redux/SessionSlice'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 
 const DoneTodoItem = ({ tutorial }) => {
     const dispatch = useDispatch()
@@ -23,7 +25,7 @@ const DoneTodoItem = ({ tutorial }) => {
                 dispatch(loginSuccess(user))
                 dispatch(setSessions(updatedSessions))
             } else {
-                Alert.alert('出现异常请重试')
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }

@@ -8,6 +8,8 @@ import COLORS from '../../constants/COLORS';
 import SubscribeContactModal from './components/SubscribeContactModal';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
 const Communication = () => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -17,7 +19,7 @@ const Communication = () => {
         if (conversations && conversations.status !== false) {
             setConversations(conversations)
         } else {
-            Alert.alert('出现异常请稍后重试')
+            Toast.show(ERROR_MESSAGE)
         }
     }
     useEffect(() => {
@@ -36,7 +38,7 @@ const Communication = () => {
         if (conversations && conversations.status !== false) {
             setConversations(conversations)
         } else {
-            Alert.alert('出现异常请稍后重试')
+            Toast.show(ERROR_MESSAGE)
         }
         setRefreshing(false);
     };
@@ -45,7 +47,7 @@ const Communication = () => {
             if (res.status !== false) {
                 setConversations(res)
             } else {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }

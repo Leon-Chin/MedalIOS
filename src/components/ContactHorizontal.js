@@ -11,6 +11,8 @@ import GENDER from '../constants/GENDER';
 import { useEffect } from 'react';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../constants/ERRORMessage';
 const ContactHorizontal = ({ contact, setVisible }) => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -30,7 +32,7 @@ const ContactHorizontal = ({ contact, setVisible }) => {
             if (res.status !== false) {
                 dispatch(loginSuccess(res))
             } else {
-                Alert.alert('出现异常请稍后重试')
+                Toast.show(ERROR_MESSAGE);
             }
         })
     }
@@ -43,7 +45,7 @@ const ContactHorizontal = ({ contact, setVisible }) => {
                 navigate('SpecificConversationPage', { conversationID: conversation._id, contact })
             } else {
                 console.log(res);
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE);
             }
         })
     }

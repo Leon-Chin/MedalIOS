@@ -10,6 +10,8 @@ import SIZE from '../../../constants/SIZE'
 import THEME from '../../../constants/THEME'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 
 const ModeModal = ({ visible, setVisible }) => {
     const [theme, setTheme] = useState()
@@ -30,11 +32,11 @@ const ModeModal = ({ visible, setVisible }) => {
                     dispatch(loginSuccess(res))
                     setVisible(false)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
             .catch(error => {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             })
     }
     return (

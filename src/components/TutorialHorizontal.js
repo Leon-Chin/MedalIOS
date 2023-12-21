@@ -11,6 +11,8 @@ import { setSessions } from '../redux/SessionSlice';
 import useIsTutorialHasAlr from '../hooks/useIsTutorialHasAlr';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { AlreadyHave_MESSAGE, ERROR_MESSAGE } from '../constants/ERRORMessage';
 const TutorialHorizontal = ({ tutorial, withCalender }) => {
     const { userSelectDay } = useSelector(state => state.calendar)
     const theme = useUserTheme()
@@ -22,7 +24,7 @@ const TutorialHorizontal = ({ tutorial, withCalender }) => {
 
     const handleAddToCalendar = async () => {
         if (isTodayHasAlr) {
-            Alert.alert("今日已有这个训练了")
+            Toast.show(AlreadyHave_MESSAGE);
         } else {
             const newSession = {
                 date: new Date(userSelectDay),
@@ -30,7 +32,7 @@ const TutorialHorizontal = ({ tutorial, withCalender }) => {
             }
             await createsession(newSession).then(res => {
                 if (res.status === false) {
-                    Alert.alert("出现异常, 请稍后再试")
+                    Toast.show(ERROR_MESSAGE);
                 } else {
                     dispatch(loginSuccess(res.user))
                     dispatch(setSessions(res.updatedSessions))

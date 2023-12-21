@@ -6,6 +6,8 @@ import { Modal, StyleSheet, Text, SafeAreaView, TouchableOpacity, View, Alert, T
 import SIZE from '../../../constants/SIZE'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, ThanksForFeedback_MESSAGE } from '../../../constants/ERRORMessage'
 
 const FeedbackModal = ({ visible, setVisible }) => {
     const [feedbackContent, setFeedbackContent] = useState()
@@ -17,14 +19,14 @@ const FeedbackModal = ({ visible, setVisible }) => {
             .then((res) => {
                 console.log("res", res);
                 if (res.status !== false) {
-                    Alert.alert("感谢您的反馈")
+                    Toast.show(ThanksForFeedback_MESSAGE)
                     setVisible(false)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
             .catch(error => {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             })
     }
     return (

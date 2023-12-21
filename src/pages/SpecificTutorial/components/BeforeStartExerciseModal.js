@@ -17,6 +17,8 @@ import PIC from '../../../constants/PIC';
 import EXERCISETYPE from '../../../constants/EXERCISETYPE';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
 
 const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }) => {
     const theme = useUserTheme()
@@ -55,7 +57,7 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
                     setTutorial(res.updatedTutorial)
                     navigate("TutorialVideo", { tutorial })
                 } else {
-                    Alert.alert("出现异常，请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         }

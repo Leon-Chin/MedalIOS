@@ -11,6 +11,8 @@ import TutorialVerticalView from '../../components/TutorialVerticalView'
 import { getspecifictypetutorials } from '../../api/tutorial.api'
 import useUserTheme from '../../hooks/useUserTheme'
 import APPTHEME from '../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../constants/ERRORMessage'
 
 const TutorialLibrary = ({ route }) => {
     const theme = useUserTheme()
@@ -32,7 +34,8 @@ const TutorialLibrary = ({ route }) => {
                 setSpecificTutorials(res)
                 console.log("res", res);
             } else {
-                Alert.alert("出现异常，请稍后重试")
+                
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }

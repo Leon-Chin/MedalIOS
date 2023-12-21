@@ -10,6 +10,8 @@ import { setLatestMeasurement, setMeasurements } from '../../../redux/Measuremen
 import { loginSuccess } from '../../../redux/userSlice'
 import useMeasurement from '../../../hooks/useMeasurement'
 import { isEmptyObj } from '../../../utils/getDuration'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../constants/ERRORMessage'
 const { width } = Dimensions.get("screen")
 
 const UploadMeasurementModal = ({ visible, setVisible }) => {
@@ -58,17 +60,17 @@ const UploadMeasurementModal = ({ visible, setVisible }) => {
                 BMI,
             }
             await uploadmeasurement(data).then(res => {
-                if (res.status !== false) {
+                if (res && res.status !== false) {
                     dispatch(setLatestMeasurement(res.measurement))
                     dispatch(setMeasurements(res.updatedMeasurements))
                     dispatch(loginSuccess(res.user))
                     handlePresentModalClose()
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
         } else {
-            Alert.alert("请输入完成信息")
+            Toast.show(PleaseInput_MESSAGE)
         }
     }
     useEffect(() => {

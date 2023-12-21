@@ -1,4 +1,4 @@
-import { Alert, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, Pressable, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useRef } from 'react'
 import COLORS from '../../constants/COLORS'
 import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons';
@@ -12,6 +12,8 @@ import PostBlogModal from './components/PostBlogModal';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { ICON } from '../../constants/SVG/ICON';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
 
 const Community = () => {
     const theme = useUserTheme()
@@ -23,8 +25,16 @@ const Community = () => {
     const [blogs, setBlogs] = useState([])
     const [searchedBlogs, setSearchedBlogs] = useState([])
     const getRecommandBlogs = async () => {
-        const blogs = await getrandomblog()
-        setBlogs(blogs)
+        await getrandomblog().then(blogs => {
+            if (blogs && blogs.status !== false) {
+                setBlogs(blogs)
+            } else {
+                Toast.show(ERROR_MESSAGE)
+            }
+        }).catch(err => {
+            console.log("blogsERRRR", err);
+            Toast.show(ERROR_MESSAGE)
+        })
     }
     useEffect(() => {
         getRecommandBlogs()
@@ -39,11 +49,11 @@ const Community = () => {
                 if (blogs.status !== false) {
                     setSearchedBlogs(blogs)
                 } else {
-                    Alert.alert('出现异常请稍后重试')
+                    Toast.show(ERROR_MESSAGE)
                 }
             }).catch(err => {
                 console.log(err);
-                Alert.alert('出现异常请稍后重试')
+                Toast.show(ERROR_MESSAGE)
             })
         } else {
             setSearchedBlogs([])
@@ -61,6 +71,28 @@ const Community = () => {
     };
 
     const [postBlogModalVisible, setPostBlogVisible] = useState(false)
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        // 可以在这里重新获取 sessions 数据，或者直接更新 selectDay 以触发重载
+        // 例如：
+        await getrandomblog().then(blogs => {
+            if (blogs && blogs.status !== false) {
+                setBlogs(blogs)
+            } else {
+                Toast.show(ERROR_MESSAGE)
+            }
+        }).catch(err => {
+            console.log("blogsERRRR", err);
+            Toast.show(ERROR_MESSAGE)
+        })
+
+        setRefreshing(false);
+    };
+
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ paddingHorizontal: 20, flexDirection: 'row', gap: 10, alignItems: 'center', height: 60, paddingBottom: 10, width: '100%' }}>
@@ -72,10 +104,10 @@ const Community = () => {
                 <TextInput
                     placeholder='Search the blog'
                     value={searchText}
-                    placeholderTextColor={currentTheme.commentFontColor}
+                    placeholderTextColor={COLORS.commentText}
                     onChangeText={setSearchText}
                     clearButtonMode='always'
-                    style={{ flex: 1, paddingHorizontal: 20, paddingVertical: 6, backgroundColor: currentTheme.contentColor, height: 50, fontSize: 18, borderRadius: 16 }}
+                    style={{ flex: 1, color: currentTheme.commentFontColor, paddingHorizontal: 20, paddingVertical: 6, backgroundColor: currentTheme.contentColor, height: 50, fontSize: 18, borderRadius: 16 }}
                 />
                 <TouchableOpacity
                     onPress={() => handleSearchBlogs()}
@@ -90,6 +122,12 @@ const Community = () => {
                 style={{ paddingHorizontal: '3%' }}
                 renderItem={({ item, index }) => <BlogCard key={index} blog={item} />}
                 onEndReached={handleEndReached}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
                 ListFooterComponent={
                     <TouchableOpacity
                         onPress={() => {

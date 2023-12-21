@@ -11,6 +11,8 @@ import THEME from '../../../constants/THEME'
 import GENDER from '../../../constants/GENDER'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 
 const GenderModal = ({ visible, setVisible }) => {
     const [updatedGender, setUpdatedGender] = useState()
@@ -30,11 +32,11 @@ const GenderModal = ({ visible, setVisible }) => {
                     dispatch(loginSuccess(res))
                     setVisible(false)
                 } else {
-                    Alert.alert("出现异常请稍后重试")
+                    Toast.show(ERROR_MESSAGE)
                 }
             })
             .catch(error => {
-                Alert.alert("出现异常请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             })
     }
     return (

@@ -11,6 +11,8 @@ import { useDispatch } from 'react-redux';
 import EvaluationQuestion from '../components/EvaluationQuestion';
 import { updatePrefer } from '../../../api/user.api';
 import { loginSuccess } from '../../../redux/userSlice';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { AlreadyEvaluation_MESSAGE, ERROR_MESSAGE, NothingInput_MESSAGE } from '../../../constants/ERRORMessage';
 const { width } = Dimensions.get('screen')
 const Evaluation = () => {
     const dispatch = useDispatch()
@@ -35,15 +37,15 @@ const Evaluation = () => {
                 if (user.status !== false) {
                     dispatch(loginSuccess(user))
                     goBack()
-                    Alert.alert('已经提交评估，将为您生成个性化推荐')
+                    Toast.show(AlreadyEvaluation_MESSAGE)
                 } else {
-                    Alert.alert('出现异常, 请稍后再试')
+                    Toast.show(ERROR_MESSAGE)
                 }
             }).catch(() => {
-                Alert.alert('出现异常, 请稍后再试')
+                Toast.show(ERROR_MESSAGE)
             })
         } else {
-            Alert.alert('您未作出选择, 无法为您更新')
+            Toast.show(NothingInput_MESSAGE)
             goBack()
         }
     }

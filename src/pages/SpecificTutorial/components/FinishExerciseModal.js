@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../redux/userSlice';
 import { finishsession } from '../../../api/session.api';
 import { setSessions } from '../../../redux/SessionSlice';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
 
 const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, watchTime, startTime, endTime }) => {
     const [shouldRecord, setShouldRecord] = useState(false)
@@ -55,7 +57,7 @@ const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, wat
                 navigation.dispatch(StackActions.replace("AfterExercise", { tutorial, data }))
             } else {
                 console.log(res);
-                Alert.alert("出现异常，请稍后重试")
+                Toast.show(ERROR_MESSAGE)
             }
         })
     }
