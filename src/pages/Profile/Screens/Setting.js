@@ -19,18 +19,8 @@ import APPTHEME from '../../../constants/COLORS/APPTHEME';
 import { ICON } from '../../../constants/SVG/ICON';
 
 const Setting = () => {
-    const { navigate } = useNavigation()
-    const dispatch = useDispatch()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
-    const bottomSheetModalRef = useRef(null);
-    // variables
-    const snapPoints = useMemo(() => ['25%'], []);
-    // callbacks
-    const handlePresentModalPress = useCallback(() => {
-        bottomSheetModalRef.current?.present();
-    }, []);
-
     const [logoutModalVisible, setLogoutModalVisible] = useState(false)
     const [languageModalVisible, setLanguageModalVisible] = useState(false)
     const [modeModalVisible, setModeModalVisible] = useState(false)

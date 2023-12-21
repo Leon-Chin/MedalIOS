@@ -13,8 +13,9 @@ import { loginSuccess } from '../../../redux/userSlice';
 import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
+import * as Location from 'expo-location';
 
-const Walk = () => {
+const Run = () => {
     const [startTime, setStartTime] = useState()
     const [focused, setFocused] = useState(true)
     const navigation = useNavigation()
@@ -36,10 +37,10 @@ const Walk = () => {
             setPedometerAvailable(isAvailable);
 
             if (isAvailable) {
-                let initial = 0
-                let first = true
                 setStartTime(new Date());
                 // 订阅Pedometer，并保存订阅以便稍后取消
+                let initial = 0
+                let first = true
                 pedometerSubscription = Pedometer.watchStepCount(result => {
                     if (first) {  // 如果这是新会话，记录初始步数
                         initial = result.steps;
@@ -57,8 +58,11 @@ const Walk = () => {
         return () => {
             if (pedometerSubscription) {
                 // 取消订阅
+                console.log("xiezaile");
+                console.log(pedometerSubscription);
                 pedometerSubscription.remove();
                 pedometerSubscription.remove()
+                console.log("now", pedometerSubscription.remove());
             }
             stopPedometer(); // 确保计时器停止
         };
@@ -78,11 +82,11 @@ const Walk = () => {
             exerciseDuration: getElapsedMinute(startTime).seconds,
             startTime: startTime,
             endTime: new Date(),
-            // calorieConsumption: 
+            distance: distance,
             step: currentStepCount,
         }
         const tutorial = {
-            name: "Walk",
+            name: "Run",
         }
         await finishsessionoutside(tutorial, ExerciseData, new Date()).then(res => {
             if (res && res.status !== false) {
@@ -90,17 +94,116 @@ const Walk = () => {
                 setFocused(false)
                 dispatch(loginSuccess(res.user))
                 dispatch(setSessions(res.updatedSessions))
+                // here
+                stopTracking()
                 navigation.dispatch(StackActions.replace("AfterExercise", { tutorial, data: ExerciseData }))
             }
         })
     }
+
+    const [isTracking, setIsTracking] = useState(true);
+    const [distance, setDistance] = useState(0);
+    const [currentPosition, setCurrentPosition] = useState(null);
+    const [positionStack, setPositionStack] = useState([]);
+    const MIN_DISTANCE_THRESHOLD = 5; // 最小距离阈值，单位为米
+    const POSITION_STACK_SIZE = 2; // 用于滑动窗口平均的位置栈大小
+    useEffect(() => {
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                Alert.alert('Permission to access location was denied');
+                return;
+            }
+        })();
+    }, []);
+
+    const stopTracking = () => {
+        setIsTracking(false);
+    };
+
+    const getAveragePosition = (positions) => {
+        if (positions.length === 0) return null;
+        let avgLat = 0, avgLon = 0;
+        positions.forEach(pos => {
+            avgLat += pos.coords.latitude;
+            avgLon += pos.coords.longitude;
+        });
+        avgLat /= positions.length;
+        avgLon /= positions.length;
+        return { latitude: avgLat, longitude: avgLon };
+    };
+
+    function getDistanceFromLatLonInM(lat1, lon1, lat2, lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2 - lat1);
+        var dLon = deg2rad(lon2 - lon1);
+        var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c; // Distance in km
+        return d * 1000; // Distance in m
+    }
+
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+    }
+
+
+    useEffect(() => {
+        if (isTracking) {
+            const subscription = Location.watchPositionAsync(
+                {
+                    accuracy: Location.Accuracy.BestForNavigation,
+                    distanceInterval: 6, // Receive updates only after moving 10 meters
+                },
+                (newPosition) => {
+                    setPositionStack(prev => [...prev.slice(1 - POSITION_STACK_SIZE), newPosition]); // 更新位置栈
+
+                    if (positionStack.length === POSITION_STACK_SIZE) {
+                        // console.log("here", newPosition);
+                        const averagePosition = getAveragePosition(positionStack);
+                        // console.log("currentPosition", currentPosition);
+                        // console.log("averagePosition", averagePosition);
+                        if (currentPosition && averagePosition) {
+                            const newDistance = getDistanceFromLatLonInM(
+                                currentPosition.coords.latitude,
+                                currentPosition.coords.longitude,
+                                averagePosition.latitude,
+                                averagePosition.longitude
+                            );
+                            // console.log("newDistance", newDistance);
+                            if (newDistance > MIN_DISTANCE_THRESHOLD) {
+                                setDistance((prevDistance) => prevDistance + newDistance);
+                                setCurrentPosition(newPosition);
+                            }
+                        } else {
+                            setCurrentPosition(newPosition);
+                        }
+                    }
+                }
+            );
+
+            return () => {
+                subscription.then((sub) => sub.remove());
+            };
+        }
+    }, [isTracking, currentPosition, positionStack]);
+
     const handleGoback = () => {
         // 显示确认对话框
         Alert.alert(
-            '放弃步行记录？',
-            '如果你离开，步行记录将会丢失。',
+            '放弃跑步记录？',
+            '如果你离开，跑步记录将会丢失。',
             [{ text: '取消', style: 'cancel', onPress: () => { } },
-            { text: '放弃', style: 'destructive', onPress: () => navigation.goBack() },// 如果用户确认放弃，则触发默认行为
+            {
+                text: '放弃', style: 'destructive', onPress: () => {
+                    setDistance(0)
+                    setCurrentStepCount(0)
+                    navigation.goBack()
+                }
+            },// 如果用户确认放弃，则触发默认行为
             ]
         );
 
@@ -112,10 +215,13 @@ const Walk = () => {
                     onPress={() => handleGoback()}>
                     {ICON.left(36, "#fff")}
                 </TouchableOpacity>
-                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>Walk</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>Run</Text>
             </View>
             <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
-
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ color: '#fff', fontSize: 80, fontWeight: 'bold' }}>{(distance).toFixed(0)}</Text>
+                    <Text style={{ color: '#fff' }}>m</Text>
+                </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: '#fff', fontSize: 80, fontWeight: 'bold' }}>{currentStepCount ? currentStepCount : "--"}</Text>
                     <Text style={{ color: '#fff' }}>步数</Text>
@@ -136,6 +242,26 @@ const Walk = () => {
                 </View>
                 {/* operation button */}
                 <View style={{ flexDirection: 'row' }}>
+                    {/* Start btn */}
+                    {/* {!started && <TouchableOpacity style={{ width: 70, height: 70, borderRadius: 35, backgroundColor: '#66CC99', justifyContent: 'center', alignItems: 'center', marginRight: 10 }} */}
+                    {/* onPress={() => startPedometer()} */}
+                    {/* > */}
+                    {/* <FontAwesome5 name="play" size={22} color="#fff" /> */}
+                    {/* {ICON.play(22, "#fff")} */}
+                    {/* </TouchableOpacity>} */}
+                    {/* <TouchableOpacity style={{ width: 70, height: 70, borderRadius: 35, backgroundColor: '#66CC99', justifyContent: 'center', alignItems: 'center', marginRight: 10 }} */}
+                    {/* onPress={() => startPedometer()} */}
+                    {/* > */}
+                    {/* <FontAwesome5 name="play" size={22} color="#fff" /> */}
+                    {/* {ICON.play(22, "#fff")} */}
+                    {/* </TouchableOpacity> */}
+                    {/* Start btn */}
+                    {/* <TouchableOpacity */}
+                    {/* style={{ width: 70, height: 70, borderRadius: 35, backgroundColor: '#CC3333', justifyContent: 'center', alignItems: 'center', marginLeft: 10 }} */}
+                    {/* > */}
+                    {/* <Ionicons name="stop" size={28} color="#fff" /> */}
+                    {/* {ICON.stop(28, "#fff")} */}
+                    {/* </TouchableOpacity> */}
                     <TouchableOpacity
                         style={{ width: 70, height: 70, borderRadius: 35, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }}
                         onPress={() => handleFinish()}
@@ -152,6 +278,6 @@ const Walk = () => {
     )
 }
 
-export default Walk
+export default Run
 
 const styles = StyleSheet.create({})

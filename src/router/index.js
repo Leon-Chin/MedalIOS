@@ -32,6 +32,7 @@ import StepScreen from '../pages/Statistics/screens/StepScreen'
 import UserPage from '../pages/Profile/Screens/UserPage'
 import useUserTheme from '../hooks/useUserTheme'
 import APPTHEME from '../constants/COLORS/APPTHEME'
+import Run from '../pages/ExercisesPages/Run'
 
 const Stack = createNativeStackNavigator();
 
@@ -68,6 +69,7 @@ export default function MyRouter() {
                         <Stack.Screen name="Setting" component={Setting} options={{ title: '设置', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                         <Stack.Screen name="SpecificConversationPage" component={SpecificConversationPage} options={{ headerShown: false }} />
                         <Stack.Screen name="Walk" component={Walk} options={{ headerShown: false }} />
+                        <Stack.Screen name="Run" component={Run} options={{ headerShown: false }} />
                         <Stack.Screen name="MyBlogsOverview" component={MyBlogsOverview} options={{ headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                         <Stack.Screen name="Report" component={Report} options={{ headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                         <Stack.Screen name="ExercisesOverview" component={ExerciseOverview} options={{ headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />

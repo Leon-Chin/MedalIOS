@@ -58,7 +58,7 @@ const AfterExcercise = ({ route }) => {
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
-                        <View style={{ flex: 1, justifyContent: 'center', gap: SIZE.NormalMargin }}>
+                        {tutorial?.name !== "Run" && tutorial?.name !== "Walk" && <View style={{ flex: 1, justifyContent: 'center', gap: SIZE.NormalMargin }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, justifyContent: 'center' }}>
                                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.colorieOrange }}>{calorieConsumption ? calorieConsumption : '--'}</Text>
                                 {ICON.fire(SIZE.NormalTitle, COLORS.colorieOrange)}
@@ -66,7 +66,7 @@ const AfterExcercise = ({ route }) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                                 <Text style={{ color: COLORS.commentText }}>预估消耗(千卡)</Text>
                             </View>
-                        </View>
+                        </View>}
 
                         <View style={{ flex: 1, gap: 3 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
@@ -79,7 +79,7 @@ const AfterExcercise = ({ route }) => {
                             </View>}
                             {distance && <View>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}>距离</Text>
-                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{distance}m</Text>
+                                <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{distance.toFixed(0)}m</Text>
                             </View>}
                             <View>
                                 <Text numberOfLines={1} style={{ color: COLORS.commentText }}>训练开始时间</Text>

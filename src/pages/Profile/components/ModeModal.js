@@ -19,7 +19,7 @@ const ModeModal = ({ visible, setVisible }) => {
     const currentTheme = APPTHEME[usertheme]
     const dispatch = useDispatch()
     const { currentUser } = useSelector(state => state.user)
-    const { _id, name, personalStatus, age, preferedTheme, preferedLanguage, gender, avator, birthday, hpNum } = currentUser
+    const { preferedTheme } = currentUser
     useEffect(() => {
         setTheme(preferedTheme)
     }, [preferedTheme])

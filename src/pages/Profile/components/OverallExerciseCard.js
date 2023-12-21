@@ -1,10 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { Entypo } from '@expo/vector-icons';
 import COLORS from '../../../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
-import useTodayExerciseDuration from '../../../hooks/useTodayExerciseDuration';
-import { secToMin, secToSpecificMin } from '../../../utils/funcs';
+import { secToSpecificMin } from '../../../utils/funcs';
 import useRecords from '../../../hooks/useRecords';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
@@ -26,12 +24,12 @@ const OverallExerciseCard = () => {
                 {ICON.right(24, currentTheme.fontColor)}
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20,color:currentTheme.fontColor }}>{secToSpecificMin(durationSum)}</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20, color: currentTheme.fontColor }}>{durationSum ? secToSpecificMin(durationSum) : 0}</Text>
                 <Text style={{ fontSize: 16, color: COLORS.commentText }}>min</Text>
             </View>
             <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                 <Text style={{ fontSize: 10, color: COLORS.commentText }}>总消耗</Text>
-                <Text style={{ fontSize: 10, color: COLORS.commentText }}>{calorieSum}({tutorialCalorieSum})</Text>
+                <Text style={{ fontSize: 10, color: COLORS.commentText }}>{calorieSum ? calorieSum.toFixed(0) : 0}({tutorialCalorieSum ? tutorialCalorieSum.toFixed(0) : 0})</Text>
                 <Text style={{ fontSize: 10, color: COLORS.commentText }}>千卡</Text>
             </View>
         </TouchableOpacity>

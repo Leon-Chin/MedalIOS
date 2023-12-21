@@ -49,6 +49,8 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
     const handleStartExercise = async () => {
         if (tutorial.type === EXERCISETYPE.walk.value) {
             navigate("Walk")
+        } else if (tutorial.type === EXERCISETYPE.run.value) {
+            navigate("Run")
         } else {
             await participateTutorial(tutorial._id).then(res => {
                 if (res.status !== false) {
