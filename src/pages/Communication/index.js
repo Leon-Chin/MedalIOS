@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList, Alert } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, RefreshControl, FlatList, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { deleteconversation, getconversation } from '../../api/user.api'
@@ -12,18 +12,34 @@ const Communication = () => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const [conversations, setConversations] = useState([{}])
-    useEffect(() => {
-        const getData = async () => {
-            const conversations = await getconversation()
+    const getData = async () => {
+        const conversations = await getconversation()
+        if (conversations && conversations.status !== false) {
             setConversations(conversations)
+        } else {
+            Alert.alert('出现异常请稍后重试')
         }
+    }
+    useEffect(() => {
         const interval = setInterval(getData, 3000)
         getData()
         return () => {
             clearInterval(interval)
         }
     }, [])
+    const [refreshing, setRefreshing] = useState(false);
 
+    const onRefresh = async () => {
+        setRefreshing(true);
+        // 可以在这里重新获取 sessions 数据，或者直接更新 selectDay 以触发重载
+        const conversations = await getconversation()
+        if (conversations && conversations.status !== false) {
+            setConversations(conversations)
+        } else {
+            Alert.alert('出现异常请稍后重试')
+        }
+        setRefreshing(false);
+    };
     const deleteConversation = async (conversationID) => {
         await deleteconversation(conversationID).then(res => {
             if (res.status !== false) {
@@ -47,6 +63,12 @@ const Communication = () => {
             <View style={{ flex: 1 }}>
                 <FlatList
                     data={conversations}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
                     renderItem={({ item, index }) => {
                         return <ConversationItem key={index} deleteConversation={deleteConversation} conversation={item} />
                     }}

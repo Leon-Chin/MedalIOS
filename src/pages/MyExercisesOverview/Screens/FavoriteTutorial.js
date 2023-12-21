@@ -20,7 +20,7 @@ const FavoriteTutorial = () => {
     return (
         <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <ScrollView style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin }}>
-                {favoriteTutorials.map((item, index) => <TutorialHorizontalWithID tutorialID={item} key={index} />)}
+                {favoriteTutorials.map((item, index) => <TutorialHorizontalWithID withCalender={true} tutorialID={item} key={index} />)}
             </ScrollView>
         </View>
     )

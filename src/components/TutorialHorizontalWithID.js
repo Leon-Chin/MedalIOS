@@ -15,6 +15,7 @@ import APPTHEME from '../constants/COLORS/APPTHEME';
 const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
+    const { userSelectDay } = useSelector(state => state.calendar)
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
     const [tutorial, setTutorial] = useState({})
@@ -30,11 +31,12 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
                 tutorial: _id,
             }
             await createsession(newSession).then(res => {
-                if (res.status === false) {
-                    Alert.alert("出现异常, 请稍后再试")
-                } else {
+                if (res && res.status !== false) {
                     dispatch(loginSuccess(res.user))
                     dispatch(setSessions(res.updatedSessions))
+                    Alert.alert("添加成功")
+                } else {
+                    Alert.alert("出现异常, 请稍后再试")
                 }
             })
         }

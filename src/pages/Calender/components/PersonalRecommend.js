@@ -57,10 +57,6 @@ const PersonalRecommend = ({ selectDay }) => {
                     <Text style={{ fontSize: 14, fontWeight: 'bold', color: COLORS.commentText }}>请做一下喜好问卷，来为您个性化推荐适合您喜好的教程</Text>
                 </View>
             )}
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <Text style={{ color: COLORS.commentText }}>--没有更多了--</Text>
-            </View>
-            <View style={{ height: 70 }}></View>
         </>
     )
 }

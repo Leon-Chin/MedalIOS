@@ -12,9 +12,9 @@ const Exercises = [
         icon: exerciseLogo.walk(30)
     },
     {
-        name: 'Rope',
-        value: EXERCISETYPE.rope.value,
-        icon: exerciseLogo.rope(30)
+        name: 'Burning',
+        value: EXERCISETYPE.burning.value,
+        icon: exerciseLogo.lose(30)
     },
     {
         name: 'Yoga',
