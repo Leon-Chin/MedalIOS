@@ -17,9 +17,8 @@ const TodayRecord = () => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
-    const todayRecord = useRecord()
+    const { todayRecord } = useRecord()
     const duration = useTodayExerciseDuration()
-
     const handleShowDetail = (title, value) => {
         Alert.alert(`${title}: ${value}`)
     }

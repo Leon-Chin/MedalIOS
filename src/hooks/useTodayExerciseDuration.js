@@ -22,7 +22,6 @@ function useTodayExerciseDuration(selectDay) {
                 }
             }
         })
-
         setDuration(sum)
     }, [selectDay, sessions]);
 
