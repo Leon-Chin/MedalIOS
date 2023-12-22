@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import { Ionicons, Entypo } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { Avatar } from '@rneui/base';
 import COLORS from '../../constants/COLORS';
 import MyExercisesCard from './components/MyExercisesCard';
@@ -11,13 +11,16 @@ import { useNavigation } from '@react-navigation/native';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { ICON } from '../../constants/SVG/ICON';
+import useCheckUserStatus from '../../hooks/useCheckUserStatus';
+import SIZE from '../../constants/SIZE';
 
 const Profile = () => {
-    const { currentUser } = useSelector((state => state.user))
+    const { currentUser } = useSelector(state => state.user, shallowEqual)
     const { navigate } = useNavigation()
-    const { _id, name, personalStatus, age, preferedTheme, preferedLanguage, gender, avator, birthday, hpNum } = currentUser
+    const { _id, name, avator, } = currentUser
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
+    const { isMuted, muteDate } = useCheckUserStatus()
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ marginHorizontal: '3%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
@@ -29,6 +32,7 @@ const Profile = () => {
                             <Text style={{ fontSize: 10, marginTop: 4, color: COLORS.commentText }}>ID:</Text>
                             <Text style={{ fontSize: 10, marginTop: 4, color: COLORS.commentText }}>{_id}</Text>
                         </View>
+                        {isMuted && <Text style={{ marginTop: SIZE.LittleMargin, color: currentTheme.fontColor, }}>账户状态: 「禁言」禁言终止日期: {muteDate}</Text>}
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('Setting')}>

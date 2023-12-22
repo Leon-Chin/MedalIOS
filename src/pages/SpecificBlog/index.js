@@ -19,6 +19,7 @@ import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
+import useCheckUserStatus from '../../hooks/useCheckUserStatus';
 
 const { width: ScreenWidth, height: ScreenHeight } = Dimensions.get('screen')
 const SpecificBlog = ({ route }) => {
@@ -150,19 +151,25 @@ const SpecificBlog = ({ route }) => {
                 })
     }
 
+    const { isMuted, muteDate } = useCheckUserStatus()
+
     const handleAddComment = async () => {
-        // 在这里执行你想要的操作
-        commentText && await addcomment({ blogID, content: commentText })
-            .then((res) => {
-                if (res.status !== false) {
-                    getBlogComments()
-                    setCommentText('')
-                } else {
+        if (!isMuted) {
+            // 在这里执行你想要的操作
+            commentText && await addcomment({ blogID, content: commentText })
+                .then((res) => {
+                    if (res.status !== false) {
+                        getBlogComments()
+                        setCommentText('')
+                    } else {
+                        Toast.show(ERROR_MESSAGE)
+                    }
+                }).catch(error => {
                     Toast.show(ERROR_MESSAGE)
-                }
-            }).catch(error => {
-                Toast.show(ERROR_MESSAGE)
-            })
+                })
+        } else {
+            Toast.show({ type: 'error', text1: '禁言提示', text2: '您因违反社区规定已被禁言, 禁言期间无法发评论, 禁言终止日期:' + muteDate, duration: 5, topOffset: 50 })
+        }
     };
     const [editModalVisible, setEditModalVisible] = useState(false)
 

@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Text, TouchableOpacity, View } from 'react-native'
 import COLORS from '../../../constants/COLORS'
 import { ICON } from '../../../constants/SVG/ICON'
 import { useNavigation } from '@react-navigation/native';
@@ -69,5 +69,3 @@ const TodayRecord = () => {
 }
 
 export default TodayRecord
-
-const styles = StyleSheet.create({})

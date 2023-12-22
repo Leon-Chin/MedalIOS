@@ -33,6 +33,8 @@ import UserPage from '../pages/Profile/Screens/UserPage'
 import useUserTheme from '../hooks/useUserTheme'
 import APPTHEME from '../constants/COLORS/APPTHEME'
 import Run from '../pages/ExercisesPages/Run'
+import useCheckUserStatus from '../hooks/useCheckUserStatus'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +43,11 @@ export default function MyRouter() {
     const Language = userLocale ? userLocale.substring(0, 2) : 'en'
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
-    if (!currentUser) {
+    const { isBlocked } = useCheckUserStatus()
+    if (isBlocked) {
+        Toast.show({ type: 'error', text1: '封禁提示', text2: '您因违反社区规定, 账号已被封禁已经无法使用App' })
+    }
+    if (!currentUser || isBlocked) {
         return (<IntlProvider locale={Language} messages={localeConfig[Language]}>
             <NavigationContainer>
                 <Stack.Navigator initialRouteName='Promotion'>
@@ -50,7 +56,6 @@ export default function MyRouter() {
                 </Stack.Navigator>
             </NavigationContainer>
         </IntlProvider>)
-
     } else {
         return (
             <IntlProvider locale={Language} messages={localeConfig[Language]}>

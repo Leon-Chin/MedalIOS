@@ -1,7 +1,7 @@
-import { Alert, FlatList, Pressable, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { FlatList, RefreshControl, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useRef } from 'react'
 import COLORS from '../../constants/COLORS'
-import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import BlogCard from '../../components/BlogCard';
 import { getrandomblog, searchblog } from '../../api/user.api';
@@ -14,8 +14,10 @@ import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { ICON } from '../../constants/SVG/ICON';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
+import useCheckUserStatus from '../../hooks/useCheckUserStatus';
 
 const Community = () => {
+    const { isMuted, muteDate } = useCheckUserStatus()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
@@ -143,7 +145,11 @@ const Community = () => {
             <View style={{ height: 50 }}></View>
             <TouchableOpacity
                 onPress={() => {
-                    setPostBlogVisible(true)
+                    if (!isMuted) {
+                        setPostBlogVisible(true)
+                    } else {
+                        Toast.show({ type: 'error', text1: '禁言提示', text2: '您因违反社区规定已被禁言, 禁言期间无法发博客, 禁言终止日期:' + muteDate, duration: 5, topOffset: 50 })
+                    }
                 }}
                 style={{ justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 100, right: 20, width: 50, height: 50, backgroundColor: COLORS.primary, borderRadius: 25, zIndex: 1 }}
             >
