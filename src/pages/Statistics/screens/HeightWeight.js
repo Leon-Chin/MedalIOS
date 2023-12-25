@@ -18,7 +18,6 @@ import { useIntl } from 'react-intl'
 const { width } = Dimensions.get("screen")
 
 const HeightWeight = () => {
-    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { latestMeasurement, allMeasurements } = useMeasurement()
@@ -45,6 +44,7 @@ const HeightWeight = () => {
     )
 }
 const WeightIntro = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     return <View>

@@ -1,3 +1,4 @@
+import { useIntl } from "react-intl";
 //计算平均数
 export const calculateBMI = (weight, height) => {//weight kg 身高 cm
     const convertedHeight = parseFloat(height) / 100
