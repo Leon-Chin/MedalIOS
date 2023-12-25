@@ -7,13 +7,23 @@ export const calculateBMI = (weight, height) => {//weight kg 身高 cm
 }
 
 export const BMISort = (bmi) => {
-    if (bmi < 18.5) {
-        return '体重过轻';
-    } else if (bmi >= 18.5 && bmi <= 24.9) {
-        return '正常范围';
-    } else if (bmi >= 25 && bmi <= 29.9) {
-        return '超重';
-    } else {
-        return '肥胖';
-    }
+    const { formatMessage } = useIntl()
+if (bmi < 18.5) {
+
+return formatMessage({ id: 'app.statistic.bmiLvl.underWt' });
+
+} else if (bmi >= 18.5 && bmi <= 24.9) {
+
+return formatMessage({ id: 'app.statistic.bmiLvl.norWt' });
+
+} else if (bmi >= 25 && bmi <= 29.9) {
+
+return formatMessage({ id: 'app.statistic.bmiLvl.overWt' });
+
+} else {
+
+return formatMessage({ id: 'app.statistic.bmiLvl.obesity' });
+
+}
+
 }

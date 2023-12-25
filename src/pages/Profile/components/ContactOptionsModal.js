@@ -7,8 +7,10 @@ import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import COLORS from '../../../constants/COLORS';
+import { useIntl } from 'react-intl';
 
 const ContactOptionsModal = ({ visible, setVisible, user }) => {
+    const { formatMessage } = useIntl()
     const bottomSheetModalRef = useRef(null);
     // variables
     const snapPoints = useMemo(() => ['25%', '50%', '75%'], []);
@@ -33,13 +35,13 @@ const ContactOptionsModal = ({ visible, setVisible, user }) => {
                 onPress={() => navigate("Report", { type: "user", target: user })}
                 style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}>举报</Text>
+                <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}>{formatMessage({ id: 'app.profile.report' })}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={handleModelClose}
                 style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                <Text style={{ fontSize: 18, color: COLORS.commentText, fontWeight: 'bold' }}>取消</Text>
+                <Text style={{ fontSize: 18, color: COLORS.commentText, fontWeight: 'bold' }}>{formatMessage({ id: 'app.profile.cancel' })}</Text>
             </TouchableOpacity>
         </BottomSheetModal>
     )

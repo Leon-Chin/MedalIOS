@@ -2,14 +2,14 @@ import EXERCISETYPE from '../EXERCISETYPE';
 import { ICON } from './ICON';
 import COLORS from '../COLORS';
 import { exerciseLogo } from './ExerciseLogo';
-const TutorialsInLibrary = [
+const TutorialsInLibrary = (formatMessage) => [
     {
-        name: 'All',
+        name: formatMessage({ id: 'app.tut.name.all' }),
         value: "all",
         icon: ICON.all(30, COLORS.white)
     },
     {
-        name: 'Star',
+        name: formatMessage({ id: 'app.tut.name.star' }),
         value: "recommand",
         icon: ICON.personalize(30, COLORS.white)
     },
@@ -19,32 +19,32 @@ const TutorialsInLibrary = [
     //     icon: exerciseLogo.rope(30)
     // },
     {
-        name: 'Yoga',
+        name: formatMessage({ id: 'app.tut.name.yoga' }),
         value: EXERCISETYPE.yoga.value,
         icon: exerciseLogo.yoga(30)
     },
     {
-        name: 'Cycling',
+        name: formatMessage({ id: 'app.tut.name.cycling' }),
         value: EXERCISETYPE.spinning.value,
         icon: exerciseLogo.cycling(30)
     },
     {
-        name: 'Burning',
+        name: formatMessage({ id: 'app.tut.name.burning' }),
         value: EXERCISETYPE.burning.value,
         icon: exerciseLogo.lose(24)
     },
     {
-        name: 'Strength',
+        name: formatMessage({ id: 'app.tut.name.strength' }),
         value: EXERCISETYPE.strength.value,
         icon: exerciseLogo.strength(30)
     },
     {
-        name: 'Stretch',
+        name: formatMessage({ id: 'app.tut.name.strech' }),
         value: EXERCISETYPE.warmup.value,
         icon: exerciseLogo.warmup(24)
     },
     {
-        name: 'Relax',
+        name: formatMessage({ id: 'app.tut.name.relax' }),
         value: EXERCISETYPE.cooldown.value,
         icon: exerciseLogo.cooldown(24)
     },

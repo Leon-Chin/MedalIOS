@@ -19,4 +19,9 @@ export const zhCN_login = {
     'app.login.propaganda3': '丰富的教程库',
     'app.login.propaganda4': '游戏化激励运动',
     'app.login.propaganda5': '个性化训练计划',
+
+    'app.login.appTitle': 'Target：一站式健身',
+    'app.login.appType': '健身软件',
+    'app.login.consent': '注册即表示我同意服务条款和隐私政策',
+    'app.login.getHelp': '获取登录帮助'
 };

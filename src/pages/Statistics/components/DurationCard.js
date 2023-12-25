@@ -12,8 +12,10 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const DurationCard = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const duration = useTodayExerciseDuration()
@@ -32,7 +34,7 @@ const DurationCard = () => {
                     <View style={{ width: 26, height: 26, backgroundColor: COLORS.purple, borderRadius: 9, justifyContent: 'center', alignItems: 'center' }}>
                         {ICON.lightning(18, COLORS.white)}
                     </View>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.purple }}>健身</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.purple }}>{formatMessage({ id: 'app.statistic.duration' })}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => {
@@ -45,9 +47,9 @@ const DurationCard = () => {
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{secToMin(duration)}</Text>
-                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>min </Text>
+                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.statistic.durationUnit' })} </Text>
                 </View>
-                <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevGoal ? secToSpecificMin(prevGoal) : "--"}min</Text>
+                <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevGoal ? secToSpecificMin(prevGoal) : "--"}{formatMessage({ id: 'app.statistic.durationUnit' })}</Text>
             </View>
             <Percentage current={duration} target={prevGoal} />
         </View>

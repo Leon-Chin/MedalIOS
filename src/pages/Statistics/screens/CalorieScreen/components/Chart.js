@@ -17,10 +17,12 @@ import debounceFunc from '../../../../../utils/debounceFunc';
 import { chartsTwoItemsOptions } from '../../../utils/chartsTwoItemsOptions';
 import useUserTheme from '../../../../../hooks/useUserTheme';
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get("screen")
 const Chart = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { calorieArr, tutorialCalorieArr, dateArr } = useRecords()
@@ -34,7 +36,7 @@ const Chart = () => {
                     width: width * 0.9,
                     height: 300,
                 });
-                chart.setOption(chartsTwoItemsOptions(dateArr, calorieArr, "卡路里消耗(kcal)", tutorialCalorieArr, "课程卡路里消耗(kcal)"));
+                chart.setOption(chartsTwoItemsOptions(dateArr, calorieArr, formatMessage({ id: 'app.statistic.chart.cal' }), tutorialCalorieArr, formatMessage({ id: 'app.statistic.chart.calTut' })));
             }
         }
         debounceFunc(initChart(), 1000)

@@ -9,8 +9,10 @@ import { FormattedTime } from '../../../utils/formatTime'
 import { useNavigation } from '@react-navigation/native';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const OneComment = ({ comment }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { likedUsers } = comment
@@ -60,7 +62,7 @@ const OneComment = ({ comment }) => {
                             style={{ justifyContent: 'center', alignItems: 'center', flexDirection: "row", alignItems: "center", marginHorizontal: 4 }}
                         >
                             <AntDesign name={liked ? "like1" : 'like2'} size={16} color={liked ? COLORS.primary : COLORS.commentText} />
-                            {likedNum === 0 ? <Text style={{ color: COLORS.commentText, fontSize: 8, marginLeft: 3 }}>Like</Text> : <Text style={{ fontSize: 12, marginLeft: 4, color: COLORS.commentText }}>{likedNum}</Text>}
+                            {likedNum === 0 ? <Text style={{ color: COLORS.commentText, fontSize: 8, marginLeft: 3 }}>{formatMessage({ id: 'app.blog.like' })}</Text> : <Text style={{ fontSize: 12, marginLeft: 4, color: COLORS.commentText }}>{likedNum}</Text>}
                         </TouchableOpacity>
                     </View>
                 </View>

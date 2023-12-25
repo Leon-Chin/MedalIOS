@@ -11,8 +11,10 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const NameModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const dispatch = useDispatch()
     const [updatedName, setUpdatedName] = useState()
     const { currentUser } = useSelector(state => state.user)
@@ -53,7 +55,7 @@ const NameModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    账号名
+                                    {formatMessage({ id: 'app.profile.userName' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -64,13 +66,13 @@ const NameModal = ({ visible, setVisible }) => {
                                 }}
                                 style={{ backgroundColor: updatedName !== name ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: updatedName !== name ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: updatedName !== name ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.profile.update' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View>
                         <TextInput
-                            placeholder='更改账号名'
+                            placeholder={formatMessage({ id: 'app.profile.nameField' })}
                             placeholderTextColor={COLORS.commentText}
                             onChangeText={setUpdatedName}
                             defaultValue={name}

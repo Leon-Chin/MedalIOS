@@ -13,8 +13,10 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const BirthdayModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
@@ -58,7 +60,7 @@ const BirthdayModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    生日
+                                    {formatMessage({ id: 'app.profile.birthday' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -69,12 +71,12 @@ const BirthdayModal = ({ visible, setVisible }) => {
                                 }}
                                 style={{ backgroundColor: !checkTwoDaysIsEqual(new Date(updatedBirthday), new Date(birthday)) ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: !checkTwoDaysIsEqual(new Date(updatedBirthday), new Date(birthday)) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: !checkTwoDaysIsEqual(new Date(updatedBirthday), new Date(birthday)) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.profile.update' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: SIZE.LargerMargin }}>
-                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>生日日期</Text>
+                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.birthdate' })}</Text>
                         <DateTimePicker
                             themeVariant={theme}
                             testID="dateTimePicker"

@@ -9,8 +9,10 @@ import { useEffect } from 'react';
 import SIZE from '../../../constants/SIZE';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const MyExercisesCard = ({ noMargin, noTitle }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
@@ -27,7 +29,7 @@ const MyExercisesCard = ({ noMargin, noTitle }) => {
     const { navigate } = useNavigation()
     return (
         <View style={{ backgroundColor: currentTheme.contentColor, marginHorizontal: noMargin ? "0" : '3%', marginBottom: 10, padding: '3%', borderRadius: 20 }}>
-            {!noTitle && <Text style={{ fontSize: 20, fontWeight: 'bold', color: currentTheme.fontColor }}>Exercises</Text>}
+            {!noTitle && <Text style={{ fontSize: 20, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.exercises' })}</Text>}
             <View style={{ flexDirection: 'row', height: 80, justifyContent: 'space-around' }}>
                 <TouchableOpacity
                     onPress={() => navigate('ExercisesOverview', { screen: 'FavoriteTutorial' })}
@@ -46,12 +48,12 @@ const MyExercisesCard = ({ noMargin, noTitle }) => {
                     </View>
                     <View style={{ marginLeft: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
-                            {'收藏课程'}
+                            {formatMessage({ id: 'app.profile.favExe' })}
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
                             <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{favoriteTutorials.length}</Text>
                             <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light', }}>
-                                {`节课程`}
+                                {formatMessage({ id: 'app.profile.exerciseEnd' })}
                             </Text>
                         </View>
                     </View>
@@ -73,12 +75,12 @@ const MyExercisesCard = ({ noMargin, noTitle }) => {
                     </View>
                     <View style={{ marginLeft: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
-                            {'练过课程'}
+                            {formatMessage({ id: 'app.profile.pracExe' })}
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
                             <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{practicedTutorials.length}</Text>
                             <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light', }}>
-                                {`节课程`}
+                                {formatMessage({ id: 'app.profile.exerciseEnd' })}
                             </Text>
                         </View>
                     </View>

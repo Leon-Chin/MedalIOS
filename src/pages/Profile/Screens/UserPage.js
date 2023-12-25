@@ -20,8 +20,10 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const UserPage = ({ route }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
@@ -101,26 +103,26 @@ const UserPage = ({ route }) => {
                 </View>
                 <View style={{ flexDirection: 'row', marginBottom: SIZE.NormalMargin, marginHorizontal: '3%', }}>
                     <Text style={{ color: currentTheme.fontColor }}>@{user?.name}</Text>
-                    <Text style={{ color: COLORS.commentText }}>于{formatTimeToChinese(user?.createdAt)}加入</Text>
+                    <Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'app.profile.joinedPt1' })}{formatTimeToChinese(user?.createdAt)}{formatMessage({ id: 'app.profile.joinedPt2' })}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: SIZE.NormalMargin, paddingRight: SIZE.NormalMargin }}>
                     <TouchableOpacity
                         style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: SIZE.NormalMargin, paddingHorizontal: SIZE.LargerMargin, borderRadius: SIZE.CardBorderRadiusForBtn, borderWidth: 2, borderColor: COLORS.primary }}
                         onPress={handleSendMessage}
                     >
-                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.primary }}>发消息</Text>
+                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.primary }}>{formatMessage({ id: 'app.profile.sendText' })}</Text>
                     </TouchableOpacity>
                     {alreadySubscribed ?
                         <TouchableOpacity
                             style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: SIZE.NormalMargin, paddingHorizontal: SIZE.LargerMargin, borderRadius: SIZE.CardBorderRadiusForBtn, backgroundColor: COLORS.primary }}
                             onPress={handleUnSubscribe}
                         >
-                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.white }}>取消关注</Text>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.white }}>{formatMessage({ id: 'app.profile.cancelSub' })}</Text>
                         </TouchableOpacity> : <TouchableOpacity
                             style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: SIZE.NormalMargin, paddingHorizontal: SIZE.LargerMargin, borderRadius: SIZE.CardBorderRadiusForBtn, backgroundColor: COLORS.primary }}
                             onPress={handleSubscribe}
                         >
-                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.white }}>关注</Text>
+                            <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.white }}>{formatMessage({ id: 'app.profile.sub' })}</Text>
                         </TouchableOpacity>}
                 </View>
                 <View style={{ marginTop: SIZE.NormalMargin, borderTopWidth: 0.2, borderTopColor: currentTheme.commentFontColor }}>
@@ -128,27 +130,27 @@ const UserPage = ({ route }) => {
                         <TouchableOpacity
                             onPress={() => { setSelectTab('blog') }}
                             style={{ alignItems: 'center', gap: 6 }}>
-                            <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: selectTab === "blog" ? currentTheme.fontColor : COLORS.commentText }}>动态</Text>
+                            <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: selectTab === "blog" ? currentTheme.fontColor : COLORS.commentText }}>{formatMessage({ id: 'app.profile.blogs' })}</Text>
                             {selectTab === 'blog' && <View style={{ height: 3, width: 10, backgroundColor: currentTheme.fontColor, borderRadius: 2, }}></View>}
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => { setSelectTab('record') }}
                             style={{ alignItems: 'center', gap: 6 }}>
-                            <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: selectTab === "record" ? currentTheme.fontColor : COLORS.commentText }}>运动记录</Text>
+                            <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: selectTab === "record" ? currentTheme.fontColor : COLORS.commentText }}>{formatMessage({ id: 'app.profile.records' })}</Text>
                             {selectTab === 'record' && <View style={{ height: 3, width: 10, backgroundColor: currentTheme.fontColor, borderRadius: 2, }}></View>}
                         </TouchableOpacity>
                     </View>
                 </View>
                 <ScrollView style={{ flex: 1 }}>
                     {selectTab === "blog" && <View style={{ marginHorizontal: '3%', paddingTop: SIZE.NormalMargin }}>
-                        {user?.blogs && <View style={{ marginBottom: SIZE.LittleMargin }}><Text style={{ fontSize: 12, color: COLORS.commentText }}>总共「{user.blogs.length}」个动态</Text></View>}
+                        {user?.blogs && <View style={{ marginBottom: SIZE.LittleMargin }}><Text style={{ fontSize: 12, color: COLORS.commentText }}>{formatMessage({ id: 'app.profile.totalPt1' })}{user.blogs.length}{formatMessage({ id: 'app.profile.totalBlogPt2' })}</Text></View>}
                         {user?.blogs && user.blogs.map((item, index) => <BlogCard blog={item} key={index} />)}
                         {/* {user?.blogs && user.blogs.map((item, index) => <BlogCard blog={item} key={index} />)} */}
                     </View>}
                     {selectTab === "record" && <View style={{ marginHorizontal: '3%', paddingTop: SIZE.NormalMargin }}>
                         {records.length !== 0 && <UserRecordSum records={user?.records} />}
                         {records.length !== 0 && <UserBestRecord records={user?.records} />}
-                        <View style={{ marginBottom: SIZE.LittleMargin }}><Text style={{ fontSize: SIZE.SmallTitle, color: COLORS.commentText }}>总共「{records.length}」个运动记录</Text></View>
+                        <View style={{ marginBottom: SIZE.LittleMargin }}><Text style={{ fontSize: SIZE.SmallTitle, color: COLORS.commentText }}>{formatMessage({ id: 'app.profile.totalPt1' })}{records.length}{formatMessage({ id: 'app.profile.totalRecordsPt2' })}</Text></View>
                     </View>}
                 </ScrollView>
                 <ContactOptionsModal visible={actionModalVisible} setVisible={setActionModalVisible} user={user} />

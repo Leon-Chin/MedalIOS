@@ -13,8 +13,10 @@ import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { ICON } from '../../constants/SVG/ICON';
 import useCheckUserStatus from '../../hooks/useCheckUserStatus';
 import SIZE from '../../constants/SIZE';
+import { useIntl } from 'react-intl';
 
 const Profile = () => {
+    const { formatMessage } = useIntl()
     const { currentUser } = useSelector(state => state.user, shallowEqual)
     const { navigate } = useNavigation()
     const { _id, name, avator, } = currentUser
@@ -32,7 +34,7 @@ const Profile = () => {
                             <Text style={{ fontSize: 10, marginTop: 4, color: COLORS.commentText }}>ID:</Text>
                             <Text style={{ fontSize: 10, marginTop: 4, color: COLORS.commentText }}>{_id}</Text>
                         </View>
-                        {isMuted && <Text style={{ marginTop: SIZE.LittleMargin, color: currentTheme.fontColor, }}>账户状态: 「禁言」禁言终止日期: {muteDate}</Text>}
+                        {isMuted && <Text style={{ marginTop: SIZE.LittleMargin, color: currentTheme.fontColor, }}>{formatMessage({ id: 'app.profile.accStatus' })}{muteDate}</Text>}
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('Setting')}>
@@ -47,7 +49,7 @@ const Profile = () => {
                 <BodyMetric />
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: COLORS.commentText, fontSize: 12, marginTop: 10 }}>--没有更多内容--</Text>
+                <Text style={{ color: COLORS.commentText, fontSize: 12, marginTop: 10 }}>{formatMessage({ id: 'app.profile.noMore' })}</Text>
             </View>
         </SafeAreaView >
     )

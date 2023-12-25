@@ -10,8 +10,10 @@ import { ICON } from '../../../constants/SVG/ICON'
 import { useSelector } from 'react-redux'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const StepCard = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
@@ -31,7 +33,7 @@ const StepCard = () => {
                     <View style={{ justifyContent: 'center', alignItems: 'center', width: 26, height: 26, backgroundColor: COLORS.primary, borderRadius: 9 }}>
                         {exerciseLogo.walk(18)}
                     </View>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.primary }}>步数</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.primary }}>{formatMessage({ id: 'app.statistic.step' })}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => {
@@ -44,9 +46,9 @@ const StepCard = () => {
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{steps}</Text>
-                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>步 </Text>
+                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.statistic.stepUnit' })} </Text>
                 </View>
-                <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevStepGoal ? prevStepGoal : "--"}步</Text>
+                <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevStepGoal ? prevStepGoal : "--"}{formatMessage({ id: 'app.statistic.stepUnit' })}</Text>
             </View>
             <Percentage current={steps} target={prevStepGoal} />
         </View>

@@ -13,9 +13,12 @@ import UploadWeightTargetModal from '../components/UploadWeightTargetModal'
 import useMeasurement from '../../../hooks/useMeasurement'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
+
 const { width } = Dimensions.get("screen")
 
 const HeightWeight = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { latestMeasurement, allMeasurements } = useMeasurement()
@@ -45,7 +48,7 @@ const WeightIntro = () => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     return <View>
-        <Text style={{ marginHorizontal: '3%', marginTop: SIZE.LargerMargin, fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>体重介绍</Text>
+        <Text style={{ marginHorizontal: '3%', marginTop: SIZE.LargerMargin, fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.intro' })}</Text>
         <View style={{
             flexDirection: 'row',
             justifyContent: 'space-around',
@@ -58,22 +61,22 @@ const WeightIntro = () => {
         }}>
             <View style={{ flex: 1 }}>
                 <Text style={{ color: currentTheme.fontColor }}>
-                    BMI（Body Mass Index，身体质量指数）是通过体重（千克）除以身高（米）的平方来计算的。
+                    {formatMessage({ id: 'app.statistic.intro.contentPt1' })}
                 </Text>
                 <Text style={{ color: currentTheme.fontColor }}>
-                    根据世界卫生组织（WHO）的标准，BMI可以分为几个不同的等级，用以评估个体的体重状况：
+                    {formatMessage({ id: 'app.statistic.intro.contentPt2' })}
                 </Text>
                 <Text style={{ color: currentTheme.fontColor }}>
-                    低于18.5：体重过轻
+                    {formatMessage({ id: 'app.statistic.intro.contentPt3' })}
                 </Text>
                 <Text style={{ color: currentTheme.fontColor }}>
-                    18.5至24.9：正常范围
+                    {formatMessage({ id: 'app.statistic.intro.contentPt4' })}
                 </Text>
                 <Text style={{ color: currentTheme.fontColor }}>
-                    25至29.9：超重
+                    {formatMessage({ id: 'app.statistic.intro.contentPt5' })}
                 </Text>
                 <Text style={{ color: currentTheme.fontColor }}>
-                    30及以上：肥胖
+                    {formatMessage({ id: 'app.statistic.intro.contentPt6' })}
                 </Text>
             </View>
         </View>

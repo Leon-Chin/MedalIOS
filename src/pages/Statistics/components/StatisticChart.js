@@ -29,9 +29,12 @@ import APPTHEME from '../../../constants/COLORS/APPTHEME';
 import UpdateMeasurementModal from './UpdateMeasurementModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
+import { useIntl } from 'react-intl';
+
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get('screen')
 const StatisticChart = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { allMeasurements } = useMeasurement()
@@ -90,7 +93,7 @@ const StatisticChart = () => {
             <TouchableOpacity
                 onPress={() => setCollapsed(!collapsed)}
                 style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: collapsed ? COLORS.primary : currentTheme.backgroundColor }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: collapsed ? COLORS.white : currentTheme.fontColor }}>数据记录</Text>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: collapsed ? COLORS.white : currentTheme.fontColor }}>{formatMessage({ id: 'app.statistic.dataRecords' })}</Text>
                 {collapsed ? ICON.right(24, COLORS.white) : ICON.down(24, collapsed ? COLORS.white : currentTheme.fontColor)}
             </TouchableOpacity>
             {!collapsed && <View>
@@ -103,7 +106,7 @@ const StatisticChart = () => {
                         gap: SIZE.NormalMargin
                     }} key={index}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(item.date)}数据</Text>
+                        <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(item.date)}{formatMessage({ id: 'app.statistic.record' })}</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <TouchableOpacity
                                     onPress={() => handleEditMeasurement(item)}
@@ -118,10 +121,10 @@ const StatisticChart = () => {
                             </View>
                         </View>
                         <View style={{ flexDirection: 'row', gap: 2, }}>
-                            <View style={{ flex: 1 }}><Text style={{ color: COLORS.commentText }}>体重: {item.weight}</Text></View>
-                            <View style={{ flex: 1 }}><Text style={{ color: COLORS.commentText }}>身高: {item.height}</Text></View>
-                            <View style={{ flex: 1 }}><Text style={{ color: COLORS.commentText }}>BMI: {item.BMI}</Text></View>
-                            <View style={{ flex: 1 }}>{item.bodyFatRate && <Text style={{ color: COLORS.commentText }}>BFR: {item.bodyFatRate}</Text>}</View>
+                            <View style={{ flex: 1 }}><Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.weightForm2' })}{item.weight}</Text></View>
+                            <View style={{ flex: 1 }}><Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.heightForm2' })}{item.height}</Text></View>
+                            <View style={{ flex: 1 }}><Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.bmiForm2' })}{item.BMI}</Text></View>
+                            <View style={{ flex: 1 }}>{item.bodyFatRate && <Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.bfrForm2' })}{item.bodyFatRate}</Text>}</View>
                         </View>
                     </View>
                 })}

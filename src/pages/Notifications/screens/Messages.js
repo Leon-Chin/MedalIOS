@@ -6,8 +6,10 @@ import MessageNotification from '../Components/MessageNotification';
 import COLORS from '../../../constants/COLORS';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const Messages = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const [loading, setLoading] = useState(false);
@@ -28,7 +30,7 @@ const Messages = () => {
             {unreadedMsgs.length === 0 ?
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.commentText }}>
-                        暂无消息
+                        {formatMessage({id: 'app.news.noNews'})}
                     </Text>
                 </View> : <FlatList
                     data={unreadedMsgs}

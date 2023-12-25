@@ -15,8 +15,10 @@ import { ICON } from '../../constants/SVG/ICON';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
 import useCheckUserStatus from '../../hooks/useCheckUserStatus';
+import { useIntl } from 'react-intl';
 
 const Community = () => {
+    const { formatMessage } = useIntl()
     const { isMuted, muteDate } = useCheckUserStatus()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -104,7 +106,7 @@ const Community = () => {
                     <Avatar source={{ uri: currentUser.avator }} rounded size={50} />
                 </TouchableOpacity>
                 <TextInput
-                    placeholder='Search the blog'
+                    placeholder={formatMessage({ id: 'app.blog.searchBlog' })}
                     value={searchText}
                     placeholderTextColor={COLORS.commentText}
                     onChangeText={setSearchText}
@@ -138,7 +140,7 @@ const Community = () => {
                         }}
                         style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 50, backgroundColor: currentTheme.contentColor, borderRadius: 12 }}
                     >
-                        <Text style={{ color: currentTheme.fontColor }}>Refresh to get more</Text>
+                        <Text style={{ color: currentTheme.fontColor }}>{formatMessage({ id: 'app.blog.getMoreBlogs' })}</Text>
                         {ICON.refresh(24, currentTheme.fontColor)}
                     </TouchableOpacity>}
             />
@@ -148,7 +150,7 @@ const Community = () => {
                     if (!isMuted) {
                         setPostBlogVisible(true)
                     } else {
-                        Toast.show({ type: 'error', text1: '禁言提示', text2: '您因违反社区规定已被禁言, 禁言期间无法发博客, 禁言终止日期:' + muteDate, duration: 5, topOffset: 50 })
+                        Toast.show({ type: 'error', text1:  formatMessage({ id: 'app.blog.banAccountAlert' }), text2: formatMessage({ id: 'app.blog.alertContent' }) + muteDate, duration: 5, topOffset: 50 })
                     }
                 }}
                 style={{ justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 100, right: 20, width: 50, height: 50, backgroundColor: COLORS.primary, borderRadius: 25, zIndex: 1 }}

@@ -20,8 +20,10 @@ import NothingMore from '../../components/NothingMore'
 import { useNavigation } from '@react-navigation/native'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const MyExercise = () => {
+    const { formatMessage } = useIntl()
     const dispatch = useDispatch()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -65,7 +67,7 @@ const MyExercise = () => {
                     showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
                     <TodayTodo selectDay={selectDay} />
                     <View style={{ paddingHorizontal: 20, marginBottom: SIZE.NormalMargin }}>
-                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>我的</Text>
+                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.calendar.meine' })}</Text>
                     </View>
                     <MyExercisesCard noMargin={true} noTitle={true} />
                     <GoToLibrary />
@@ -83,13 +85,14 @@ const MyExercise = () => {
 export default MyExercise
 
 const GoToLibrary = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
     return <TouchableOpacity
         onPress={() => navigate('AllTutorials')}
         style={{ backgroundColor: currentTheme.contentColor, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, padding: '3%', borderRadius: SIZE.CardBorderRadius }}>
-        <Text numberOfLines={1} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold', }}>Go to Tutorial Library get more</Text>
+        <Text numberOfLines={1} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold', }}>{formatMessage({ id: 'app.calendar.tutLibPortal' })}</Text>
         {ICON.right(24, currentTheme.fontColor)}
     </TouchableOpacity>
 }

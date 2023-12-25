@@ -4,7 +4,14 @@ import { zhCN_commonText } from './commonText';
 import { zhCN_report } from './report';
 import { zhCN_statistic } from './statistic';
 import { zhCN_login } from './loginPage';
-
+import { zhCN_calendar } from './calendar';
+import { zhCN_communication } from './communication';
+import { zhCN_blog } from './blog';
+import { zhCN_exercisesPages } from './exercisesPages';
+import { zhCN_tutorial } from './tutorial';
+import { zhCN_notification } from './notification';
+import { zhCN_profile } from './profile';
+import { zhCN_promoPage } from './promoPage';
 
 const zh_CN = {
     ...zhCN_dashboard,
@@ -12,7 +19,15 @@ const zh_CN = {
     ...zhCN_commonText,
     ...zhCN_report,
     ...zhCN_statistic,
-    ...zhCN_login
+    ...zhCN_login,
+    ...zhCN_calendar,
+    ...zhCN_communication,
+    ...zhCN_blog,
+    ...zhCN_exercisesPages,
+    ...zhCN_tutorial,
+    ...zhCN_notification,
+    ...zhCN_profile,
+    ...zhCN_promoPage
 };
 
 export default zh_CN;

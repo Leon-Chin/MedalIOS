@@ -13,8 +13,10 @@ import { loginSuccess } from '../../../redux/userSlice';
 import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
+import { useIntl } from 'react-intl';
 
 const Walk = () => {
+    const { formatMessage } = useIntl()
     const [startTime, setStartTime] = useState()
     const [focused, setFocused] = useState(true)
     const navigation = useNavigation()
@@ -82,7 +84,8 @@ const Walk = () => {
             step: currentStepCount,
         }
         const tutorial = {
-            name: "Walk",
+            // name: "Walk",
+            name: formatMessage({ id: 'app.exercises.walkExercise' }),
         }
         await finishsessionoutside(tutorial, ExerciseData, new Date()).then(res => {
             if (res && res.status !== false) {
@@ -97,10 +100,10 @@ const Walk = () => {
     const handleGoback = () => {
         // 显示确认对话框
         Alert.alert(
-            '放弃步行记录？',
-            '如果你离开，步行记录将会丢失。',
-            [{ text: '取消', style: 'cancel', onPress: () => { } },
-            { text: '放弃', style: 'destructive', onPress: () => navigation.goBack() },// 如果用户确认放弃，则触发默认行为
+            formatMessage({ id: 'app.exercises.walkAlert' }),
+            formatMessage({ id: 'app.exercises.walkEndAlert' }),
+            [{ text: formatMessage({ id: 'app.exercises.cancel' }), style: 'cancel', onPress: () => { } },
+            { text: formatMessage({ id: 'app.exercises.endSession' }), style: 'destructive', onPress: () => navigation.goBack() },// 如果用户确认放弃，则触发默认行为
             ]
         );
 
@@ -112,13 +115,13 @@ const Walk = () => {
                     onPress={() => handleGoback()}>
                     {ICON.left(36, "#fff")}
                 </TouchableOpacity>
-                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>Walk</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>{formatMessage({ id: 'app.exercises.walkExercise' })}</Text>
             </View>
             <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: '#fff', fontSize: 80, fontWeight: 'bold' }}>{currentStepCount ? currentStepCount : "--"}</Text>
-                    <Text style={{ color: '#fff' }}>步数</Text>
+                    <Text style={{ color: '#fff' }}>{formatMessage({ id: 'app.exercises.stepUnit' })}</Text>
                 </View>
                 <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: '8%' }}>
                     {/* <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -127,7 +130,7 @@ const Walk = () => {
                     </View> */}
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                         <ElapsedTimeDisplay startTime={startTime} />
-                        <Text style={{ color: '#fff', fontSize: 16 }}>用时</Text>
+                        <Text style={{ color: '#fff', fontSize: 16 }}>{formatMessage({ id: 'app.exercises.time' })}</Text>
                     </View>
                     {/* <View style={{ justifyContent: 'center', alignItems: 'center' }} >
                         <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>{calorie ? calorie : '--'}</Text>

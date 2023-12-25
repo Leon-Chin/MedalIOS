@@ -4,8 +4,10 @@ import SIZE from '../../../constants/SIZE'
 import COLORS from '../../../constants/COLORS'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const StatisticHeader = ({ latestMeasurement }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
 
@@ -15,10 +17,10 @@ const StatisticHeader = ({ latestMeasurement }) => {
     </View>
     return (
         <View style={{ gap: 4, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: SIZE.NormalMargin, paddingHorizontal: SIZE.NormalMargin, }}>
-            <ItemCard title={"体重(kg)"} value={latestMeasurement?.weight} />
-            <ItemCard title={"身高(cm)"} value={latestMeasurement?.height} />
-            <ItemCard title={"BMI"} value={latestMeasurement?.BMI} />
-            <ItemCard title={"体脂率%"} value={latestMeasurement?.bodyFatRate} />
+            <ItemCard title={formatMessage({ id: 'app.statistic.weight' })} value={latestMeasurement?.weight} />
+            <ItemCard title={formatMessage({ id: 'app.statistic.height' })} value={latestMeasurement?.height} />
+            <ItemCard title={formatMessage({ id: 'app.statistic.bmi' })} value={latestMeasurement?.BMI} />
+            <ItemCard title={formatMessage({ id: 'app.statistic.bodyFat' })} value={latestMeasurement?.bodyFatRate} />
         </View>
     )
 }

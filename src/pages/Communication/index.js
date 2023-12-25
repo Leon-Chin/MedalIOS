@@ -10,7 +10,10 @@ import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
+import { useIntl } from 'react-intl';
+
 const Communication = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const [conversations, setConversations] = useState([{}])
@@ -55,7 +58,7 @@ const Communication = () => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: '3%', paddingBottom: 10 }}>
-                <Text style={{ fontSize: 24, fontWeight: 'bold', color: currentTheme.fontColor }}>Communication</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.comu.chatHistory' })}</Text>
                 <TouchableOpacity
                     onPress={() => setSubscribeContactModalVisible(true)}
                 >

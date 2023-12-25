@@ -9,9 +9,12 @@ import { useDispatch } from 'react-redux'
 import { loginSuccess } from '../../../redux/userSlice'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
+
 const { width } = Dimensions.get("screen")
 
 const UploadWeightTargetModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const [weightTarget, setWeightTarget] = useState();
     const dispatch = useDispatch()
     const handleUploadWeightTarget = async () => {
@@ -54,11 +57,11 @@ const UploadWeightTargetModal = ({ visible, setVisible }) => {
         >
             <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', marginBottom: SIZE.LargerMargin, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ color: COLORS.commentText }}>记录身体数据</Text>
+                    <Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.recordBodyMetric' })}</Text>
                 </View>
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={styles.inputItem}>
-                        <Text style={styles.inputItemFont}>目标体重(kg)</Text>
+                        <Text style={styles.inputItemFont}>{formatMessage({ id: 'app.statistic.goalWgt' })}</Text>
                         <TextInput
                             autoFocus
                             keyboardType='decimal-pad'
@@ -74,14 +77,14 @@ const UploadWeightTargetModal = ({ visible, setVisible }) => {
                     style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                 >
                     <View style={{ flexDirection: 'row', justifyContent: 'center', width: width * 0.4, alignItems: 'center', backgroundColor: COLORS.primary, paddingVertical: SIZE.NormalMargin, paddingHorizontal: SIZE.LargerMargin, borderRadius: SIZE.CardBorderRadiusForBtn, }}>
-                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.white }}>保存</Text>
+                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.white }}>{formatMessage({ id: 'app.statistic.saveRecord' })}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={handlePresentModalClose}
                     style={{ height: 50, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <Text style={{ fontSize: 18, color: COLORS.commentText }}>取消</Text>
+                    <Text style={{ fontSize: 18, color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.cancel' })}</Text>
                 </TouchableOpacity>
             </View>
         </BottomSheetModal>

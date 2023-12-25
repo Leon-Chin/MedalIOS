@@ -17,10 +17,12 @@ import COLORS from '../../../../../constants/COLORS';
 import debounceFunc from '../../../../../utils/debounceFunc';
 import useUserTheme from '../../../../../hooks/useUserTheme';
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get("screen")
 const Chart = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { distanceArr, dateArr } = useRecords()
@@ -34,7 +36,7 @@ const Chart = () => {
                     width: width * 0.9,
                     height: 300,
                 });
-                chart.setOption(chartsOneItemOptions(dateArr, distanceArr, "跑步步行距离(m)"));
+                chart.setOption(chartsOneItemOptions(dateArr, distanceArr, formatMessage({ id: 'app.statistic.chart.dist' })));
             }
         }
         debounceFunc(initChart(), 1000)
