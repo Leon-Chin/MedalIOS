@@ -11,8 +11,16 @@ import { useDispatch } from 'react-redux';
 import EvaluationQuestion from '../components/EvaluationQuestion';
 import { updatePrefer } from '../../../api/user.api';
 import { loginSuccess } from '../../../redux/userSlice';
+<<<<<<< Updated upstream
+=======
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { AlreadyEvaluation_MESSAGE, ERROR_MESSAGE, NothingInput_MESSAGE } from '../../../constants/ERRORMessage';
+import { useIntl } from 'react-intl';
+
+>>>>>>> Stashed changes
 const { width } = Dimensions.get('screen')
 const Evaluation = () => {
+    const { formatMessage } = useIntl()
     const dispatch = useDispatch()
     const { navigate, goBack } = useNavigation()
     const [questionNo, setQuestionNo] = useState(1)
@@ -72,7 +80,7 @@ const Evaluation = () => {
                                 handleNextQuestion()
                             }}
                         >
-                            <Text style={styles.nextBtnContent}>Next question</Text>
+                            <Text style={styles.nextBtnContent}>{formatMessage({ id: 'app.calendar.nextAssessmentQuestion' })}</Text>
                             {ICON.right(24, COLORS.white)}
                         </TouchableOpacity>
                     </View> : <View style={styles.nextBtnArea}>
@@ -82,7 +90,7 @@ const Evaluation = () => {
                                 handleSubmitEvaluation()
                             }}
                         >
-                            <Text style={styles.nextBtnContent}>提交评估</Text>
+                            <Text style={styles.nextBtnContent}>{formatMessage({ id: 'app.calendar.submitAssessment' })}</Text>
                         </TouchableOpacity>
                     </View>}
                 </View>

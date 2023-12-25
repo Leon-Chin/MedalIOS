@@ -10,8 +10,10 @@ import { ICON } from '../../../constants/SVG/ICON'
 import { useSelector } from 'react-redux'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const DistanceCard = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
@@ -30,7 +32,7 @@ const DistanceCard = () => {
                     <View style={{ justifyContent: 'center', alignItems: 'center', width: 26, height: 26, backgroundColor: COLORS.primary, borderRadius: 9 }}>
                         {exerciseLogo.run(18)}
                     </View>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.primary }}>跑步步行</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.primary }}>{formatMessage({ id: 'app.statistic.distanceCover' })}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => {
@@ -43,9 +45,9 @@ const DistanceCard = () => {
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{(distance / 1000).toFixed(2)}</Text>
-                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>km </Text>
+                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.statistic.distanceUnit' })} </Text>
                 </View>
-                <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevDistanceGoal ? (prevDistanceGoal / 1000).toFixed(2) : "--"}km</Text>
+                <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevDistanceGoal ? (prevDistanceGoal / 1000).toFixed(2) : "--"}{formatMessage({ id: 'app.statistic.distanceUnit' })}</Text>
             </View>
             <Percentage current={distance} target={prevDistanceGoal} />
         </View >

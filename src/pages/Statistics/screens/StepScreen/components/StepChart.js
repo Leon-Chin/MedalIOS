@@ -18,10 +18,12 @@ import COLORS from '../../../../../constants/COLORS';
 import debounceFunc from '../../../../../utils/debounceFunc';
 import useUserTheme from '../../../../../hooks/useUserTheme';
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get("screen")
 const StepChart = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { stepArr, dateArr } = useRecords()
@@ -35,7 +37,7 @@ const StepChart = () => {
                     width: width * 0.9,
                     height: 300,
                 });
-                chart.setOption(chartsOneItemOptions(dateArr, stepArr, "步数"));
+                chart.setOption(chartsOneItemOptions(dateArr, stepArr, formatMessage({ id: 'app.statistic.chart.step' })));
             }
         }
         debounceFunc(initChart(), 1000)

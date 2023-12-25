@@ -27,14 +27,14 @@ const TodayTodo = ({ selectDay }) => {
     return (
         <View style={{ marginBottom: SIZE.LargerMargin }}>
             <View style={{ paddingHorizontal: 20, marginBottom: SIZE.NormalMargin }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'todaySessions' })}</Text>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.calendar.todaySessions' })}</Text>
             </View>
             {!noTutorial && <Percentage selectDay={selectDay} />}
             {noTutorial && <NoTutorialToday />}
-            {yetDoneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>未完成</Text>
+            {yetDoneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.calendar.notCompleted' })}</Text>
                 {yetDoneTutorial.map((tutorial, index) => <UnDoneTodoItem tutorial={tutorial} key={index} />)}
             </>}
-            {doneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>已完成</Text>
+            {doneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.calendar.completed' })}</Text>
                 {doneTutorial.map((tutorial, index) => <DoneTodoItem tutorial={tutorial} key={index} />)}
             </>}
         </View>

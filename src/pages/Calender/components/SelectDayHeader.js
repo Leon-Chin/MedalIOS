@@ -6,10 +6,12 @@ import { ICON } from '../../../constants/SVG/ICON'
 import { DateToMonthDay } from '../../../utils/formatTime'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const SelectDayHeader = ({ isToday, setSelectDay, selectDay }) => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
+    const { formatMessage } = useIntl()
     const goToPreviousDay = () => {
         setSelectDay(prevDay => new Date(prevDay.setDate(prevDay.getDate() - 1)));
     };
@@ -37,7 +39,7 @@ const SelectDayHeader = ({ isToday, setSelectDay, selectDay }) => {
                 <TouchableOpacity
                     onPress={() => setSelectDay(new Date())}
                     style={{ backgroundColor: currentTheme.contentColor, borderRadius: SIZE.CardBorderRadius, flexDirection: 'row', justifyContent: 'center', padding: SIZE.NormalMargin, }}>
-                    <Text style={{ color: currentTheme.fontColor }}>回到今天</Text>
+                    <Text style={{ color: currentTheme.fontColor }}>{formatMessage({ id: 'app.calendar.backToday' })}</Text>
                 </TouchableOpacity>
             }
         </View>

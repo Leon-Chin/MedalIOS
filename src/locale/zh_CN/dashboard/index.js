@@ -23,4 +23,17 @@ export const zhCN_dashboard = {
     'evaluateLevel': '评估你的健康水平来个性化运动内容',
     'goplanpage': '去计划日历页',
     'recommandForU': '为你推荐',
+    'app.dashboard.calorie': '卡路里',
+    'app.dashboard.calorieUnit': '千卡',
+    'app.dashboard.distance': '距离',
+    'app.dashboard.distanceUnit': '千米',
+    'app.dashboard.steps': '步数',
+    'app.dashboard.stepsUnit': '步',
+    'app.dashboard.time': '时长',
+    'app.dashboard.timeUnit': '分钟',
+    'app.dashboard.run': '奔跑',
+    'app.dashboard.walk': '健走',
+    'app.dashboard.burn': '燃脂',
+    'app.dashboard.yoga': '瑜伽',
+    'app.dashboard.strength': '无氧'
 };

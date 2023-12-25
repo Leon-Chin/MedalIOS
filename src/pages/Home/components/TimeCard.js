@@ -7,8 +7,10 @@ import useTodayExerciseDuration from '../../../hooks/useTodayExerciseDuration';
 import { secToMin } from '../../../utils/funcs';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const TimeCard = () => {
+    const { formatMessage } = useIntl()
     const { navigate } = useNavigation()
     const duration = useTodayExerciseDuration()
     const theme = useUserTheme()
@@ -29,7 +31,7 @@ const TimeCard = () => {
             <View style={{ height: 30, width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                     {ICON.time(18, COLORS.colorieOrange)}
-                    <Text style={{ fontWeight: "bold", color: COLORS.colorieOrange, fontSize: 16 }}>Time</Text>
+                    <Text style={{ fontWeight: "bold", color: COLORS.colorieOrange, fontSize: 16 }}>{formatMessage({ id: 'app.dashboard.time' })}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => navigate('Statistics')}
@@ -41,7 +43,7 @@ const TimeCard = () => {
             <View style={{ flex: 1, width: '100%', paddingHorizontal: '6%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 4 }}>
                     <Text style={{ fontSize: 24, fontWeight: 'bold', color: currentTheme.fontColor }}>{duration ? secToMin(duration) : "--"}</Text>
-                    <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>min</Text>
+                    <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>{formatMessage({ id: 'app.dashboard.timeUnit' })}</Text>
                 </View>
             </View>
         </View>

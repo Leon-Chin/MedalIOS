@@ -11,8 +11,16 @@ import TutorialVerticalView from '../../components/TutorialVerticalView'
 import { getspecifictypetutorials } from '../../api/tutorial.api'
 import useUserTheme from '../../hooks/useUserTheme'
 import APPTHEME from '../../constants/COLORS/APPTHEME'
+<<<<<<< Updated upstream
+=======
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
+>>>>>>> Stashed changes
 
 const TutorialLibrary = ({ route }) => {
+    const { formatMessage } = useIntl()
+    const intl = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
@@ -63,7 +71,7 @@ const TutorialLibrary = ({ route }) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ paddingHorizontal: '3%', paddingVertical: 10, overflow: 'visible' }}>
                 <FlatList
-                    data={TutorialsInLibrary}
+                    data={TutorialsInLibrary(intl.formatMessage)}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ columnGap: 10 }}
@@ -73,7 +81,7 @@ const TutorialLibrary = ({ route }) => {
             <View style={{ flex: 1, marginHorizontal: '3%' }}>
                 {!selectedType &&
                     <View>
-                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>为您精选</Text>
+                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.tut.recommendation' })}</Text>
                         <FlatList
                             data={tutorials}
                             renderItem={({ item, index }) => <TutorialVerticalView key={index} tutorial={item} />}

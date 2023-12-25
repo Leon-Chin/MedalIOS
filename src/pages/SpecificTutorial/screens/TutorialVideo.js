@@ -8,9 +8,11 @@ import SIZE from '../../../constants/SIZE';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import FinishExerciseModal from '../components/FinishExerciseModal';
 import EXERCISETYPE from '../../../constants/EXERCISETYPE';
+import { useIntl } from 'react-intl';
 
 const { width, height } = Dimensions.get('screen')
 const TutorialVideo = ({ route }) => {
+    const { formatMessage } = useIntl()
     const { tutorial } = route.params
     const [exerciseStartTime, setExerciseStartTime] = useState(new Date())
     const [exerciseFinishTime, setExerciseFinishTime] = useState()
@@ -91,7 +93,7 @@ const TutorialVideo = ({ route }) => {
                 {!isPlaying && <TouchableOpacity
                     onPress={handleFinish}
                     style={{ position: 'absolute', zIndex: 99, bottom: 100, right: 20, backgroundColor: COLORS.primary, padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadiusForBtn }}>
-                    <Text style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold', }}>结束训练</Text>
+                    <Text style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold', }}>{formatMessage({ id: 'app.exercises.stopSession' })}</Text>
                 </TouchableOpacity>}
             </View>
             <FinishExerciseModal videoDuration={durationInSeconds} watchTime={watchedTime} visible={finishTutorialVisible} setVisible={setFinishTutorialVisible} tutorial={tutorial} startTime={exerciseStartTime} endTime={exerciseFinishTime} />

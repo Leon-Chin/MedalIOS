@@ -17,10 +17,12 @@ import debounceFunc from '../../../../../utils/debounceFunc';
 import { chartsOneItemOptions } from '../../../utils/chartsOneItemOptions';
 import useUserTheme from '../../../../../hooks/useUserTheme';
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
 const { width } = Dimensions.get("screen")
 const Chart = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { durationArr, dateArr } = useRecords()
@@ -34,7 +36,7 @@ const Chart = () => {
                     width: width * 0.9,
                     height: 300,
                 });
-                chart.setOption(chartsOneItemOptions(dateArr, durationArr, "运动时长(min)"));
+                chart.setOption(chartsOneItemOptions(dateArr, durationArr, formatMessage({ id: 'app.statistic.chart.duration' })));
             }
         }
         debounceFunc(initChart(), 1000)

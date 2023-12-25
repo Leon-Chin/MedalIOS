@@ -9,8 +9,10 @@ import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import useCompletedTutorials from '../../../hooks/useCompletedTutorials'
 import { useNavigation } from '@react-navigation/native'
 import TodoNotiPercentage from '../Components/TodoNotiPercentage'
+import { useIntl } from 'react-intl'
 
 const TodoExercise = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const todo = useUncompletedTutorials();
@@ -29,7 +31,7 @@ const TodoExercise = () => {
                     onPress={() => navigate("MyExercise")}
                 >
                     <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: COLORS.commentText }}>
-                        没有待练课程, 去添加教程/做些伸展运动休息吧
+                    {formatMessage({ id: 'app.news.noTut' })}
                     </Text>
                 </TouchableOpacity>
             }</View>
@@ -38,25 +40,25 @@ const TodoExercise = () => {
             <ScrollView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, paddingTop: SIZE.NormalMargin, }}>
                 {todo.length !== 0 && <><View style={{ gap: SIZE.NormalMargin, padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: COLORS.primary, marginHorizontal: '3%', marginBottom: SIZE.NormalMargin }}>
                     <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.white, fontWeight: 'bold' }}>
-                        今日完成「{doneTutorial.length}」个教程
+                    {formatMessage({ id: 'app.news.completeTutpt1' })}{doneTutorial.length}{formatMessage({ id: 'app.news.completeTutpt2' })}
                     </Text>
                     <Text style={{ fontSize: SIZE.SmallTitle, color: COLORS.white, fontWeight: 'bold' }}>
-                        还有「{todo.length}」个教程就达成目标, 加油！！！
+                    {formatMessage({ id: 'app.news.leftTutpt1' })}{todo.length}{formatMessage({ id: 'app.news.leftTutpt2' })}
                     </Text>
                     <TodoNotiPercentage />
                 </View>
                     <View style={{ marginHorizontal: '3%', marginVertical: SIZE.NormalMargin }}>
-                        <Text style={{ color: currentTheme.fontColor }}>剩余待练</Text>
+                        <Text style={{ color: currentTheme.fontColor }}>{formatMessage({ id: 'app.news.leftUndo' })}</Text>
                     </View>
                     <View style={{ flex: 1, marginHorizontal: SIZE.NormalMargin }}>
                         {todo.map((tutorial, index) => <UnDoneTodoItem tutorial={tutorial} key={index} />)}
                     </View></>}
                 {todo.length === 0 && doneTutorial.length !== 0 && <View style={{ gap: SIZE.NormalMargin, padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: COLORS.primary, marginHorizontal: '3%', marginBottom: SIZE.NormalMargin }}>
                     <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.white, fontWeight: 'bold' }}>
-                        今日完成「{doneTutorial.length}」个教程, 达成运动目标
+                    {formatMessage({ id: 'app.news.completeTutpt1' })}{doneTutorial.length}{formatMessage({ id: 'app.news.completeTutpt3' })}
                     </Text>
                     <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.white, fontWeight: 'bold' }}>
-                        Great Job!!!🎊
+                    {formatMessage({ id: 'app.news.congrats' })}
                     </Text>
                     <TodoNotiPercentage />
                 </View>}

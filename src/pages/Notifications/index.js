@@ -50,7 +50,7 @@ const Notifications = () => {
     return (
         <>
             <Tab.Navigator
-                initialRouteName="Todos"
+                initialRouteName="待办事项"
                 screenOptions={{
                     tabBarStyle: { backgroundColor: currentTheme.contentColor },
                     tabBarLabelStyle: { fontSize: 14, color: currentTheme.fontColor, fontWeight: 'bold', textTransform: 'none' },

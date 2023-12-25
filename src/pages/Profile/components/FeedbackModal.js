@@ -6,8 +6,15 @@ import { Modal, StyleSheet, Text, SafeAreaView, TouchableOpacity, View, Alert, T
 import SIZE from '../../../constants/SIZE'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+<<<<<<< Updated upstream
+=======
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, ThanksForFeedback_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
+>>>>>>> Stashed changes
 
 const FeedbackModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const [feedbackContent, setFeedbackContent] = useState()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -43,7 +50,7 @@ const FeedbackModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    反馈
+                                {formatMessage({ id: 'app.profile.feedback' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -54,13 +61,13 @@ const FeedbackModal = ({ visible, setVisible }) => {
                                 }}
                                 style={{ backgroundColor: feedbackContent ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: feedbackContent ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>发送</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: feedbackContent ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.profile.send' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View>
                         <TextInput
-                            placeholder='有什么问题反馈给我们让社区更美好'
+                            placeholder={formatMessage({ id: 'app.profile.feedbackAlert' })}
                             placeholderTextColor={COLORS.commentText}
                             multiline={true}
                             onChangeText={setFeedbackContent}

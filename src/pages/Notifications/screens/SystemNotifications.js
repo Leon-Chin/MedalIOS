@@ -10,8 +10,10 @@ import COLORS from '../../../constants/COLORS'
 import PIC from '../../../constants/PIC'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const SystemNotifications = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const [loading, setLoading] = useState(false)
@@ -36,7 +38,7 @@ const SystemNotifications = () => {
     if (notifications.length === 0) {
         return <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, alignItems: 'center', justifyContent: 'center' }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.commentText }}>
-                没有系统消息
+            {formatMessage({ id: 'app.news.noSystemMsg' })}
             </Text></View>
     } else {
         return (

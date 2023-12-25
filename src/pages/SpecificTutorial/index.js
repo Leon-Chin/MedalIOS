@@ -12,9 +12,12 @@ import BeforeStartExerciseModal from './components/BeforeStartExerciseModal';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { ICON } from '../../constants/SVG/ICON';
+import { useIntl } from 'react-intl';
+
 const { width } = Dimensions.get('window')
 
 const SpecificTutorial = ({ route }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     useEffect(() => {
@@ -71,20 +74,20 @@ const SpecificTutorial = ({ route }) => {
                                     <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', color: currentTheme.fontColor }}>{level}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', color: currentTheme.fontColor }}>{duration} </Text><Text style={{ color: currentTheme.fontColor }}>min</Text>
+                                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: "bold", fontStyle: 'italic', color: currentTheme.fontColor }}>{duration} </Text><Text style={{ color: currentTheme.fontColor }}>{formatMessage({ id: 'app.exercises.durationUnit' })}</Text>
                                 </View>
                             </View>
                             <View style={styles.tutorialIntroRight}>
                                 <View style={{ marginRight: 6 }}>
-                                    <Text style={{ color: currentTheme.fontColor }}>{tutorial.users.length} <Text style={{ color: currentTheme.fontColor }}>人练过</Text></Text>
+                                    <Text style={{ color: currentTheme.fontColor }}>{tutorial.users.length} <Text style={{ color: currentTheme.fontColor }}>{formatMessage({ id: 'app.exercises.pracCount' })}</Text></Text>
                                 </View>
-                                <View><Text style={{ color: currentTheme.fontColor }}>暂无评分</Text></View>
+                                <View><Text style={{ color: currentTheme.fontColor }}>{formatMessage({ id: 'app.exercises.noMark' })}</Text></View>
                                 {/* {rate.length === 0 ? <View className="specificTutorialPage-detail-statistic-rate"><View className='commentText'>暂无评分</View></View> : <View className="specificTutorialPage-detail-statistic-rate">评分 9.0</View>} */}
                             </View>
                         </View>
                         <Text style={{ textAlign: 'justify', marginBottom: 10, color: currentTheme.fontColor }}>{tutorial.description}</Text>
                         <View style={styles.estimateColorie}>
-                            <Text style={{ fontWeight: 500, fontSize: 16, color: currentTheme.fontColor }}>预估消耗(千卡)</Text>
+                            <Text style={{ fontWeight: 500, fontSize: 16, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.exercises.calorieEstimate' })}</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={{ fontWeight: 600, color: currentTheme.fontColor }}>
                                     {tutorial.lowerEstimateColorie}~{tutorial.higherEstimateColorie}
@@ -92,7 +95,7 @@ const SpecificTutorial = ({ route }) => {
                                 <MaterialCommunityIcons name="fire" size={24} color={currentTheme.fontColor} />
                             </View>
                         </View>
-                        <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 10, color: currentTheme.fontColor }}>Equipments Requirement:</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 600, marginBottom: 10, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.exercises.equipReq' })}</Text>
                         <View style={styles.equipments}>
                             <Tag content={tutorial.equipments} />
                         </View>
@@ -104,7 +107,7 @@ const SpecificTutorial = ({ route }) => {
                         style={styles.startBtn}
                         onPress={() => setBeforeStartExerciseModalVisible(true)}
                     >
-                        <Text style={{ fontSize: 20, fontWeight: 500, color: '#fff' }}>Start Exercise</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 500, color: '#fff' }}>{formatMessage({ id: 'app.exercises.startExercise' })}</Text>
                     </TouchableOpacity>
                 </View>
             </View >

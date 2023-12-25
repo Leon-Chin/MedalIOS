@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.qinleiheng.MedalIOS",
+      "bundleIdentifier": "com.hongwei.MedalIOS",
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
@@ -35,6 +35,15 @@
     "plugins": [
       "expo-localization",
       "react-native-health"
+<<<<<<< Updated upstream
     ]
+=======
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "21295382-246c-4305-8cc6-f7f65ab4472c"
+      }
+    }
+>>>>>>> Stashed changes
   }
 }

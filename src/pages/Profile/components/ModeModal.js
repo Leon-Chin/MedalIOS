@@ -10,8 +10,15 @@ import SIZE from '../../../constants/SIZE'
 import THEME from '../../../constants/THEME'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+<<<<<<< Updated upstream
+=======
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
+>>>>>>> Stashed changes
 
 const ModeModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const [theme, setTheme] = useState()
     const usertheme = useUserTheme()
     const currentTheme = APPTHEME[usertheme]
@@ -53,7 +60,7 @@ const ModeModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    主题
+                                {formatMessage({ id: 'app.profile.theme' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -64,7 +71,7 @@ const ModeModal = ({ visible, setVisible }) => {
                                 }}
                                 style={{ backgroundColor: preferedTheme !== theme ? COLORS.primary : currentTheme.contentColor, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: preferedTheme !== theme ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: preferedTheme !== theme ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.profile.update' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -76,7 +83,7 @@ const ModeModal = ({ visible, setVisible }) => {
                             >
                                 {ICON.light(24, theme === THEME.dark ? COLORS.gray : COLORS.white)}
                                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: theme === THEME.light ? COLORS.white : COLORS.gray }}>
-                                    Light
+                                {formatMessage({ id: 'app.profile.theme.light' })}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -84,7 +91,7 @@ const ModeModal = ({ visible, setVisible }) => {
                                 style={{ width: 100, flexDirection: 'row', gap: SIZE.NormalMargin, justifyContent: 'center', alignItems: 'center', backgroundColor: theme === THEME.dark ? COLORS.primary : currentTheme.contentColor, padding: SIZE.NormalMargin, borderTopRightRadius: SIZE.CardBorderRadius, borderBottomRightRadius: SIZE.CardBorderRadius, }}>
                                 {ICON.dark(24, theme === THEME.light ? COLORS.gray : COLORS.white)}
                                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: theme === THEME.dark ? COLORS.white : COLORS.gray }}>
-                                    Dark
+                                {formatMessage({ id: 'app.profile.theme.dark' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>

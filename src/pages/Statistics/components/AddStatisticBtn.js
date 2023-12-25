@@ -3,8 +3,10 @@ import React from 'react'
 import { ICON } from '../../../constants/SVG/ICON'
 import COLORS from '../../../constants/COLORS'
 import SIZE from '../../../constants/SIZE'
+import { useIntl } from 'react-intl'
 const { width } = Dimensions.get('screen')
 const AddStatisticBtn = ({ handlePresentModalPress }) => {
+    const { formatMessage } = useIntl()
     return (
         <View style={styles.bottomBar}>
             <TouchableOpacity
@@ -14,7 +16,7 @@ const AddStatisticBtn = ({ handlePresentModalPress }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     {ICON.edit(24, COLORS.white)}
                     <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.white }}>
-                        添加数据
+                        {formatMessage({ id: 'app.statistic.addData' })}
                     </Text>
                 </View>
             </TouchableOpacity>

@@ -6,13 +6,15 @@ import LinearGradient from 'react-native-linear-gradient'
 import { formatTimeForCharts } from '../../../utils/formatTime'
 import useRecordsAnalysis from '../../../hooks/useRecordsAnalysis'
 import { secToSpecificMin } from '../../../utils/funcs'
+import { useIntl } from 'react-intl'
 
 const UserBestRecord = ({ records }) => {
+    const { formatMessage } = useIntl()
     const { maxSteps, maxStepsDate, maxDuration, maxDurationDate, maxCalorie, maxCalorieDate, maxDistance, maxDistanceDate, } = useRecordsAnalysis(records)
     return (
         <View style={{}}>
             <View style={{ marginBottom: SIZE.NormalMargin }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>最高记录</Text>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>{formatMessage({ id: 'app.profile.highRecord' })}</Text>
             </View>
             <LinearGradient
                 start={{ x: 0, y: 0 }}
@@ -23,16 +25,16 @@ const UserBestRecord = ({ records }) => {
                 <View >
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>
                         {ICON.trophy(SIZE.NormalTitle, COLORS.white)}
-                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>单日最高记录</Text>
+                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>{formatMessage({ id: 'app.profile.singleRecord' })}</Text>
                     </View>
                     <View style={{ marginTop: SIZE.LargerMargin, flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         {ICON.fire(16, COLORS.white)}
-                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>卡路里</Text>
+                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>{formatMessage({ id: 'app.profile.calorieName' })}</Text>
                     </View>
                     <View style={{ marginTop: SIZE.NormalMargin, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                             <Text style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{maxCalorie}</Text>
-                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>kcal</Text>
+                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatMessage({ id: 'app.profile.calorieUnit' })}</Text>
                         </View>
                         <View>
                             {maxCalorieDate ? <Text style={{ color: COLORS.white, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatTimeForCharts(maxCalorieDate)}</Text> :
@@ -43,12 +45,12 @@ const UserBestRecord = ({ records }) => {
 
                     <View style={{ marginTop: SIZE.LargerMargin, flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         {ICON.stepIcon(16, COLORS.white)}
-                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>步数</Text>
+                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>{formatMessage({ id: 'app.profile.step' })}</Text>
                     </View>
                     <View style={{ marginTop: SIZE.NormalMargin, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                             <Text style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{maxSteps}</Text>
-                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>步</Text>
+                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatMessage({ id: 'app.profile.stepUnit' })}</Text>
                         </View>
                         <View>
                             {maxCalorieDate ? <Text style={{ color: COLORS.white, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatTimeForCharts(maxStepsDate)}</Text> :
@@ -59,12 +61,12 @@ const UserBestRecord = ({ records }) => {
 
                     <View style={{ marginTop: SIZE.LargerMargin, flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         {ICON.distanceIcon(16, COLORS.white)}
-                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>跑步步行距离</Text>
+                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>{formatMessage({ id: 'app.profile.distance' })}</Text>
                     </View>
                     <View style={{ marginTop: SIZE.NormalMargin, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                             <Text style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{maxDistance}</Text>
-                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>m</Text>
+                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatMessage({ id: 'app.profile.distanceUnit' })}</Text>
                         </View>
                         <View>
                             {maxCalorieDate ? <Text style={{ color: COLORS.white, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatTimeForCharts(maxDistanceDate)}</Text> :
@@ -75,12 +77,12 @@ const UserBestRecord = ({ records }) => {
 
                     <View style={{ marginTop: SIZE.LargerMargin, flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         {ICON.time(16, COLORS.white)}
-                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>单日运动时长</Text>
+                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>{formatMessage({ id: 'app.profile.singleDuration' })}</Text>
                     </View>
                     <View style={{ marginTop: SIZE.NormalMargin, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                             <Text style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{secToSpecificMin(maxDuration)}</Text>
-                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>min</Text>
+                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatMessage({ id: 'app.profile.durationUnit' })}</Text>
                         </View>
                         <View>
                             {maxCalorieDate ? <Text style={{ color: COLORS.white, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatTimeForCharts(maxDurationDate)}</Text> :

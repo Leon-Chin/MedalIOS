@@ -1,3 +1,5 @@
+import { useIntl } from "react-intl";
+
 export const FormattedTime = (Date) => {
     // Get the individual components of the date and time
     const year = Date.getFullYear();
@@ -9,13 +11,21 @@ export const FormattedTime = (Date) => {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
-export const DateToMonthDay = (Date) => {
-    // Get the individual components of the date and time
-    const month = Date.getMonth() + 1;
-    const day = Date.getDate();
-    // Format the components into a readable time string
-    return `${month}月${day}日`
-}
+// export const DateToMonthDay = (Date) => {
+//     // Get the individual components of the date and time
+//     const month = Date.getMonth() + 1;
+//     const day = Date.getDate();
+//     // Format the components into a readable time string
+//     return `${month}月${day}日`
+// }
+
+export const DateToMonthDay = (date) => {
+    const intl = useIntl();
+    return intl.formatDate(date, {
+      month: 'long',
+      day: 'numeric',
+    });
+  };
 
 export const formatTimeToChinese = (dateNeedConvert) => {
     const date = new Date(dateNeedConvert)

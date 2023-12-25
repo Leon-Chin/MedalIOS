@@ -7,7 +7,9 @@ import useCompletedTutorials from '../../../hooks/useCompletedTutorials'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { ICON } from '../../../constants/SVG/ICON'
+import { useIntl } from 'react-intl'
 const TodoNotiPercentage = ({ selectDay }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const yetDoneTutorial = useUncompletedTutorials(selectDay)
@@ -29,7 +31,7 @@ const TodoNotiPercentage = ({ selectDay }) => {
                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.white }}>{percentage * 100}%</Text>
 
                 {(yetDoneTutorial.length === 0 && doneTutorial.length !== 0) ? ICON.doneCircle(24, COLORS.green) :
-                    <Text style={{ color: COLORS.white }}>剩余({yetDoneTutorial.length}/{yetDoneTutorial.length + doneTutorial.length})</Text>
+                    <Text style={{ color: COLORS.white }}>{formatMessage({ id: 'app.news.remaining' })}({yetDoneTutorial.length}/{yetDoneTutorial.length + doneTutorial.length})</Text>
                 }
             </View>
             <View style={{ height: 10, borderRadius: 4, backgroundColor: COLORS.black }}>

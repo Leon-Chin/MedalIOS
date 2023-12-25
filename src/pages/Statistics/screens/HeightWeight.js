@@ -13,6 +13,7 @@ import UploadWeightTargetModal from '../components/UploadWeightTargetModal'
 import useMeasurement from '../../../hooks/useMeasurement'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 const { width } = Dimensions.get("screen")
 
 const HeightWeight = () => {
@@ -74,6 +75,7 @@ const HeightWeight = () => {
 
     )
 }
+<<<<<<< Updated upstream
 
 export default HeightWeight
 
@@ -111,3 +113,45 @@ const styles = StyleSheet.create({
         width: width * 0.5,
     }
 })
+=======
+const WeightIntro = () => {
+    const { formatMessage } = useIntl()
+    const theme = useUserTheme()
+    const currentTheme = APPTHEME[theme]
+    return <View>
+        <Text style={{ marginHorizontal: '3%', marginTop: SIZE.LargerMargin, fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.intro' })}</Text>
+        <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            marginHorizontal: '3%',
+            marginTop: SIZE.NormalMargin,
+            padding: SIZE.NormalMargin,
+            borderRadius: SIZE.CardBorderRadius,
+            backgroundColor: currentTheme.contentColor
+        }}>
+            <View style={{ flex: 1 }}>
+                <Text style={{ color: currentTheme.fontColor }}>
+                    {formatMessage({ id: 'app.statistic.intro.contentPt1' })}
+                </Text>
+                <Text style={{ color: currentTheme.fontColor }}>
+                    {formatMessage({ id: 'app.statistic.intro.contentPt2' })}
+                </Text>
+                <Text style={{ color: currentTheme.fontColor }}>
+                    {formatMessage({ id: 'app.statistic.intro.contentPt3' })}
+                </Text>
+                <Text style={{ color: currentTheme.fontColor }}>
+                    {formatMessage({ id: 'app.statistic.intro.contentPt4' })}
+                </Text>
+                <Text style={{ color: currentTheme.fontColor }}>
+                    {formatMessage({ id: 'app.statistic.intro.contentPt5' })}
+                </Text>
+                <Text style={{ color: currentTheme.fontColor }}>
+                    {formatMessage({ id: 'app.statistic.intro.contentPt6' })}
+                </Text>
+            </View>
+        </View>
+    </View>
+}
+export default HeightWeight
+>>>>>>> Stashed changes

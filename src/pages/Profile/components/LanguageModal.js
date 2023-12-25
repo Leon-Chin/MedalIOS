@@ -11,8 +11,15 @@ import { updateuserinfo } from '../../../api/user.api'
 import { loginSuccess } from '../../../redux/userSlice'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+<<<<<<< Updated upstream
+=======
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
+>>>>>>> Stashed changes
 
 const LanguageModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const [language, setLanguage] = useState()
     const dispatch = useDispatch()
     const { currentUser } = useSelector(state => state.user)
@@ -53,7 +60,7 @@ const LanguageModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    语言
+                                    {formatMessage({ id: 'app.profile.lang' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -64,7 +71,7 @@ const LanguageModal = ({ visible, setVisible }) => {
                                 }}
                                 style={{ backgroundColor: preferedLanguage !== language ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: preferedLanguage !== language ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: preferedLanguage !== language ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.profile.update' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -75,14 +82,14 @@ const LanguageModal = ({ visible, setVisible }) => {
                                 style={{ width: 100, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: language === LANGUAGE.zh ? COLORS.primary : COLORS.backgroundGray, padding: SIZE.NormalMargin, borderTopLeftRadius: SIZE.CardBorderRadius, borderBottomLeftRadius: SIZE.CardBorderRadius, }}
                             >
                                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: language === LANGUAGE.zh ? COLORS.white : COLORS.gray }}>
-                                    中文
+                                {formatMessage({ id: 'app.profile.lang.zh' })}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => setLanguage(LANGUAGE.en)}
                                 style={{ width: 100, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: language === LANGUAGE.en ? COLORS.primary : COLORS.backgroundGray, padding: SIZE.NormalMargin, borderTopRightRadius: SIZE.CardBorderRadius, borderBottomRightRadius: SIZE.CardBorderRadius, }}>
                                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: language === LANGUAGE.en ? COLORS.white : COLORS.gray }}>
-                                    English
+                                {formatMessage({ id: 'app.profile.lang.en' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>

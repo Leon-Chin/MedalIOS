@@ -17,9 +17,17 @@ import { loginSuccess } from '../../redux/userSlice';
 import EditBlogModal from './Components/EditBlogModal';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
+<<<<<<< Updated upstream
+=======
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
+import useCheckUserStatus from '../../hooks/useCheckUserStatus';
+import { useIntl } from 'react-intl';
+>>>>>>> Stashed changes
 
 const { width: ScreenWidth, height: ScreenHeight } = Dimensions.get('screen')
 const SpecificBlog = ({ route }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
@@ -149,6 +157,7 @@ const SpecificBlog = ({ route }) => {
     }
 
     const handleAddComment = async () => {
+<<<<<<< Updated upstream
         // 在这里执行你想要的操作
         commentText && await addcomment({ blogID, content: commentText })
             .then((res) => {
@@ -161,6 +170,24 @@ const SpecificBlog = ({ route }) => {
             }).catch(error => {
                 Alert.alert("出现异常请稍后重试")
             })
+=======
+        if (!isMuted) {
+            // 在这里执行你想要的操作
+            commentText && await addcomment({ blogID, content: commentText })
+                .then((res) => {
+                    if (res.status !== false) {
+                        getBlogComments()
+                        setCommentText('')
+                    } else {
+                        Toast.show(ERROR_MESSAGE)
+                    }
+                }).catch(error => {
+                    Toast.show(ERROR_MESSAGE)
+                })
+        } else {
+            Toast.show({ type: 'error', text1: formatMessage({ id: 'app.blog.banAccountAlert' }), text2: formatMessage({ id: 'app.blog.alertContent' }) + muteDate, duration: 5, topOffset: 50 })
+        }
+>>>>>>> Stashed changes
     };
     const [editModalVisible, setEditModalVisible] = useState(false)
 
@@ -216,7 +243,7 @@ const SpecificBlog = ({ route }) => {
                             </View>
                             <View style={{ marginHorizontal: '3%', opacity: 0.4, height: 0.8, backgroundColor: COLORS.commentText }}></View>
                             <View style={{ marginHorizontal: '3%', paddingVertical: 10, }}>
-                                <Text style={{ color: currentTheme.fontColor, marginBottom: 10 }}>共「<Text style={{ fontWeight: 'bold' }}>{comments && comments.length}</Text>」条评论</Text>
+                                <Text style={{ color: currentTheme.fontColor, marginBottom: 10 }}>{formatMessage({ id: 'app.blog.totalCommentPt1' })}<Text style={{ fontWeight: 'bold' }}>{comments && comments.length}</Text>{formatMessage({ id: 'app.blog.totalCommentPt2' })}</Text>
                                 {comments && comments.map((item, index) => <OneComment key={index} comment={item} />)}
                             </View>
                         </ScrollView>
@@ -240,7 +267,7 @@ const SpecificBlog = ({ route }) => {
                                     onChangeText={(commentText) => setCommentText(commentText)}
                                     returnKeyType='send'
                                     onSubmitEditing={handleAddComment}
-                                    placeholder='请输入你的评论'
+                                    placeholder={formatMessage({ id: 'app.blog.commentField' })}
                                 />
                             </View>
                             <View style={{ flex: 0.3, flexDirection: 'row', justifyContent: 'space-around' }}>
@@ -249,14 +276,14 @@ const SpecificBlog = ({ route }) => {
                                     style={{ justifyContent: 'center', alignItems: "center", marginHorizontal: 4 }}
                                 >
                                     <AntDesign name={liked ? "like1" : 'like2'} size={26} color={liked ? COLORS.primary : COLORS.black} />
-                                    {likedNum === 0 ? <Text style={{ fontSize: 12, color: COLORS.commentText }}>Like</Text> : <Text style={{ fontSize: 12, marginLeft: 4, color: currentTheme.fontColor }}>{likedNum}</Text>}
+                                    {likedNum === 0 ? <Text style={{ fontSize: 12, color: COLORS.commentText }}>{formatMessage({ id: 'app.blog.like' })}</Text> : <Text style={{ fontSize: 12, marginLeft: 4, color: currentTheme.fontColor }}>{likedNum}</Text>}
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => handleFavoriteBlog()}
                                     style={{ justifyContent: 'center', alignItems: "center", marginHorizontal: 4 }}
                                 >
                                     <AntDesign name={favorited ? "star" : 'staro'} size={26} color={favorited ? COLORS.primary : COLORS.black} />
-                                    {favoritedNum === 0 ? <Text style={{ fontSize: 12, color: COLORS.commentText }}>Favor</Text> : <Text style={{ fontSize: 12, marginLeft: 4, color: currentTheme.fontColor }}>{favoritedNum}</Text>}
+                                    {favoritedNum === 0 ? <Text style={{ fontSize: 12, color: COLORS.commentText }}>{formatMessage({ id: 'app.blog.favor' })}</Text> : <Text style={{ fontSize: 12, marginLeft: 4, color: currentTheme.fontColor }}>{favoritedNum}</Text>}
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -280,14 +307,14 @@ const SpecificBlog = ({ route }) => {
                             }}
                             style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                         >
-                            <Text style={{ fontSize: 18, color: currentTheme.fontColor, fontWeight: 'bold' }}>编辑</Text>
+                            <Text style={{ fontSize: 18, color: currentTheme.fontColor, fontWeight: 'bold' }}>{formatMessage({ id: 'app.blog.editComment' })}</Text>
                             {ICON.edit(24, currentTheme.fontColor)}
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={handleDeleteBlog}
                             style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                         >
-                            <Text style={{ fontSize: 18, color: COLORS.red, fontWeight: 'bold' }}>删除</Text>
+                            <Text style={{ fontSize: 18, color: COLORS.red, fontWeight: 'bold' }}>{formatMessage({ id: 'app.blog.delComment' })}</Text>
                             {ICON.delete(24, COLORS.red)}
                         </TouchableOpacity>
                     </View> :
@@ -295,7 +322,7 @@ const SpecificBlog = ({ route }) => {
                             onPress={() => navigate("Report", { type: "blog", target: blog })}
                             style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                         >
-                            <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}>举报</Text>
+                            <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}>{formatMessage({ id: 'app.blog.report' })}</Text>
                         </TouchableOpacity>}
                 </View>
             </BottomSheetModal>

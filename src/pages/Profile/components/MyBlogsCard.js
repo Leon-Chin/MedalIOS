@@ -9,8 +9,10 @@ import { useEffect } from 'react';
 import SIZE from '../../../constants/SIZE';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const MyBlogsCard = () => {
+    const { formatMessage } = useIntl()
     const { navigate } = useNavigation()
     const { currentUser } = useSelector(state => state.user)
     const [likeBlogs, setLikeBlogs] = useState([])
@@ -27,7 +29,7 @@ const MyBlogsCard = () => {
     }, [currentUser])
     return (
         <View style={{ backgroundColor: currentTheme.contentColor, marginHorizontal: '3%', marginBottom: 10, padding: '3%', borderRadius: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: currentTheme.fontColor }}>My Blogs</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.myBlogs' })}</Text>
             <View style={{ flexDirection: 'row', height: 80 }}>
                 <TouchableOpacity
                     onPress={() => navigate('MyBlogsOverview', { screen: 'LikeBlogs' })}
@@ -46,12 +48,12 @@ const MyBlogsCard = () => {
                     </View>
                     <View style={{ marginLeft: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
-                            {'点赞blog'}
+                        {formatMessage({ id: 'app.profile.likedBlogs' })}
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
                             <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{likeBlogs.length}</Text>
                             <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
-                                {`个blog`}
+                            {formatMessage({ id: 'app.profile.blogEnd' })}
                             </Text>
                         </View>
                     </View>
@@ -73,12 +75,12 @@ const MyBlogsCard = () => {
                     </View>
                     <View style={{ marginLeft: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
-                            {'收藏blogs'}
+                        {formatMessage({ id: 'app.profile.favBlogs' })}
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 6, }}>
                             <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{favoriteBlogs.length}</Text>
                             <Text style={{ fontSize: 10, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
-                                {`个blog`}
+                            {formatMessage({ id: 'app.profile.blogEnd' })}
                             </Text>
                         </View>
                     </View>

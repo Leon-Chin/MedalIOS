@@ -32,5 +32,7 @@ export const enUS_commonText = {
     "actionHistory": 'Operation History',
     'noAction': 'No operation',
     'sort': 'Sort',
-    'todaySessions': 'Today Sessions'
+    'welcomeMessage': 'Welcome Back to Target~',
+    'loading': 'Loading',
+    'app.viewAll': 'View All',
 };

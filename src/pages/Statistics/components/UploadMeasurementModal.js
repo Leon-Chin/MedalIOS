@@ -10,9 +10,16 @@ import { setLatestMeasurement, setMeasurements } from '../../../redux/Measuremen
 import { loginSuccess } from '../../../redux/userSlice'
 import useMeasurement from '../../../hooks/useMeasurement'
 import { isEmptyObj } from '../../../utils/getDuration'
+<<<<<<< Updated upstream
+=======
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
+>>>>>>> Stashed changes
 const { width } = Dimensions.get("screen")
 
 const UploadMeasurementModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const { latestMeasurement } = useMeasurement()
     const [height, setHeight] = useState();
     const [weight, setWeight] = useState();
@@ -101,11 +108,11 @@ const UploadMeasurementModal = ({ visible, setVisible }) => {
         >
             <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', marginBottom: SIZE.LargerMargin, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ color: COLORS.commentText }}>记录身体数据</Text>
+                    <Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.recordBodyMetric' })}</Text>
                 </View>
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={styles.inputItem}>
-                        <Text style={styles.inputItemFont}>体重(kg)</Text>
+                        <Text style={styles.inputItemFont}>{formatMessage({ id: 'app.statistic.weight' })}</Text>
                         <TextInput
                             defaultValue={weight ? weight + "" : ""}
                             autoFocus
@@ -115,7 +122,7 @@ const UploadMeasurementModal = ({ visible, setVisible }) => {
                         />
                     </View>
                     <View style={styles.inputItem}>
-                        <Text style={styles.inputItemFont}>身高(cm)</Text>
+                        <Text style={styles.inputItemFont}>{formatMessage({ id: 'app.statistic.height' })}</Text>
                         <TextInput
                             defaultValue={height ? height + "" : ""}
                             onChangeText={handleInputHeight}
@@ -124,7 +131,7 @@ const UploadMeasurementModal = ({ visible, setVisible }) => {
                         />
                     </View>
                     <View style={styles.inputItem}>
-                        <Text style={styles.inputItemFont}>体脂率(%)</Text>
+                        <Text style={styles.inputItemFont}>{formatMessage({ id: 'app.statistic.bfrForm3' })}(%)</Text>
                         <TextInput
                             defaultValue={fatRate ? fatRate + "" : ""}
                             onChangeText={handleInputFatRate}
@@ -133,7 +140,7 @@ const UploadMeasurementModal = ({ visible, setVisible }) => {
                         />
                     </View>
                     <View style={styles.inputItem}>
-                        <Text style={styles.inputItemFont}>BMI</Text>
+                        <Text style={styles.inputItemFont}>{formatMessage({ id: 'app.statistic.bmi' })}</Text>
                         <View style={styles.showBox}>
                             {BMI && <Text style={{ fontSize: SIZE.NormalTitle }}>{BMI}</Text>}
                         </View>
@@ -146,14 +153,14 @@ const UploadMeasurementModal = ({ visible, setVisible }) => {
                     style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                 >
                     <View style={{ flexDirection: 'row', justifyContent: 'center', width: width * 0.4, alignItems: 'center', backgroundColor: COLORS.primary, paddingVertical: SIZE.NormalMargin, paddingHorizontal: SIZE.LargerMargin, borderRadius: SIZE.CardBorderRadiusForBtn, }}>
-                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.white }}>保存</Text>
+                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.white }}>{formatMessage({ id: 'app.statistic.saveRecord' })}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={handlePresentModalClose}
                     style={{ height: 50, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <Text style={{ fontSize: 18, color: COLORS.commentText }}>取消</Text>
+                    <Text style={{ fontSize: 18, color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.cancel' })}</Text>
                 </TouchableOpacity>
             </View>
         </BottomSheetModal>

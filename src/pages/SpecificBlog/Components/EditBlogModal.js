@@ -13,10 +13,17 @@ import { Video, ResizeMode } from 'expo-av';
 import { useNavigation } from '@react-navigation/native'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+<<<<<<< Updated upstream
+=======
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
+>>>>>>> Stashed changes
 
 const { width } = Dimensions.get('screen')
 
 const EditBlogModal = ({ visible, setVisible, blog }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
@@ -143,7 +150,7 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    编辑博客
+                                    {formatMessage({ id: 'app.blog.editBlog' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -152,26 +159,26 @@ const EditBlogModal = ({ visible, setVisible, blog }) => {
                                 onPress={() => { (title && content) && editBlog() }}
                                 style={{ backgroundColor: (title && content) ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: (title && content) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: (title && content) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.blog.update' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View>
                         <View>
-                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.commentText }}>博客标题</Text>
+                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.commentText }}>{formatMessage({ id: 'app.blog.blogTitle' })}</Text>
                             <TextInput
                                 onChangeText={setTitle}
                                 placeholderTextColor={COLORS.commentText}
                                 returnKeyType='done'
                                 defaultValue={title + ''}
-                                placeholder='添加标题让更多有需要的人看到你吧'
+                                placeholder={formatMessage({ id: 'app.blog.titleAlert' })}
                                 style={{ borderRadius: SIZE.CardBorderRadius, color: currentTheme.fontColor, height: 50 }}
                             />
                         </View>
                         <View>
-                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>博客内容</Text>
+                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>{formatMessage({ id: 'app.blog.blogContent' })}</Text>
                             <TextInput
-                                placeholder='发一下你的运动时刻想法或者运动技巧吧'
+                                placeholder={formatMessage({ id: 'app.blog.contentAlert' })}
                                 placeholderTextColor={COLORS.commentText}
                                 multiline={true}
                                 defaultValue={content + ''}
