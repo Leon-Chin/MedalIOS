@@ -32,5 +32,6 @@ export const enUS_commonText = {
     "actionHistory": 'Operation History',
     'noAction': 'No operation',
     'sort': 'Sort',
-    'todaySessions': 'Today Sessions'
+    'todaySessions': 'Today Sessions',
+    "personalStatisticCenter": "Personal Statistic",
 };

@@ -32,5 +32,6 @@ export const zhCN_commonText = {
     "actionHistory": '历史操作',
     'noAction': "暂无操作",
     'sort': '种类',
-    'todaySessions': '今日日程'
+    'todaySessions': '今日日程',
+    "personalStatisticCenter": "个人数据中心",
 };
