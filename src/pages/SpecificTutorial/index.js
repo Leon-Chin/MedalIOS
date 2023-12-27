@@ -11,17 +11,18 @@ import MoreOptionsModal from './components/MoreOptionsModal';
 import BeforeStartExerciseModal from './components/BeforeStartExerciseModal';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
-import { ICON } from '../../constants/SVG/ICON';
+import useUserLocale from '../../hooks/useUserLocale';
 const { width } = Dimensions.get('window')
 
 const SpecificTutorial = ({ route }) => {
+    const locale = useUserLocale()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     useEffect(() => {
         setTutorial(route.params.tutorial)
     }, [route.params])
     const [tutorial, setTutorial] = useState(route.params.tutorial)
-    const { cover, level, colorie, brief, name, duration, _id } = tutorial
+    const { cover, level, colorie, brief, zh_brief, name, zh_name, duration, _id } = tutorial
     const [MoreOptionsModalVisible, setMoreOptionsModalVisible] = useState(false)
     const [BeforeStartExerciseModalVisible, setBeforeStartExerciseModalVisible] = useState(false)
 
@@ -47,11 +48,14 @@ const SpecificTutorial = ({ route }) => {
                     backgroundColor: currentTheme.contentColor,
                     paddingHorizontal: 16
                 }} >
-                    <CardTitle title={name} />
+                    <CardTitle title={locale === "en" ? name : zh_name} />
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         style={{ flex: 1 }}
                     >
+                        <Text style={{ color: currentTheme.fontColor, marginBottom: SIZE.NormalMargin, fontStyle: 'italic', fontWeight: 'bold' }}>
+                            「"{locale === "en" ? brief : zh_brief}"」
+                        </Text>
                         <View style={{
                             paddingVertical: 10,
                             backgroundColor: currentTheme.backgroundColor,
@@ -62,6 +66,7 @@ const SpecificTutorial = ({ route }) => {
                             alignItems: 'center',
                             justifyContent: 'space-between',
                         }}>
+
                             <View style={{
                                 display: 'flex',
                                 alignItems: 'center',
@@ -82,7 +87,7 @@ const SpecificTutorial = ({ route }) => {
                                 {/* {rate.length === 0 ? <View className="specificTutorialPage-detail-statistic-rate"><View className='commentText'>暂无评分</View></View> : <View className="specificTutorialPage-detail-statistic-rate">评分 9.0</View>} */}
                             </View>
                         </View>
-                        <Text style={{ textAlign: 'justify', marginBottom: 10, color: currentTheme.fontColor }}>{tutorial.description}</Text>
+                        <Text style={{ textAlign: 'justify', marginBottom: 10, color: currentTheme.fontColor }}>{locale === "en" ? tutorial.description : tutorial.zh_description}</Text>
                         <View style={styles.estimateColorie}>
                             <Text style={{ fontWeight: 500, fontSize: 16, color: currentTheme.fontColor }}>预估消耗(千卡)</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

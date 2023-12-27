@@ -1,5 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native'
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { shallowEqual, useSelector } from 'react-redux';
 import { Avatar } from '@rneui/base';
 import COLORS from '../../constants/COLORS';

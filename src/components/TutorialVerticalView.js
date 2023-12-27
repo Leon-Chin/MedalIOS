@@ -10,10 +10,12 @@ import COLORS from '../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
+import useUserLocale from '../hooks/useUserLocale';
 
 const TutorialVerticalView = ({ tutorial }) => {
+    const locale = useUserLocale()
     const { navigate } = useNavigation()
-    const { cover, level, colorie, brief, name, duration, _id } = tutorial
+    const { cover, level, colorie, brief, zh_brief, name, zh_name, duration, _id } = tutorial
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     return (
@@ -96,10 +98,10 @@ const TutorialVerticalView = ({ tutorial }) => {
                         overflow: 'hidden'
                     }}>
                     <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10, color: currentTheme.fontColor }}>
-                        {name}
+                        {locale === "en" ? name : zh_name}
                     </Text>
                     <Text numberOfLines={1} style={{ marginBottom: 2, color: currentTheme.fontColor }}>
-                        {brief}
+                        {locale === "en" ? brief : zh_brief}
                     </Text>
                 </View>
             </View>
