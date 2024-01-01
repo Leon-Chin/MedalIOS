@@ -14,15 +14,17 @@ import APPTHEME from '../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AlreadyHave_MESSAGE, ERROR_MESSAGE } from '../constants/ERRORMessage';
 import { useIntl } from 'react-intl';
+import useUserLocale from '../hooks/useUserLocale';
 
 const TutorialHorizontal = ({ tutorial, withCalender }) => {
     const { formatMessage } = useIntl()
     const { userSelectDay } = useSelector(state => state.calendar)
+    const locale = useUserLocale()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
-    const { cover, level, lowerEstimateColorie, higherEstimateColorie, name, duration, _id } = tutorial
+    const { cover, level, lowerEstimateColorie, higherEstimateColorie, name, zh_name, duration, _id } = tutorial
     const isTodayHasAlr = useIsTutorialHasAlr(_id)
 
     const handleAddToCalendar = async () => {
@@ -72,7 +74,7 @@ const TutorialHorizontal = ({ tutorial, withCalender }) => {
                         padding: 4,
                     }}>
                     <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10, color: currentTheme.fontColor }}>
-                        {name}
+                        {locale === "en" ? name : zh_name}
                     </Text>
                     <View style={{ flexDirection: 'row', gap: 6 }}>
                         <Text style={{ color: COLORS.commentText }}>{level}</Text>

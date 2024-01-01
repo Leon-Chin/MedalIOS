@@ -40,4 +40,5 @@ export const enUS_commonText = {
     'date.month': 'Month',
     'date.year': 'Year',
     
+    "personalStatisticCenter": "Personal Statistic",
 };

@@ -12,10 +12,12 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import useUserLocale from '../../../hooks/useUserLocale'
 
 const DoneTodoItem = ({ tutorial }) => {
     const dispatch = useDispatch()
     const theme = useUserTheme()
+    const locale = useUserLocale()
     const currentTheme = APPTHEME[theme]
     const { navigate } = useNavigation()
     const handleDelete = async () => {
@@ -37,8 +39,12 @@ const DoneTodoItem = ({ tutorial }) => {
             <View style={{ height: '100%', width: 6, borderRadius: 3, backgroundColor: COLORS.primary }}></View>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ flex: 1, gap: SIZE.LittleMargin, }}>
-                    <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{tutorial.name}</Text>
-                    {tutorial?.brief && <Text numberOfLines={1} style={{ fontSize: 12, color: COLORS.commentText }}>{tutorial?.brief} </Text>}
+                    {!tutorial?.zh_name ? <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{tutorial.name}</Text>
+                        : <Text numberOfLines={1} style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{locale === "en" ? tutorial.name : tutorial.zh_name}</Text>}
+                    {tutorial?.zh_brief ?
+                        <Text numberOfLines={1} style={{ fontSize: 12, color: COLORS.commentText }}>{locale === "en" ? tutorial?.brief : tutorial?.zh_brief} </Text> :
+                        tutorial?.brief && <Text numberOfLines={1} style={{ fontSize: 12, color: COLORS.commentText }}>{tutorial?.brief}</Text>
+                    }
                 </View>
                 <View style={{ flexDirection: 'row', gap: SIZE.NormalMargin, alignItems: 'center' }}>
                     {ICON.doneCircle(22, COLORS.green)}

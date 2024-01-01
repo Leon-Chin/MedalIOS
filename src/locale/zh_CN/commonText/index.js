@@ -39,4 +39,6 @@ export const zhCN_commonText = {
     'date.week': '周',
     'date.month': '月',
     'date.year': '年',
+    'todaySessions': '今日日程',
+    "personalStatisticCenter": "个人数据中心",
 };
