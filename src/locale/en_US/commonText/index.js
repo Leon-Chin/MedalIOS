@@ -57,4 +57,7 @@ export const enUS_commonText = {
     'title.notification': 'Notifications',
     'title.blogOverview': 'Blogs',
     'title.exerciseOverview': 'Exercises',
+
+    'error.banAlert': 'Banning Alert:',
+    'error.banAlertMessage': 'Your account has been banned for violating the community rules',
 };

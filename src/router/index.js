@@ -112,7 +112,7 @@ const MyRouter = () => {
     const { isBlocked } = useCheckUserStatus()
     const { formatMessage } = useIntl()
     if (isBlocked) {
-        Toast.show({ type: 'error', text1: '封禁提示', text2: '您因违反社区规定, 账号已被封禁已经无法使用App' })
+        Toast.show({ type: 'error', text1: formatMessage({ id: "error.banAlert" }), text2: formatMessage({ id: "error.banAlertMessage" }) })
     }
     if (!currentUser || isBlocked) {
         return (
