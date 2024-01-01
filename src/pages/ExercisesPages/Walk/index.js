@@ -13,6 +13,7 @@ import { loginSuccess } from '../../../redux/userSlice';
 import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
+import { WALK_TUTORIAL } from '../../../constants/APP_INSIDE_TUTORIAL';
 
 const Walk = () => {
     const [startTime, setStartTime] = useState()
@@ -81,16 +82,13 @@ const Walk = () => {
             // calorieConsumption: 
             step: currentStepCount,
         }
-        const tutorial = {
-            name: "Walk",
-        }
-        await finishsessionoutside(tutorial, ExerciseData, new Date()).then(res => {
+        await finishsessionoutside(WALK_TUTORIAL, ExerciseData, new Date()).then(res => {
             if (res && res.status !== false) {
                 stopPedometer()
                 setFocused(false)
                 dispatch(loginSuccess(res.user))
                 dispatch(setSessions(res.updatedSessions))
-                navigation.dispatch(StackActions.replace("AfterExercise", { tutorial, data: ExerciseData }))
+                navigation.dispatch(StackActions.replace("AfterExercise", { tutorial: WALK_TUTORIAL, data: ExerciseData }))
             }
         })
     }
@@ -103,7 +101,6 @@ const Walk = () => {
             { text: '放弃', style: 'destructive', onPress: () => navigation.goBack() },// 如果用户确认放弃，则触发默认行为
             ]
         );
-
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.blueBackground }}>

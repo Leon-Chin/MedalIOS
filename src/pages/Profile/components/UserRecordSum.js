@@ -48,16 +48,16 @@ const UserRecordSum = ({ records }) => {
                     <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>总运动消耗</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                         <TouchableOpacity
-                            onPress={() => { handleShowDetail(CALORIE_TYPE.total, calorieSum ? calorieSum : 0) }}
+                            onPress={() => { handleShowDetail(CALORIE_TYPE.total, calorieSum ? calorieSum.toFixed(1) : 0) }}
                         >
-                            {calorieSum ? <Text style={{ color: currentTheme.fontColor, fontSize: 26, fontWeight: 'bold' }}>{calorieSum}</Text> :
+                            {calorieSum ? <Text style={{ color: currentTheme.fontColor, fontSize: 26, fontWeight: 'bold' }}>{calorieSum.toFixed(1)}</Text> :
                                 <Text style={{ color: currentTheme.fontColor, fontSize: 26, fontWeight: 'bold' }}>0</Text>}
                         </TouchableOpacity>
                         <Text>+</Text>
                         <TouchableOpacity
                             onPress={() => { handleShowDetail(CALORIE_TYPE.tutorial, tutorialCalorieSum ? tutorialCalorieSum : 0) }}
                         >
-                            {tutorialCalorieSum ? <Text style={{ color: currentTheme.fontColor, fontSize: 26, fontWeight: 'bold' }}>{tutorialCalorieSum}</Text> :
+                            {tutorialCalorieSum ? <Text style={{ color: currentTheme.fontColor, fontSize: 18, fontWeight: 'bold' }}>{tutorialCalorieSum.toFixed(1)}</Text> :
                                 <Text style={{ color: currentTheme.fontColor, fontSize: 26, fontWeight: 'bold' }}>0</Text>}
                         </TouchableOpacity>
                         <Text style={{ color: currentTheme.fontColor, fontSize: 14, fontWeight: 'bold' }}>千卡</Text>

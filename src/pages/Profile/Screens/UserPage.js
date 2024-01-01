@@ -1,4 +1,4 @@
-import { Alert, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -28,6 +28,7 @@ const UserPage = ({ route }) => {
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
     const ContactID = route.params.userID
+    const isOwn = ContactID === currentUser._id
     const { contactsUsers } = currentUser
     const [user, setUser] = useState()
     const [records, setRecords] = useState([])
@@ -93,11 +94,11 @@ const UserPage = ({ route }) => {
                             </View>
                         </View>
                     </View>
-                    <TouchableOpacity
+                    {!isOwn && <TouchableOpacity
                         onPress={() => { setActionModalVisible(true) }}
                     >
                         {ICON.more(30, COLORS.black)}
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
                 </View>
                 <View style={{ flexDirection: 'row', marginBottom: SIZE.NormalMargin, marginHorizontal: '3%', }}>
                     <Text style={{ color: currentTheme.fontColor }}>@{user?.name}</Text>

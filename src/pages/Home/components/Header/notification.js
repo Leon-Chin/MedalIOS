@@ -13,7 +13,6 @@ import { ICON } from '../../../../constants/SVG/ICON'
 const Notification = () => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
-    const { formatMessage } = useIntl()
     const navigation = useNavigation()
     const [allNotifications, setAllNotifications] = useState(0)
     const [notifications, setNotifications] = useState([]);

@@ -14,6 +14,7 @@ import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
 import * as Location from 'expo-location';
+import { RUN_TUTORIAL } from '../../../constants/APP_INSIDE_TUTORIAL';
 
 const Run = () => {
     const [startTime, setStartTime] = useState()
@@ -85,10 +86,7 @@ const Run = () => {
             distance: distance,
             step: currentStepCount,
         }
-        const tutorial = {
-            name: "Run",
-        }
-        await finishsessionoutside(tutorial, ExerciseData, new Date()).then(res => {
+        await finishsessionoutside(RUN_TUTORIAL, ExerciseData, new Date()).then(res => {
             if (res && res.status !== false) {
                 stopPedometer()
                 setFocused(false)
@@ -96,7 +94,7 @@ const Run = () => {
                 dispatch(setSessions(res.updatedSessions))
                 // here
                 stopTracking()
-                navigation.dispatch(StackActions.replace("AfterExercise", { tutorial, data: ExerciseData }))
+                navigation.dispatch(StackActions.replace("AfterExercise", { tutorial: RUN_TUTORIAL, data: ExerciseData }))
             }
         })
     }
