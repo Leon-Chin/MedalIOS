@@ -13,7 +13,9 @@ import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { ICON } from '../../constants/SVG/ICON';
 import { useIntl } from 'react-intl';
+import useUserLocale from '../../hooks/useUserLocale';
 const { width } = Dimensions.get('window')
+
 
 const SpecificTutorial = ({ route }) => {
     const { formatMessage } = useIntl()

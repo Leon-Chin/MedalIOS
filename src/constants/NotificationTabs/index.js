@@ -1,18 +1,18 @@
-const NotificationTabs = [
+const NotificationTabs = (formatMessage) => [
     {
         id: 1,
         name: "SystemNotifications",
-        value: "System"
+        value: formatMessage({ id: 'app.news.tab.system' })
     },
     {
         id: 2,
         name: "Messages",
-        value: "Messages"
+        value: formatMessage({ id: 'app.news.tab.pm' })
     },
     {
         id: 3,
         name: "Todos",
-        value: "Todos"
+        value: formatMessage({ id: 'app.news.tab.todos' })
     },
 ]
 

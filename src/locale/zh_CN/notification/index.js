@@ -11,5 +11,12 @@ export const zhCN_notification = {
     'app.news.leftTutpt2': '」个教程就达成目标, 加油！！！',
     'app.news.leftUndo': '剩余待练',
     'app.news.completeTutpt3': '」个教程, 达成运动目标',
-    'app.news.congrats': '干得漂亮!!!🎊'
+    'app.news.congrats': '干得漂亮!!!🎊',
+
+    'app.news.tab.system': '系统通知',
+    'app.news.tab.pm': '私信',
+    'app.news.tab.todos': '待办事项',
+
+    'app.news.customQuestion': "选择一个选项卡以屏蔽通知",
+    'app.news.customQuestion.exit': '退出',
 }

@@ -16,7 +16,7 @@ export const enUS_tutorial = {
     'app.tut.name.strech': 'Strech',
     'app.tut.name.relax': 'Cool Down',
 
-    'app.tut.selected': 'selected',
+    'app.tut.selected': 'Selected',
  
     'app.tut.durationUnit': 'min',
     'app.tut.calorieUnit': 'kcal',
