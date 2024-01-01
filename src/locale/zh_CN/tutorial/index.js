@@ -17,4 +17,7 @@ export const zhCN_tutorial = {
     'app.tut.name.relax': '放松',
 
     'app.tut.selected': '精选',
+
+    'app.tut.durationUnit': '分钟',
+    'app.tut.calorieUnit': '千卡',
 }

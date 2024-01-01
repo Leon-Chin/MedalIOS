@@ -91,4 +91,10 @@ export const zhCN_statistic = {
     'app.statistic.intro.contentPt4': '18.5至24.9：正常范围',
     'app.statistic.intro.contentPt5': '25至29.9：超重',
     'app.statistic.intro.contentPt6': '30及以上：肥胖',
+
+    'app.statistic.label.weight': '体重',
+    'app.statistic.label.height': '身高',
+    'app.statistic.label.bmi': 'BMI',
+    'app.statistic.label.weightGoal': '目标体重',
+    'app.statistic.label.bfr': 'BFR',
 };

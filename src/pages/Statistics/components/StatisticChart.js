@@ -35,6 +35,7 @@ echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendCompon
 const { width } = Dimensions.get('screen')
 const StatisticChart = () => {
     const { formatMessage } = useIntl()
+    const intl = useIntl();
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { allMeasurements } = useMeasurement()
@@ -61,7 +62,7 @@ const StatisticChart = () => {
                 width: width * 0.9,
                 height: 400,
             });
-            chart.setOption(chartOption(dateArr, weightArr, weightTarget, heightArr, BMIArr, bodyFatRateArr));
+            chart.setOption(chartOption(intl.formatMessage, dateArr, weightArr, weightTarget, heightArr, BMIArr, bodyFatRateArr));
         }
         return () => chart?.dispose();
     }, [allMeasurements, heightArr, weightArr, BMIArr, dateArr]);

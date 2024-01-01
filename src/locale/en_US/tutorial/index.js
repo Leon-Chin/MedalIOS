@@ -17,4 +17,7 @@ export const enUS_tutorial = {
     'app.tut.name.relax': 'Cool Down',
 
     'app.tut.selected': 'selected',
+ 
+    'app.tut.durationUnit': 'min',
+    'app.tut.calorieUnit': 'kcal',
 }

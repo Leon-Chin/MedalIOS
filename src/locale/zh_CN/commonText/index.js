@@ -36,4 +36,7 @@ export const zhCN_commonText = {
     'welcomeMessage': '欢迎回到Target~',
     'loading': '加载中',
     'app.viewAll': '查看全部',
+    'date.week': '周',
+    'date.month': '月',
+    'date.year': '年',
 };

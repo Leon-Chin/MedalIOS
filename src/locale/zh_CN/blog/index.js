@@ -28,4 +28,6 @@ export const zhCN_blog = {
     'app.blog.editComment': '编辑',
     'app.blog.delComment': '删除',
     'app.blog.report': '举报',
+
+    'app.blog.removedBlog': '已无法无法找到该动态',
 }

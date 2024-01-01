@@ -93,4 +93,10 @@ export const enUS_statistic = {
     'app.statistic.intro.contentPt4': '18.5 to 24.9: Normal range',
     'app.statistic.intro.contentPt5': '25 to 29.9: Overweight',
     'app.statistic.intro.contentPt6': '30 and above: obese',
+
+    'app.statistic.label.weight': 'Wt.',
+    'app.statistic.label.height': 'Hgt.',
+    'app.statistic.label.bmi': 'BMI',
+    'app.statistic.label.weightGoal': 'Goal Wt.',
+    'app.statistic.label.bfr': 'BFR',
 };

@@ -13,7 +13,10 @@ import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { ERROR_MESSAGE } from '../constants/ERRORMessage';
+import { useIntl } from 'react-intl'
+
 const ContactHorizontal = ({ contact, setVisible }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
@@ -90,12 +93,12 @@ const ContactHorizontal = ({ contact, setVisible }) => {
                 onPress={handleSendMessage}
                 style={{ padding: SIZE.LittleMargin, borderRadius: SIZE.CardBorderRadius, borderColor: COLORS.commentText, borderWidth: 2 }}
             >
-                <Text style={{ color: COLORS.commentText, }}>发消息</Text>
+                <Text style={{ color: COLORS.commentText, }}>{formatMessage({ id: 'app.comu.sendText' })}</Text>
             </TouchableOpacity> : <TouchableOpacity
                 onPress={handleSubscribe}
                 style={{ padding: SIZE.LittleMargin, borderRadius: SIZE.CardBorderRadius, borderColor: COLORS.primary, borderWidth: 2 }}
             >
-                <Text style={{ color: COLORS.primary, }}>关注</Text>
+                <Text style={{ color: COLORS.primary, }}>{formatMessage({ id: 'app.comu.subscribe' })}</Text>
             </TouchableOpacity>}
         </TouchableOpacity >
     )

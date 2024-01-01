@@ -28,4 +28,6 @@ export const enUS_blog = {
     'app.blog.editComment': 'Edit',
     'app.blog.delComment': 'Delete',
     'app.blog.report': 'Report',
+
+    'app.blog.removedBlog': 'This blog is no longer available',
 }
