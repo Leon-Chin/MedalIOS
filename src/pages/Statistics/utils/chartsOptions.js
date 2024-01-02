@@ -1,6 +1,6 @@
 import COLORS from "../../../constants/COLORS";
 
-export const chartOption = (dateArr, weightArr, weightTarget, heightArr, BMIArr, bodyFatRateArr) => {
+export const chartOption = (formatMessage, dateArr, weightArr, weightTarget, heightArr, BMIArr, bodyFatRateArr) => {
 
     return {
         tooltip: {
@@ -38,30 +38,30 @@ export const chartOption = (dateArr, weightArr, weightTarget, heightArr, BMIArr,
         },
         series: [
             {
-                name: '体重',
+                name: formatMessage({ id: 'app.statistic.label.weight' }),
                 type: 'line',
                 smooth: true,
                 data: weightArr,
             },
             heightArr && {
-                name: '身高',
+                name: formatMessage({ id: 'app.statistic.label.height' }),
                 type: 'line',
                 smooth: true,
                 data: heightArr,
             },
             BMIArr && {
-                name: 'BMI',
+                name: formatMessage({ id: 'app.statistic.label.bmi' }),
                 type: 'line',
                 smooth: true,
                 data: BMIArr,
             },
             weightTarget && {
-                name: '目标体重',
+                name: formatMessage({ id: 'app.statistic.label.weightGoal' }),
                 type: 'line',
                 data: new Array(dateArr.length).fill(weightTarget),
             },
             bodyFatRateArr && {
-                name: 'BFR',
+                name: formatMessage({ id: 'app.statistic.label.bfr' }),
                 type: 'line',
                 data: bodyFatRateArr,
             },

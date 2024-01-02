@@ -13,8 +13,10 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE, PleaseInputSearchContent_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const SubscribeContactModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const { currentUser } = useSelector(state => state.user)
     const [searchText, setSearchText] = useState('')
     const theme = useUserTheme()
@@ -52,14 +54,14 @@ const SubscribeContactModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    用户
+                                    {formatMessage({ id: 'app.comu.user' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View>
                         <TextInput
-                            placeholder={'搜索用户名， 用户ID, 邮箱'}
+                            placeholder={formatMessage({ id: 'app.comu.searchBar' })}
                             placeholderTextColor={COLORS.commentText}
                             style={{ backgroundColor: currentTheme.contentColor, color: currentTheme.fontColor, padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, marginBottom: SIZE.NormalMargin }}
                             onChangeText={setSearchText}

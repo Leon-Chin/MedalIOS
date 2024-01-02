@@ -5,8 +5,10 @@ import { ICON } from '../../../constants/SVG/ICON';
 import useHealthKit from '../../../hooks/useHealthkit';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const DistanceCounter = () => {
+    const { formatMessage } = useIntl()
     const { navigate } = useNavigation()
     const { distance } = useHealthKit()
     const theme = useUserTheme()
@@ -27,7 +29,7 @@ const DistanceCounter = () => {
             <View style={{ height: 30, width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                     {ICON.distanceIcon(16, COLORS.colorieOrange)}
-                    <Text style={{ fontWeight: "bold", color: COLORS.colorieOrange, fontSize: 16 }}>Distance</Text>
+                    <Text style={{ fontWeight: "bold", color: COLORS.colorieOrange, fontSize: 16 }}>{formatMessage({ id: 'app.dashboard.distance' })}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => navigate('Statistics')}
@@ -39,7 +41,7 @@ const DistanceCounter = () => {
             <View style={{ flex: 1, width: '100%', paddingHorizontal: '6%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 4 }}>
                     <Text style={{ fontSize: 24, fontWeight: 'bold', color: currentTheme.fontColor }}>{(distance / 1000).toFixed(2)}</Text>
-                    <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>km</Text>
+                    <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>{formatMessage({ id: 'app.dashboard.distanceUnit' })}</Text>
                 </View>
             </View>
         </View>

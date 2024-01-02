@@ -5,7 +5,10 @@ import TutorialVerticalView from '../../../../components/TutorialVerticalView'
 import { getalltutorial } from '../../../../api/user.api'
 import { useNavigation } from '@react-navigation/native'
 import COLORS from '../../../../constants/COLORS'
+import { useIntl } from 'react-intl'
+
 const TutorialLibrary = () => {
+    const { formatMessage } = useIntl()
     const [tutorials, setTutorials] = useState([])
     const { navigate } = useNavigation()
 
@@ -22,7 +25,7 @@ const TutorialLibrary = () => {
     }, [])
     if (tutorials.length === 0) {
         // loading
-        return <View><Text style={{ color: COLORS.commentText }}>Loading</Text></View>
+        return <View><Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'loading' })}</Text></View>
     } else {
         return (
             <>
@@ -32,9 +35,9 @@ const TutorialLibrary = () => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                    <Label>精选</Label>
+                    <Label>{formatMessage({ id: 'app.tut.selected' })}</Label>
                     <Pressable onPress={() => navigate('AllTutorials')}>
-                        <Text style={{ opacity: 0.5, fontSize: 12, color: COLORS.commentText }}>View All</Text>
+                        <Text style={{ opacity: 0.5, fontSize: 12, color: COLORS.commentText }}>{formatMessage({id: 'app.viewAll'})}</Text>
                     </Pressable>
                 </View>
                 <View style={{ flexDirection: 'row' }}>

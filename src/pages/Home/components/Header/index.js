@@ -33,7 +33,7 @@ const Header = () => {
             </TouchableOpacity>
             <View style={styles.title}>
                 <Text style={{ fontSize: 20, fontWeight: '700', color: currentTheme.fontColor }}>{isBirthday ? formatMessage({ id: 'happyBirthday' }) : formatMessage({ id: 'hi' })}, <Text style={{ color: COLORS.primary, fontWeight: "800" }}>{userName}</Text>!</Text>
-                <Text style={{ paddingTop: 4, fontSize: 12, opacity: 0.6, color: currentTheme.commentFontColor }}>欢迎回到Target~</Text>
+                <Text style={{ paddingTop: 4, fontSize: 12, opacity: 0.6, color: currentTheme.commentFontColor }}>{formatMessage({ id: 'welcomeMessage' })}</Text>
             </View>
             <Notification />
         </View>

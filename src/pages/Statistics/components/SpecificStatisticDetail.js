@@ -7,8 +7,10 @@ import { useSelector } from 'react-redux'
 import { BMISort } from '../../../utils/BMICalculate'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const SpecificStatisticDetail = ({ setUploadWeightModalVisible, latestMeasurement }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
@@ -25,7 +27,7 @@ const SpecificStatisticDetail = ({ setUploadWeightModalVisible, latestMeasuremen
             backgroundColor: currentTheme.contentColor
         }}>
             <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: SIZE.SmallTitle, marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>当前/目标体重</Text>
+                <Text style={{ fontSize: SIZE.SmallTitle, marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.currentGoalWt' })}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text style={{ fontSize: SIZE.ExtraLargerTitle, color: currentTheme.fontColor, fontWeight: 'bold' }}>{latestMeasurement?.weight ? latestMeasurement.weight : "--"}</Text>
                     <TouchableOpacity
@@ -40,7 +42,7 @@ const SpecificStatisticDetail = ({ setUploadWeightModalVisible, latestMeasuremen
             </View>
             <View style={{ width: SIZE.NormalMargin }}></View>
             <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: SIZE.SmallTitle, marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>BMI水平</Text>
+                <Text style={{ fontSize: SIZE.SmallTitle, marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.bmiLvl' })}</Text>
                 {!latestMeasurement?.BMI ? <Text style={{ fontSize: SIZE.ExtraLargerTitle, color: currentTheme.fontColor, fontWeight: 'bold' }}>--</Text> :
                     <Text style={{ fontSize: SIZE.ExtraLargerTitle, color: currentTheme.fontColor, fontWeight: 'bold' }}>{BMISort(latestMeasurement.BMI)}</Text>}
             </View>

@@ -14,10 +14,12 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE, PublicSuccess_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const { width } = Dimensions.get('screen')
 
 const PostBlogModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const [title, setTitle] = useState()
@@ -147,7 +149,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    发博客
+                                    {formatMessage({ id: 'app.blog.postBlog' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -156,25 +158,25 @@ const PostBlogModal = ({ visible, setVisible }) => {
                                 onPress={() => { (title && content) && postBlog() }}
                                 style={{ backgroundColor: (title && content) ? COLORS.primary : currentTheme.contentColor, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: (title && content) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>发布</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: (title && content) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.blog.postBtn' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View>
                         <View>
-                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.commentText }}>博客标题</Text>
+                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.commentText }}>{formatMessage({ id: 'app.blog.blogTitle' })}</Text>
                             <TextInput
                                 onChangeText={setTitle}
                                 returnKeyType='done'
                                 placeholderTextColor={COLORS.commentText}
-                                placeholder='添加标题让更多有需要的人看到你吧'
+                                placeholder={formatMessage({ id: 'app.blog.titleAlert' })}
                                 style={{ borderRadius: SIZE.CardBorderRadius, color: currentTheme.fontColor, height: 50 }}
                             />
                         </View>
                         <View>
-                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>博客内容</Text>
+                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.commentText }}>{formatMessage({ id: 'app.blog.blogContent' })}</Text>
                             <TextInput
-                                placeholder='发一下你的运动时刻想法或者运动技巧吧'
+                                placeholder={formatMessage({ id: 'app.blog.contentAlert' })}
                                 placeholderTextColor={COLORS.commentText}
                                 multiline={true}
                                 onChangeText={setContent}

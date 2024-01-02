@@ -19,4 +19,9 @@ export const enUS_login = {
     'app.login.propaganda3': 'Watch the rich tutorial library',
     'app.login.propaganda4': 'Gamification features',
     'app.login.propaganda5': 'Personalized Exercise Plan',
+    
+    'app.login.appTitle': 'Target - FitnessApp',
+    'app.login.appType': 'FitnessApp',
+    'app.login.consent': 'By signing up, I agree to the Terms of Services and Privacy policy',
+    'app.login.getHelp': 'Get help signing in',
 };

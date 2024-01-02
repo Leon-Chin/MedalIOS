@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.qinleiheng.MedalIOS",
+      "bundleIdentifier": "com.hongwei.MedalIOS",
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
@@ -38,7 +38,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "4301719b-90d0-415a-bd91-41a2acf1f707"
+        "projectId": "21295382-246c-4305-8cc6-f7f65ab4472c"
       }
     }
   }

@@ -14,8 +14,11 @@ import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AddSuccess_MESSAGE, AlreadyHave_MESSAGE, ERROR_MESSAGE } from '../constants/ERRORMessage';
+import { useIntl } from 'react-intl';
+
 import useUserLocale from '../hooks/useUserLocale';
 const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
+    const { formatMessage } = useIntl()
     const locale = useUserLocale()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -90,8 +93,8 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
                     </Text>
                     <View style={{ flexDirection: 'row', gap: 6 }}>
                         <Text style={{ color: COLORS.commentText }}>{level && level}</Text>
-                        <Text style={{ color: COLORS.commentText }}>{duration && duration} min</Text>
-                        <Text style={{ color: COLORS.commentText }}>{lowerEstimateColorie && lowerEstimateColorie}-{higherEstimateColorie && higherEstimateColorie} 千卡</Text>
+                        <Text style={{ color: COLORS.commentText }}>{duration && duration} {formatMessage({ id: 'app.tut.durationUnit' })}</Text>
+                        <Text style={{ color: COLORS.commentText }}>{lowerEstimateColorie && lowerEstimateColorie}-{higherEstimateColorie && higherEstimateColorie} {formatMessage({ id: 'app.tut.calorieUnit' })}</Text>
                     </View>
                 </View>
             </>

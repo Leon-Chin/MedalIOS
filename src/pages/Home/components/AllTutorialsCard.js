@@ -4,9 +4,12 @@ import COLORS from '../../../constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
+
 const couple = require('../../../../assets/images/couple.jpg');
 
 const AllTutorialsCard = () => {
+    const { formatMessage } = useIntl()
     const navigation = useNavigation()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -26,10 +29,10 @@ const AllTutorialsCard = () => {
             }}>
             <View>
                 <Text style={{ fontSize: 16, fontWeight: '600', color: currentTheme.fontColor }}>
-                    {'全部课程'}
+                    {formatMessage({ id: 'app.tut.allTut' })}
                 </Text>
                 <Text style={{ fontSize: 10, marginTop: 6, color: COLORS.commentText, fontFamily: 'Poppins-Light' }}>
-                    {'分类 详解'}
+                    {formatMessage({ id: 'app.tut.briefCard' })}
                 </Text>
             </View>
             <View style={{ height: 70, width: 70, borderRadius: 10, overflow: 'hidden' }}>

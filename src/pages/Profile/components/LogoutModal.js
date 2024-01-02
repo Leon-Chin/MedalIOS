@@ -9,9 +9,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
-
+import { useIntl } from 'react-intl';
 
 const LogoutModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const dispatch = useDispatch()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -41,7 +42,7 @@ const LogoutModal = ({ visible, setVisible }) => {
         >
             <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ color: COLORS.commentText }}>确定要退出登录么？</Text>
+                    <Text style={{ color: COLORS.commentText }}>{formatMessage({ id: 'app.profile.logoutAlert' })}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => {
@@ -49,13 +50,13 @@ const LogoutModal = ({ visible, setVisible }) => {
                     }}
                     style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}>确认退出</Text>
+                    <Text style={{ fontSize: 18, color: 'red', fontWeight: 'bold' }}>{formatMessage({ id: 'app.profile.confirmLogout' })}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={handleClose}
                     style={{ height: 50, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <Text style={{ fontSize: 18, color: COLORS.commentText }}>取消</Text>
+                    <Text style={{ fontSize: 18, color: COLORS.commentText }}>{formatMessage({ id: 'app.profile.cancel' })}</Text>
                 </TouchableOpacity>
             </View>
         </BottomSheetModal>

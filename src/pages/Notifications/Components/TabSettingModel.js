@@ -8,20 +8,25 @@ import { useEffect, useState } from 'react';
 import NotificationTabs from '../../../constants/NotificationTabs';
 import { setMessages, setNotificationTab, setSystemMsgs, setTodos } from '../../../redux/NotificationSettingSlice';
 import { updateNotificationTab } from '../../../api/user.api';
+import { useIntl } from 'react-intl';
 
 const TabSettingModel = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
+    const intl = useIntl()
+    const notificationTabs = NotificationTabs(intl.formatMessage);
+    
     const { systemMsgsTabShow, messagesTabShow, todosTabShow } = useSelector(state => state.notificationTab)
     const dispatch = useDispatch()
     useEffect(() => {
         let selectTab;
         if (!systemMsgsTabShow) {
-            selectTab = NotificationTabs[0].name
+            selectTab = notificationTabs[0].name
         }
         if (!messagesTabShow) {
-            selectTab = NotificationTabs[1].name
+            selectTab = notificationTabs[1].name
         }
         if (!todosTabShow) {
-            selectTab = NotificationTabs[2].name
+            selectTab = notificationTabs[2].name
         }
         if (systemMsgsTabShow && messagesTabShow && todosTabShow) {
             selectTab = "none"
@@ -36,13 +41,13 @@ const TabSettingModel = ({ visible, setVisible }) => {
             todosTabShow: true,
         }
         switch (selectTab) {
-            case NotificationTabs[0].name:
+            case notificationTabs[0].name:
                 req.systemMsgsTabShow = false
                 break;
-            case NotificationTabs[1].name:
+            case notificationTabs[1].name:
                 req.messagesTabShow = false
                 break;
-            case NotificationTabs[2].name:
+            case notificationTabs[2].name:
                 req.todosTabShow = false
                 break;
             default:
@@ -69,11 +74,11 @@ const TabSettingModel = ({ visible, setVisible }) => {
                         onPress={() => setVisible(false)}
                     >
                         {ICON.left(24, COLORS.black)}
-                        <Text style={{ fontSize: SIZE.LargerTitle, color: COLORS.black, fontWeight: 'bold' }}>Exit</Text>
+                        <Text style={{ fontSize: SIZE.LargerTitle, color: COLORS.black, fontWeight: 'bold' }}>{formatMessage({ id: 'app.news.customQuestion.exit' })}</Text>
                     </TouchableOpacity>
-                    <Text style={{ fontSize: SIZE.NormalTitle, marginBottom: SIZE.LargerMargin }}>Set one tab you don't want to receive notifications</Text>
+                    <Text style={{ fontSize: SIZE.NormalTitle, marginBottom: SIZE.LargerMargin }}>{formatMessage({ id: 'app.news.customQuestion' })}</Text>
                     <View style={{}}>
-                        {NotificationTabs.map((item, index) =>
+                        {notificationTabs.map((item, index) =>
                             <TouchableOpacity
                                 key={index}
                                 style={{
@@ -115,7 +120,7 @@ const TabSettingModel = ({ visible, setVisible }) => {
                                 color: selectTab === "none" ? COLORS.white : COLORS.commentText,
                                 fontWeight: 'bold',
                             }}>
-                                None
+                                {formatMessage({ id: 'app.news.none' })}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -133,7 +138,7 @@ const TabSettingModel = ({ visible, setVisible }) => {
                             backgroundColor: COLORS.primary
                         }}
                         onPress={handleSelectTab}>
-                        <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.white, fontWeight: 'bold' }}>确定</Text>
+                        <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.white, fontWeight: 'bold' }}>{formatMessage({ id: 'app.news.confirm' })}</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>

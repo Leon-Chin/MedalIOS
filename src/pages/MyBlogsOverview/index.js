@@ -6,9 +6,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import MyBlogs from './Screens/MyBlogs';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const Tab = createMaterialTopTabNavigator();
 const MyBlogsOverview = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     return (
@@ -22,17 +24,17 @@ const MyBlogsOverview = () => {
             <Tab.Screen
                 name="LikeBlogs"
                 component={LikeBlogs}
-                options={{ tabBarLabel: `点赞博客` }}
+                options={{ tabBarLabel: formatMessage({ id: 'app.blog.likedBlog' }) }}
             />
             <Tab.Screen
                 name="MyBlogs"
                 component={MyBlogs}
-                options={{ tabBarLabel: `全部博客` }}
+                options={{ tabBarLabel: formatMessage({ id: 'app.blog.myBlog' }) }}
             />
             <Tab.Screen
                 name="FavoriteBlogs"
                 component={FavoriteBlogs}
-                options={{ tabBarLabel: `收藏博客` }}
+                options={{ tabBarLabel: formatMessage({ id: 'app.blog.favBlog' }) }}
             />
         </Tab.Navigator>
     )

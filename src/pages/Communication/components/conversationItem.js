@@ -12,7 +12,10 @@ import SIZE from '../../../constants/SIZE'
 import { ICON } from '../../../constants/SVG/ICON'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
+
 const ConversationItem = ({ conversation, deleteConversation }) => {
+    const { formatMessage } = useIntl()
     const { currentUser } = useSelector(state => state.user)
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -73,7 +76,7 @@ const ConversationItem = ({ conversation, deleteConversation }) => {
                 {contact ? <Avatar size={50} rounded source={{ uri: contact.avator }} /> : <FontAwesome5 name="user-circle" size={24} color="black" />}
                 <View style={{ flex: 1, marginLeft: 10, }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>{contact.name} {!alreadySubscribed && <Text style={{ fontSize: 10, color: COLORS.commentText }}>[未关注]</Text>}</Text>}
+                        {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>{contact.name} {!alreadySubscribed && <Text style={{ fontSize: 10, color: COLORS.commentText }}>{formatMessage({ id: 'app.comu.subInfo' })}</Text>}</Text>}
                         <Text style={{ color: COLORS.commentText, fontSize: 14 }}>{formatDateTime(conversation.updatedAt)}</Text>
                     </View>
                     <View>

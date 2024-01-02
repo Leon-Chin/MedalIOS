@@ -7,8 +7,10 @@ import APPTHEME from '../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE, PleaseInput_MESSAGE, ThanksForFeedback_MESSAGE } from '../../constants/ERRORMessage'
 import COLORS from '../../constants/COLORS'
+import { useIntl } from 'react-intl'
 
 const Report = ({ route }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { type, target } = route.params
@@ -25,9 +27,9 @@ const Report = ({ route }) => {
     return (
         <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             <View style={{ flex: 1, marginHorizontal: '3%', marginVertical: '3%', }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, color: currentTheme.fontColor }}>Report Reason:</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.report.reportReason' })}</Text>
                 <TextInput
-                    placeholder='Please Enter'
+                    placeholder={formatMessage({ id: 'app.report.reportField' })}
                     placeholderTextColor={COLORS.commentText}
                     returnKeyType='send'
                     multiline

@@ -14,8 +14,10 @@ import { finishsession } from '../../../api/session.api';
 import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
+import { useIntl } from 'react-intl';
 
 const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, watchTime, startTime, endTime }) => {
+    const { formatMessage } = useIntl
     const [shouldRecord, setShouldRecord] = useState(false)
     const { navigate, goBack } = useNavigation()
     const navigation = useNavigation()
@@ -72,27 +74,27 @@ const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, wat
             <View style={{ marginHorizontal: '3%' }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: SIZE.NormalMargin }}>
                     {shouldRecord ? <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>
-                        要结束运动么？
+                        {formatMessage({ id: 'app.exercises.stopSessionAlert' })}
                     </Text> : <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.red }}>
-                        训练时长太短无法记录
+                        {formatMessage({ id: 'app.exercises.failedRecord' })}
                     </Text>}
                 </View>
                 {shouldRecord ? <TouchableOpacity
                     onPress={handleFinishExercise}
                     style={{ padding: SIZE.NormalMargin, flexDirection: 'row', justifyContent: 'center', marginTop: SIZE.NormalMargin }}
                 >
-                    <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', fontStyle: 'italic' }}>结束训练</Text>
+                    <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{formatMessage({ id: 'app.exercises.stopSession' })}</Text>
                 </TouchableOpacity> : <TouchableOpacity
                     onPress={goBack}
                     style={{ padding: SIZE.NormalMargin, flexDirection: 'row', justifyContent: 'center', marginTop: SIZE.NormalMargin }}
                 >
-                    <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', fontStyle: 'italic' }}>退出训练</Text>
+                    <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', fontStyle: 'italic' }}>{formatMessage({ id: 'app.exercises.quitSession' })}</Text>
                 </TouchableOpacity>}
                 <TouchableOpacity
                     onPress={handleModelClose}
                     style={{ padding: SIZE.NormalMargin, flexDirection: 'row', justifyContent: 'center', marginTop: SIZE.NormalMargin }}
                 >
-                    <Text style={{ fontSize: SIZE.NormalTitle, }}>取消</Text>
+                    <Text style={{ fontSize: SIZE.NormalTitle, }}>{formatMessage({ id: 'app.exercises.cancel' })}</Text>
                 </TouchableOpacity>
             </View>
         </BottomSheetModal>

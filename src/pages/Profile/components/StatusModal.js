@@ -11,8 +11,10 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const StatusModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const dispatch = useDispatch()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -53,7 +55,7 @@ const StatusModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    个性签名
+                                    {formatMessage({ id: 'app.profile.status' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -64,13 +66,13 @@ const StatusModal = ({ visible, setVisible }) => {
                                 }}
                                 style={{ backgroundColor: (updatedPersonalStatus && (updatedPersonalStatus !== personalStatus)) ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: (updatedPersonalStatus && (updatedPersonalStatus !== personalStatus)) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: (updatedPersonalStatus && (updatedPersonalStatus !== personalStatus)) ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.profile.update' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View>
                         <TextInput
-                            placeholder='更改个性签名'
+                            placeholder={formatMessage({ id: 'app.profile.statusField' })}
                             placeholderTextColor={COLORS.commentText}
                             onChangeText={setUpdatedPersonalStatus}
                             defaultValue={personalStatus}

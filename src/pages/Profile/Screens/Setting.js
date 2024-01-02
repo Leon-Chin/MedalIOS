@@ -17,8 +17,10 @@ import FeedbackModal from '../components/FeedbackModal';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
 import { ICON } from '../../../constants/SVG/ICON';
+import { useIntl } from 'react-intl';
 
 const Setting = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const [logoutModalVisible, setLogoutModalVisible] = useState(false)
@@ -33,28 +35,28 @@ const Setting = () => {
                 <TouchableOpacity
                     onPress={() => setLanguageModalVisible(true)}
                     style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>Language</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.lang' })}</Text>
                     {ICON.right(18, currentTheme.fontColor)}
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => setModeModalVisible(true)}
                     style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>Mode</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.theme' })}</Text>
                     {ICON.right(18, currentTheme.fontColor)}
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => setFeedbackModalVisible(true)}
                     style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: 2, alignItems: 'center', paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>反馈</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.feedback' })}</Text>
                     {ICON.right(18, currentTheme.fontColor)}
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => { setLogoutModalVisible(true) }}
                     style={{ width: '100%', height: 60, backgroundColor: currentTheme.contentColor, marginBottom: 2, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>Logout</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.logout' })}</Text>
                 </TouchableOpacity>
 
                 <LogoutModal visible={logoutModalVisible} setVisible={setLogoutModalVisible} />
