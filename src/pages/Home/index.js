@@ -14,8 +14,10 @@ import ColorieCard from './components/ColorieCard';
 import TimeCard from './components/TimeCard';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const Home = () => {
+    const intl = useIntl()
     const { navigate } = useNavigation()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
@@ -28,7 +30,7 @@ const Home = () => {
                 showsVerticalScrollIndicator={false}>
                 <View style={{ paddingHorizontal: '3%', overflow: 'visible' }}>
                     <FlatList
-                        data={Exercies}
+                        data={Exercies(intl.formatMessage)}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ columnGap: 10 }}

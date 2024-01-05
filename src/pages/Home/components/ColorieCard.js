@@ -5,8 +5,10 @@ import { ICON } from '../../../constants/SVG/ICON';
 import useHealthKit from '../../../hooks/useHealthkit';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const ColorieCard = () => {
+    const { formatMessage } = useIntl()
     const { navigate } = useNavigation()
     const { calorie } = useHealthKit()
     const theme = useUserTheme()
@@ -27,7 +29,7 @@ const ColorieCard = () => {
             <View style={{ height: 30, width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                     {ICON.fire(16, COLORS.colorieOrange)}
-                    <Text style={{ fontWeight: "bold", color: COLORS.colorieOrange, fontSize: 16 }}>Calorie</Text>
+                    <Text style={{ fontWeight: "bold", color: COLORS.colorieOrange, fontSize: 16 }}>{formatMessage({ id: 'app.dashboard.calorie' })}</Text>
                 </View>
                 <TouchableOpacity
                     style={{ justifyContent: 'center', alignItems: 'center', width: 20, height: 20, borderRadius: 10, backgroundColor: COLORS.colorieOrangeBackground }}
@@ -39,7 +41,7 @@ const ColorieCard = () => {
             <View style={{ flex: 1, width: '100%', paddingHorizontal: '6%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 4 }}>
                     <Text style={{ fontSize: 24, fontWeight: 'bold', color: currentTheme.fontColor }}>{calorie}</Text>
-                    <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>kcal</Text>
+                    <Text style={{ color: COLORS.commentText, fontSize: 16, fontWeight: 'bold' }}>{formatMessage({ id: 'app.dashboard.calorieUnit' })}</Text>
                 </View>
             </View>
         </View>
