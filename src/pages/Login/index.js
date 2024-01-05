@@ -88,7 +88,7 @@ export default function Login() {
     return (
         <SafeAreaView style={style.container}>
             {!signup ? <>
-                <Text style={style.logo}>Medal - FitnessApp</Text>
+                <Text style={style.logo}>{formatMessage({id: 'app.login.appTitle'})}</Text>
                 <View>
                     <Text style={style.welcomeText}>{formatMessage({ id: 'app.login.welcomeback' })}</Text>
                     <View style={style.haventRegisteredContainer}>
@@ -133,10 +133,11 @@ export default function Login() {
                 </View>
                 <Text style={style.commentText}>
                     {formatMessage({ id: 'app.login.forgetPassword' })}
-                    <Text >Get help</Text> signing in
+                    {/* <Text >Get help</Text> signing in */}
+                    {formatMessage({ id: 'app.login.getHelp' })}
                 </Text>
             </> : <>
-                <Text style={style.logo}>FitnessApp</Text>
+                <Text style={style.logo}>{formatMessage({ id: 'app.login.appType' })}</Text>
                 <View>
                     <Text style={style.welcomeText}>{formatMessage({ id: 'app.login.getStarted' })}</Text>
                     <View style={style.haventRegisteredContainer}>
@@ -183,7 +184,8 @@ export default function Login() {
                     </TouchableOpacity>
                 </View>
                 <Text style={style.commentText}>
-                    By signing up, I agree to the <Text>Terms of Services</Text> and <Text>Privacy policy</Text>
+                    {/* By signing up, I agree to the <Text>Terms of Services</Text> and <Text>Privacy policy</Text> */}
+                    {formatMessage({ id: 'app.login.consent' })}
                 </Text>
             </>}
         </SafeAreaView>
