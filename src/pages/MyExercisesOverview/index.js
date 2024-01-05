@@ -5,10 +5,12 @@ import PractisedTutorial from './Screens/PractisedTutorial'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const Tab = createMaterialTopTabNavigator();
 
 const ExerciseOverview = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     return (
@@ -22,12 +24,12 @@ const ExerciseOverview = () => {
             <Tab.Screen
                 name="FavoriteTutorial"
                 component={FavoriteTutorial}
-                options={{ tabBarLabel: `收藏课程` }}
+                options={{ tabBarLabel: formatMessage({ id: 'app.tut.favTut' }) }}
             />
             <Tab.Screen
                 name="PractisedTutorial"
                 component={PractisedTutorial}
-                options={{ tabBarLabel: `练过课程` }}
+                options={{ tabBarLabel: formatMessage({ id: 'app.tut.pracTut' }) }}
             />
         </Tab.Navigator>
     )

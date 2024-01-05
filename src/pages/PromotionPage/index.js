@@ -3,8 +3,11 @@ import React from 'react'
 import Onboarding from 'react-native-onboarding-swiper';
 import Lottie from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native'
+import { useIntl } from 'react-intl';
+
 const { width } = Dimensions.get('window')
 export default function PromotionPage() {
+    const { formatMessage } = useIntl()
     const { navigate } = useNavigation()
     const handleDone = () => {
         navigate("Login")
@@ -20,8 +23,8 @@ export default function PromotionPage() {
                         image: <View style={style.lottie}>
                             <Lottie source={require('../../../assets/lottie/animation_lo3qpt4m.json')} autoPlay loop />
                         </View>,
-                        title: 'Onboarding',
-                        subtitle: 'Done with React Native Onboarding Swiper',
+                        title: formatMessage({ id: 'app.promo.onBoarding' }),
+                        subtitle:formatMessage({ id: 'app.promo.contentPt1' }),
                     },
                     {
                         backgroundColor: '#fff',

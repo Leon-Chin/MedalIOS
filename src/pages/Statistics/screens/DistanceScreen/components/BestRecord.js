@@ -8,15 +8,17 @@ import LinearGradient from 'react-native-linear-gradient'
 import useRecord from '../../../../../hooks/useRecord'
 import { formatTimeForChartSoloItem, formatTimeForCharts, formatTimeToChinese } from '../../../../../utils/formatTime'
 import useRecords from '../../../../../hooks/useRecords'
+import { useIntl } from 'react-intl'
 
 const BestRecord = () => {
+    const { formatMessage } = useIntl()
     const record = useRecord()
     const { steps } = useHealthKit()
     const { maxDistance, maxDistanceDate } = useRecords()
     return (
         <View style={{ marginTop: SIZE.LargerMargin, }}>
             <View style={{ marginBottom: SIZE.NormalMargin }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>最高记录</Text>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>{formatMessage({ id: 'app.statistic.highestRecord' })}</Text>
             </View>
             <LinearGradient
                 start={{ x: 0, y: 0 }}
@@ -27,12 +29,12 @@ const BestRecord = () => {
                 <View >
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>
                         {ICON.trophy(SIZE.NormalTitle, COLORS.white)}
-                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>单日最高记录</Text>
+                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: "bold", color: COLORS.white }}>{formatMessage({ id: 'app.statistic.singleHighRecord' })}</Text>
                     </View>
                     <View style={{ marginTop: SIZE.NormalMargin, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                             <Text style={{ color: COLORS.white, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{maxDistance}</Text>
-                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>m</Text>
+                            <Text style={{ color: COLORS.backgroundGray, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatMessage({ id: 'app.statistic.distanceUnit' })}</Text>
                         </View>
                         <View>
                             {maxDistanceDate ? <Text style={{ color: COLORS.white, fontSize: SIZE.ExtarSmallTitle, fontWeight: 'bold' }}>{formatTimeForCharts(maxDistanceDate)}</Text> :

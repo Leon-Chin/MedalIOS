@@ -12,8 +12,10 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const CalorieCard = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { calorie } = useHealthKit()
@@ -33,7 +35,7 @@ const CalorieCard = () => {
                     <View style={{ width: 26, height: 26, backgroundColor: COLORS.colorieOrange, alignItems: 'center', justifyContent: 'center', borderRadius: 9 }}>
                         {ICON.fire(16, COLORS.white)}
                     </View>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.colorieOrange }}>卡路里</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: COLORS.colorieOrange }}>{formatMessage({ id: 'app.statistic.calorie' })}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => {
@@ -46,9 +48,9 @@ const CalorieCard = () => {
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text style={{ fontSize: SIZE.ExtraLargerTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{calorie}</Text>
-                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>kcal </Text>
+                    <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.statistic.calorieUnit' })} </Text>
                 </View>
-                <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevGoal ? prevGoal : "--"}kcal</Text>
+                <Text style={{ color: COLORS.commentText, fontWeight: 'bold' }}>/ {prevGoal ? prevGoal : "--"}{formatMessage({ id: 'app.statistic.calorieUnit' })}</Text>
             </View>
             <Percentage current={calorie} target={prevGoal} />
         </View>

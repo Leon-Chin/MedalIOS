@@ -8,8 +8,10 @@ import { useEffect, useState } from 'react';
 import NotificationTabs from '../../../constants/NotificationTabs';
 import { setMessages, setNotificationTab, setSystemMsgs, setTodos } from '../../../redux/NotificationSettingSlice';
 import { updateNotificationTab } from '../../../api/user.api';
+import { useIntl } from 'react-intl';
 
 const TabSettingModel = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const { systemMsgsTabShow, messagesTabShow, todosTabShow } = useSelector(state => state.notificationTab)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -115,7 +117,7 @@ const TabSettingModel = ({ visible, setVisible }) => {
                                 color: selectTab === "none" ? COLORS.white : COLORS.commentText,
                                 fontWeight: 'bold',
                             }}>
-                                None
+                                {formatMessage({ id: 'app.news.none' })}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -133,7 +135,7 @@ const TabSettingModel = ({ visible, setVisible }) => {
                             backgroundColor: COLORS.primary
                         }}
                         onPress={handleSelectTab}>
-                        <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.white, fontWeight: 'bold' }}>确定</Text>
+                        <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.white, fontWeight: 'bold' }}>{formatMessage({ id: 'app.news.confirm' })}</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>

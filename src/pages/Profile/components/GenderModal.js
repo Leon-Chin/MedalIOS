@@ -13,8 +13,10 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const GenderModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const [updatedGender, setUpdatedGender] = useState()
     const dispatch = useDispatch()
     const theme = useUserTheme()
@@ -55,7 +57,7 @@ const GenderModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    性别
+                                    {formatMessage({ id: 'app.profile.gender' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -66,7 +68,7 @@ const GenderModal = ({ visible, setVisible }) => {
                                 }}
                                 style={{ backgroundColor: gender !== updatedGender ? COLORS.primary : currentTheme.contentColor, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: gender !== updatedGender ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: gender !== updatedGender ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.profile.update' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -78,7 +80,7 @@ const GenderModal = ({ visible, setVisible }) => {
                             >
                                 {ICON.male(24, updatedGender === GENDER.male ? COLORS.white : COLORS.primary)}
                                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: updatedGender === GENDER.male ? COLORS.white : COLORS.primary }}>
-                                    Male
+                                    {formatMessage({ id: 'app.profile.gender.male' })}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -86,7 +88,7 @@ const GenderModal = ({ visible, setVisible }) => {
                                 style={{ width: 100, flexDirection: 'row', gap: SIZE.NormalMargin, justifyContent: 'center', alignItems: 'center', backgroundColor: updatedGender === GENDER.female ? COLORS.pink : currentTheme.contentColor, padding: SIZE.NormalMargin, borderTopRightRadius: SIZE.CardBorderRadius, borderBottomRightRadius: SIZE.CardBorderRadius, }}>
                                 {ICON.female(24, updatedGender !== GENDER.female ? COLORS.pink : COLORS.white)}
                                 <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: updatedGender !== GENDER.female ? COLORS.pink : COLORS.white }}>
-                                    Female
+                                    {formatMessage({ id: 'app.profile.gender.female' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>

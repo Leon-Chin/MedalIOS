@@ -16,8 +16,10 @@ import BirthdayModal from '../components/BirthdayModal'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import SIZE from '../../../constants/SIZE'
+import { useIntl } from 'react-intl'
 
 const PersonalDetail = () => {
+    const { formatMessage } = useIntl()
     const { currentUser } = useSelector(state => state.user)
     const [avatorModalVisible, setAvatorModalVisible] = useState(false)
     const [nameModalVisible, setNameModalVisible] = useState(false)
@@ -31,7 +33,7 @@ const PersonalDetail = () => {
             <TouchableOpacity
                 onPress={() => setAvatorModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginVertical: SIZE.LittleMargin, alignItems: 'center', paddingHorizontal: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>头像</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.avatar' })}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Avatar source={{ uri: currentUser.avator }} size={40} />
                     {/* <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" /> */}
@@ -42,7 +44,7 @@ const PersonalDetail = () => {
             <TouchableOpacity
                 onPress={() => setNameModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: SIZE.LittleMargin, alignItems: 'center', paddingHorizontal: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>账号名</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.userName' })}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: COLORS.commentText }}>{currentUser.name}</Text>
                     {/* <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" /> */}
@@ -53,7 +55,7 @@ const PersonalDetail = () => {
             <TouchableOpacity
                 onPress={() => setGenderModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: SIZE.LittleMargin, alignItems: 'center', paddingHorizontal: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>性别</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.gender' })}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     {currentUser.gender && (currentUser.gender === GENDER.male ? ICON.male(24, COLORS.primary) : ICON.female(24, COLORS.pink))}
                     {/* <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" /> */}
@@ -64,7 +66,7 @@ const PersonalDetail = () => {
             <TouchableOpacity
                 onPress={() => setStatusModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: SIZE.LittleMargin, alignItems: 'center', paddingHorizontal: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>个性签名</Text>
+                 <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.status' })}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: COLORS.commentText }}>{currentUser.personalStatus && currentUser.personalStatus}</Text>
                     {/* <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" /> */}
@@ -75,7 +77,7 @@ const PersonalDetail = () => {
             <TouchableOpacity
                 onPress={() => setBirthdayModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: SIZE.LittleMargin, alignItems: 'center', paddingHorizontal: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>生日</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.birthday' })}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: COLORS.commentText }}>{currentUser.birthday && formatTimeToChinese(currentUser.birthday)}</Text>
                     {/* <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" /> */}

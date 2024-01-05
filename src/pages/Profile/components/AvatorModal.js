@@ -14,8 +14,10 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const AvatorModal = ({ visible, setVisible }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const [updatedAvator, setUpdatedAvator] = useState()
@@ -88,7 +90,7 @@ const AvatorModal = ({ visible, setVisible }) => {
                             </TouchableOpacity>
                             <TouchableOpacity >
                                 <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', color: COLORS.primary }}>
-                                    头像
+                                    {formatMessage({ id: 'app.profile.avatar' })}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -99,7 +101,7 @@ const AvatorModal = ({ visible, setVisible }) => {
                                 }}
                                 style={{ backgroundColor: avator !== updatedAvator ? COLORS.primary : COLORS.backgroundGray, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}
                             >
-                                <Text style={{ fontSize: SIZE.NormalTitle, color: avator !== updatedAvator ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>更改</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: avator !== updatedAvator ? COLORS.white : COLORS.gray, fontWeight: 'bold', }}>{formatMessage({ id: 'app.profile.update' })}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

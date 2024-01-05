@@ -12,8 +12,10 @@ import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { AddSuccess_MESSAGE, AlreadyFavorTutorial_MESSAGE, AlreadyHave_MESSAGE, ERROR_MESSAGE, FavorSuccess_MESSAGE } from '../../../constants/ERRORMessage'
+import { useIntl } from 'react-intl'
 
 const OptionsInModal = ({ handleModelClose, tutorial }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { cover, level, colorie, brief, name, duration, _id } = tutorial
@@ -63,19 +65,19 @@ const OptionsInModal = ({ handleModelClose, tutorial }) => {
                 onPress={handleAddTutorialTofavor}
                 style={{ height: 50, marginTop: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                <Text style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>收藏</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.exercises.addFav' })}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={handleAddToCalendar}
                 style={{ height: 50, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                <Text style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>添加到{formatTimeToChinese(userSelectDay)}待练</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.exercises.addTodoPt1' })}{formatTimeToChinese(userSelectDay)}{formatMessage({ id: 'app.exercises.addTodoPt2' })}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={handleModelClose}
                 style={{ height: 50, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                <Text style={{ fontSize: 16, color: currentTheme.fontColor }}>取消</Text>
+                <Text style={{ fontSize: 16, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.exercises.cancel' })}</Text>
             </TouchableOpacity>
         </View>
     )

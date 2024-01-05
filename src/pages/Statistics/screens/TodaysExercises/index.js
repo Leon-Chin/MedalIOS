@@ -10,8 +10,10 @@ import Chart from './components/Chart'
 import { BarchartsOptions } from '../../utils/BarchartsOptions'
 import useUserTheme from '../../../../hooks/useUserTheme'
 import APPTHEME from '../../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const TodaysExercises = ({ }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { weeklyData, monthlyData, yearlyData } = useRecords()
@@ -25,7 +27,7 @@ const TodaysExercises = ({ }) => {
         const calorieArr = weeklyData.map((item) => item.calories)
         const stepArr = weeklyData.map((item) => item.steps)
         const distanceArr = weeklyData.map((item) => item.distance)
-        setWeekDataChatsOption(BarchartsOptions(dateArr, durationArr, '时长', calorieArr, '卡路里', stepArr, '步数', distanceArr, '距离'))
+        setWeekDataChatsOption(BarchartsOptions(dateArr, durationArr, formatMessage({ id: 'app.statistic.label.duration' }), calorieArr, formatMessage({ id: 'app.statistic.label.calorie' }), stepArr, formatMessage({ id: 'app.statistic.label.step' }), distanceArr, formatMessage({ id: 'app.statistic.label.dist' })))
     }, [weeklyData])
     useEffect(() => {
         const dateArr = monthlyData.map((item) => item.month)
@@ -33,7 +35,7 @@ const TodaysExercises = ({ }) => {
         const calorieArr = monthlyData.map((item) => item.calories)
         const stepArr = monthlyData.map((item) => item.steps)
         const distanceArr = monthlyData.map((item) => item.distance)
-        setMonthDataChatsOption(BarchartsOptions(dateArr, durationArr, '时长', calorieArr, '卡路里', stepArr, '步数', distanceArr, '距离'))
+        setMonthDataChatsOption(BarchartsOptions(dateArr, durationArr, formatMessage({ id: 'app.statistic.label.duration' }), calorieArr, formatMessage({ id: 'app.statistic.label.calorie' }), stepArr, formatMessage({ id: 'app.statistic.label.step' }), distanceArr, formatMessage({ id: 'app.statistic.label.dist' })))
     }, [monthlyData])
     useEffect(() => {
         const dateArr = yearlyData.map((item) => item.year)
@@ -41,7 +43,7 @@ const TodaysExercises = ({ }) => {
         const calorieArr = weeklyData.map((item) => item.calories)
         const stepArr = weeklyData.map((item) => item.steps)
         const distanceArr = weeklyData.map((item) => item.distance)
-        setYearDataChatsOption(BarchartsOptions(dateArr, durationArr, '时长', calorieArr, '卡路里', stepArr, '步数', distanceArr, '距离'))
+        setYearDataChatsOption(BarchartsOptions(dateArr, durationArr, formatMessage({ id: 'app.statistic.label.duration' }), calorieArr, formatMessage({ id: 'app.statistic.label.calorie' }), stepArr, formatMessage({ id: 'app.statistic.label.step' }), distanceArr, formatMessage({ id: 'app.statistic.label.dist' })))
     }, [yearlyData])
     return (
         <ScrollView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
@@ -55,7 +57,7 @@ const TodaysExercises = ({ }) => {
                         style={{ flex: 1, flexDirection: 'row', padding: 4, justifyContent: 'center', backgroundColor: currentTheme.backgroundColor, borderTopLeftRadius: SIZE.CardBorderRadius, borderBottomLeftRadius: SIZE.CardBorderRadius, overflow: 'hidden' }}
                     >
                         <View style={{ flex: 1, backgroundColor: selectDateType === DATE.week ? currentTheme.contentColor : currentTheme.backgroundColor, padding: SIZE.NormalMargin, flexDirection: 'row', justifyContent: 'center', borderRadius: SIZE.CardBorderRadius }}>
-                            <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{DATE.week}</Text>
+                            <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'date.week' })}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -65,7 +67,7 @@ const TodaysExercises = ({ }) => {
                         style={{ flex: 1, flexDirection: 'row', padding: 4, justifyContent: 'center', backgroundColor: currentTheme.backgroundColor, overflow: 'hidden' }}
                     >
                         <View style={{ flex: 1, backgroundColor: selectDateType === DATE.month ? currentTheme.contentColor : currentTheme.backgroundColor, padding: SIZE.NormalMargin, flexDirection: 'row', justifyContent: 'center', borderRadius: SIZE.CardBorderRadius }}>
-                            <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{DATE.month}</Text>
+                            <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'date.month' })}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -74,7 +76,7 @@ const TodaysExercises = ({ }) => {
                         }}
                         style={{ flex: 1, flexDirection: 'row', padding: 4, justifyContent: 'center', backgroundColor: currentTheme.backgroundColor, borderTopRightRadius: SIZE.CardBorderRadius, borderBottomRightRadius: SIZE.CardBorderRadius, overflow: 'hidden' }}>
                         <View style={{ flex: 1, backgroundColor: selectDateType === DATE.year ? currentTheme.contentColor : currentTheme.backgroundColor, padding: SIZE.NormalMargin, flexDirection: 'row', justifyContent: 'center', borderRadius: SIZE.CardBorderRadius }}>
-                            <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{DATE.year}</Text>
+                            <Text style={{ fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'date.year' })}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
