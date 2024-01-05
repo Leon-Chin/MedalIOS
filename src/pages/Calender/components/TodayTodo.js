@@ -31,10 +31,10 @@ const TodayTodo = ({ selectDay }) => {
             </View>
             {!noTutorial && <Percentage selectDay={selectDay} />}
             {noTutorial && <NoTutorialToday />}
-            {yetDoneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>未完成</Text>
+            {yetDoneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.calendar.notCompleted' })}</Text>
                 {yetDoneTutorial.map((tutorial, index) => <UnDoneTodoItem tutorial={tutorial} key={index} />)}
             </>}
-            {doneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>已完成</Text>
+            {doneTutorial.length !== 0 && <><Text style={{ marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.calendar.completed' })}</Text>
                 {doneTutorial.map((tutorial, index) => <DoneTodoItem tutorial={tutorial} key={index} />)}
             </>}
         </View>
