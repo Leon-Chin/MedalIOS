@@ -12,14 +12,15 @@ import { secToMin } from '../../../utils/funcs'
 import { formatTimeForChartSoloItem } from '../../../utils/formatTime'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import useUserLocale from '../../../hooks/useUserLocale'
 
 const AfterExcercise = ({ route }) => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
+    const userLocale = useUserLocale()
     const { currentUser } = useSelector(state => state.user)
     const tutorial = route.params.tutorial
     const data = route.params.data
-    // console.log("route.params", route.params);
     const { step, distance, calorieConsumption, exerciseDuration, startTime, endTime } = data
     const { navigate } = useNavigation()
     const navigateToCool = () => {
@@ -45,7 +46,7 @@ const AfterExcercise = ({ route }) => {
                     <View style={{ padding: SIZE.NormalMargin, marginBottom: SIZE.NormalMargin, backgroundColor: currentTheme.backgroundColor, borderRadius: SIZE.CardBorderRadius }}>
                         <Text style={{ color: COLORS.commentText }}>教程名称: </Text>
                         <View style={{ marginVertical: SIZE.NormalMargin }}>
-                            <Text numberOfLines={2} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{tutorial?.name}</Text>
+                            <Text numberOfLines={2} style={{ color: currentTheme.fontColor, fontSize: SIZE.NormalTitle, fontWeight: 'bold' }}>{userLocale === "zh" ? tutorial?.zh_name : tutorial?.name}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', gap: SIZE.NormalMargin, alignItems: 'center' }}>
                             {tutorial?.level && <View style={{ paddingHorizontal: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: COLORS.primary }}>

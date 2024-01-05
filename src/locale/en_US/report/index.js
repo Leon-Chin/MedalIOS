@@ -11,4 +11,7 @@ export const enUS_report = {
     'app.report.table.detail': 'Detail',
     'app.report.table.createtime': 'Create Time',
     'app.report.targetID': 'Target ID',
+
+    'app.report.reportReason': 'Report Reason:',
+    'app.report.reportField': 'Please Enter',
 };

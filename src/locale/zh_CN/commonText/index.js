@@ -32,6 +32,11 @@ export const zhCN_commonText = {
     "actionHistory": '历史操作',
     'noAction': "暂无操作",
     'sort': '种类',
-    'todaySessions': '今日日程',
-    "personalStatisticCenter": "个人数据中心",
+    'todaySessions': '今日课程',
+    'welcomeMessage': '欢迎回到Target~',
+    'loading': '加载中',
+    'app.viewAll': '查看全部',
+    'date.week': '周',
+    'date.month': '月',
+    'date.year': '年',
 };

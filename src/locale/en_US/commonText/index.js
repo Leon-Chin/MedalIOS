@@ -33,5 +33,11 @@ export const enUS_commonText = {
     'noAction': 'No operation',
     'sort': 'Sort',
     'todaySessions': 'Today Sessions',
-    "personalStatisticCenter": "Personal Statistic",
+    'welcomeMessage': 'Welcome Back to Target~',
+    'loading': 'Loading',
+    'app.viewAll': 'View All',
+    'date.week': 'Week',
+    'date.month': 'Month',
+    'date.year': 'Year',
+    
 };

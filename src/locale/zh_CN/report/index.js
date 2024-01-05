@@ -11,4 +11,7 @@ export const zhCN_report = {
     'app.report.table.detail': '详情',
     'app.report.table.createtime': '创建时间',
     'app.report.targetID': '举报对象标识',
+
+    'app.report.reportReason': '举报原因',
+    'app.report.reportField': '请输入',
 };
