@@ -11,8 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
 import useUserLocale from '../hooks/useUserLocale';
+import { useIntl } from 'react-intl';
 
 const TutorialVerticalView = ({ tutorial }) => {
+    const { formatMessage } = useIntl()
     const locale = useUserLocale()
     const { navigate } = useNavigation()
     const { cover, level, colorie, brief, zh_brief, name, zh_name, duration, _id } = tutorial
@@ -73,7 +75,7 @@ const TutorialVerticalView = ({ tutorial }) => {
                                 color: '#fff',
                                 fontWeight: '800'
                             }}>
-                            {duration} min
+                            {duration} {formatMessage({ id: 'app.tut.durationUnit' })}
                         </Text>
                     </View>
                     {/* favorate */}

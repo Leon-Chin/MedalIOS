@@ -15,7 +15,10 @@ import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { ERROR_MESSAGE } from '../constants/ERRORMessage';
+import { useIntl } from 'react-intl'
+
 const ContactHorizontalWithID = ({ contactID, setVisible }) => {
+    const { formatMessage } = useIntl()
     const dispatch = useDispatch()
     const { navigate } = useNavigation()
     const theme = useUserTheme()
@@ -107,7 +110,7 @@ const ContactHorizontalWithID = ({ contactID, setVisible }) => {
                     onPress={handleSendMessage}
                     style={{ padding: SIZE.LittleMargin, borderRadius: SIZE.CardBorderRadius, borderColor: COLORS.commentText, borderWidth: 2 }}
                 >
-                    <Text style={{ color: COLORS.commentText, }}>发消息</Text>
+                    <Text style={{ color: COLORS.commentText, }}>{formatMessage({ id: 'app.comu.sendText' })}</Text>
                 </TouchableOpacity>
             </TouchableOpacity >
         </Swipeable>

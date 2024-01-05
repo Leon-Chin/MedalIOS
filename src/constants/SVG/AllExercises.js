@@ -1,30 +1,31 @@
 import EXERCISETYPE from '../EXERCISETYPE';
 import { exerciseLogo } from './ExerciseLogo';
-const Exercises = [
+const Exercises = (formatMessage) => [
     {
-        name: 'Run',
+        name: formatMessage({ id: 'app.dashboard.run' }),
         value: 'run',
         icon: exerciseLogo.run(30)
     },
     {
-        name: 'Walk',
+        name: formatMessage({ id: 'app.dashboard.walk' }),
         value: 'walk',
         icon: exerciseLogo.walk(30)
     },
     {
-        name: 'Burning',
+        name: formatMessage({ id: 'app.dashboard.burn' }),
         value: EXERCISETYPE.burning.value,
         icon: exerciseLogo.lose(30)
     },
+    
     {
-        name: 'Yoga',
+        name: formatMessage({ id: 'app.dashboard.yoga' }),
         value: EXERCISETYPE.yoga.value,
         icon: exerciseLogo.yoga(30)
     },
     {
-        name: 'Strength',
+        name: formatMessage({ id: 'app.dashboard.strength' }),
         value: EXERCISETYPE.strength.value,
         icon: exerciseLogo.yoga(30)
     },
-]
-export default Exercises
+    ]
+    export default Exercises

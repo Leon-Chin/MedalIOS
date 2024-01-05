@@ -11,8 +11,10 @@ import SIZE from '../constants/SIZE'
 import { ICON } from '../constants/SVG/ICON'
 import useUserTheme from '../hooks/useUserTheme'
 import APPTHEME from '../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const BlogCardWithID = ({ blogID }) => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
@@ -120,7 +122,7 @@ const BlogCardWithID = ({ blogID }) => {
                 gap: SIZE.LittleMargin,
                 paddingVertical: SIZE.LargerMargin
             }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>已无法无法找到该动态</Text>
+                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: COLORS.commentText }}>{formatMessage({ id: 'app.blog.removedBlog' })}</Text>
                 {ICON.frowno(24, COLORS.commentText)}
             </View>}
         </TouchableOpacity >
