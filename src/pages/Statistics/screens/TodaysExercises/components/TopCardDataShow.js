@@ -8,7 +8,7 @@ import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
 import { useIntl } from 'react-intl'
 
 const TopCardDataShow = ({ duration, date, calorie, distance, step }) => {
-    const { formatMessage} = useIntl()
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     return (
@@ -35,7 +35,7 @@ const TopCardDataShow = ({ duration, date, calorie, distance, step }) => {
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'baseline', gap: SIZE.LittleMargin }}>
                     <Text style={{ color: COLORS.commentText, fontSize: 12, fontWeight: 'bold' }}>{formatMessage({ id: 'app.statistic.dist' })}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline', }}>
-                        <Text style={{ color: currentTheme.fontColor, fontSize: SIZE.SmallTitle, fontWeight: 'bold' }}>{distance !== undefined ? distance : "--"}</Text>
+                        <Text style={{ color: currentTheme.fontColor, fontSize: SIZE.SmallTitle, fontWeight: 'bold' }}>{distance !== undefined ? (distance / 1000).toFixed(1) : "--"}</Text>
                         <Text style={{ color: COLORS.commentText, fontSize: 12, fontWeight: 'bold' }}>{formatMessage({ id: 'app.statistic.distanceUnit' })}</Text>
                     </View>
                 </View>

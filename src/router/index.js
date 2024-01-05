@@ -112,7 +112,7 @@ const MyRouter = () => {
     const { isBlocked } = useCheckUserStatus()
     const { formatMessage } = useIntl()
     if (isBlocked) {
-        Toast.show({ type: 'error', text1: '封禁提示', text2: '您因违反社区规定, 账号已被封禁已经无法使用App' })
+        Toast.show({ type: 'error', text1: formatMessage({ id: "error.banAlert" }), text2: formatMessage({ id: "error.banAlertMessage" }) })
     }
     if (!currentUser || isBlocked) {
         return (
@@ -127,32 +127,32 @@ const MyRouter = () => {
         return (
             <NavigationContainer>
                 <Stack.Navigator initialRouteName='Home'>
-                    <Stack.Screen name="Home" component={BottomNavigationBar} options={{ title: 'Home', headerShown: false }} />
-                    <Stack.Screen name="SpecificTutorial" component={SpecificTutorial} options={{ title: 'Tutorial', headerShown: false }} />
+                    <Stack.Screen name="Home" component={BottomNavigationBar} options={{ title: formatMessage({ id: "title.home" }), headerShown: false }} />
+                    <Stack.Screen name="SpecificTutorial" component={SpecificTutorial} options={{ title: formatMessage({ id: "title.tutorial" }), headerShown: false }} />
                     <Stack.Screen name="Notifications" component={Notifications} options={{
-                        title: 'Notifications', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor },
+                        title: formatMessage({ id: "title.notification" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor },
                     }} />
-                    <Stack.Screen name="AllTutorials" component={TutorialLibrary} options={{ title: 'Tutorials Library', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="AllTutorials" component={TutorialLibrary} options={{ title: formatMessage({ id: "title.tutLib" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                     <Stack.Screen name="TutorialVideo" component={TutorialVideo} options={{ headerShown: false }} />
                     <Stack.Screen name="AllCompetitions" component={Competitions} options={{ title: 'Competitions', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                     <Stack.Screen name="Statistics" component={Statistics} options={{ title: formatMessage({ id: "personalStatisticCenter" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
-                    <Stack.Screen name="PersonalDetails" component={PersonalDetail} options={{ title: '个人信息', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
-                    <Stack.Screen name="Setting" component={Setting} options={{ title: '设置', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="PersonalDetails" component={PersonalDetail} options={{ title: formatMessage({ id: "title.personalInfo" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="Setting" component={Setting} options={{ title: formatMessage({ id: "title.settings" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                     <Stack.Screen name="SpecificConversationPage" component={SpecificConversationPage} options={{ headerShown: false }} />
                     <Stack.Screen name="Walk" component={Walk} options={{ headerShown: false }} />
                     <Stack.Screen name="Run" component={Run} options={{ headerShown: false }} />
-                    <Stack.Screen name="MyBlogsOverview" component={MyBlogsOverview} options={{ headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="MyBlogsOverview" component={MyBlogsOverview} options={{ title: formatMessage({ id: "title.blogOverview" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                     <Stack.Screen name="Report" component={Report} options={{ headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
-                    <Stack.Screen name="ExercisesOverview" component={ExerciseOverview} options={{ headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="ExercisesOverview" component={ExerciseOverview} options={{ title: formatMessage({ id: "title.exerciseOverview" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                     <Stack.Screen name="SpecificBlog" component={SpecificBlog} options={{ headerShown: false }} />
-                    <Stack.Screen name="AfterExercise" component={AfterExcercise} options={{ title: '恭喜完成运动🎉', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
-                    <Stack.Screen name="DurationSreen" component={DurationScreen} options={{ title: '运动时长', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
-                    <Stack.Screen name="CalorieScreen" component={CalorieScreen} options={{ title: '卡路里消耗', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
-                    <Stack.Screen name="DistanceScreen" component={DistanceScreen} options={{ title: '步行跑步距离', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
-                    <Stack.Screen name="StepScreen" component={StepScreen} options={{ title: '步数', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="AfterExercise" component={AfterExcercise} options={{ title: formatMessage({ id: "title.congrat" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="DurationSreen" component={DurationScreen} options={{ title: formatMessage({ id: "title.duration" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="CalorieScreen" component={CalorieScreen} options={{ title: formatMessage({ id: "title.calExp" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="DistanceScreen" component={DistanceScreen} options={{ title: formatMessage({ id: "title.runCoverage" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="StepScreen" component={StepScreen} options={{ title: formatMessage({ id: "title.steps" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                     <Stack.Screen name="Evaluation" component={Evaluation} options={{ headerShown: false }} />
-                    <Stack.Screen name="HeightWeight" component={HeightWeight} options={{ title: '身高体重', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
-                    <Stack.Screen name="TodaysExercises" component={TodaysExercises} options={{ title: '总运动', headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="HeightWeight" component={HeightWeight} options={{ title: formatMessage({ id: "title.wtAndHgt" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
+                    <Stack.Screen name="TodaysExercises" component={TodaysExercises} options={{ title: formatMessage({ id: "title.summary" }), headerShown: true, headerStyle: { backgroundColor: currentTheme.contentColor, }, headerTitleStyle: { color: currentTheme.fontColor }, }} />
                     <Stack.Screen name="UserPage" component={UserPage} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>

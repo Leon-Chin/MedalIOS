@@ -39,5 +39,25 @@ export const enUS_commonText = {
     'date.week': 'Week',
     'date.month': 'Month',
     'date.year': 'Year',
-    
+    "personalStatisticCenter": "Statistics",
+    'title.personalInfo': 'Profile',
+    'title.congrat': 'Campaign Completed, Congrats🎉',
+    'title.duration': 'Duration',
+    'title.calExp': 'Calorie',
+    'title.runCoverage': 'Distance',
+    'title.steps': 'Step',
+    'title.wtAndHgt': 'Weight & Height',
+    'title.summary': 'Summary',
+    'title.settings': 'Settings',
+
+    'title.home': 'Home',
+    'title.tutorial': 'Tutorial',
+    'title.tutLib': 'Tutorials Library',
+    'title.notification': 'Notifications',
+    'title.blogOverview': 'Blogs',
+    'title.exerciseOverview': 'Exercises',
+
+    'error.banAlert': 'Banning Alert:',
+    'error.banAlertMessage': 'Your account has been banned for violating the community rules',
+
 };

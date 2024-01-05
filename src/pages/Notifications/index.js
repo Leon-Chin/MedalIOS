@@ -14,10 +14,12 @@ import TabSettingModel from './Components/TabSettingModel';
 import { useSelector } from 'react-redux';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
+import { useIntl } from 'react-intl';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Notifications = () => {
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { systemMsgsTabShow, messagesTabShow, todosTabShow } = useSelector(state => state.notificationTab)
@@ -60,18 +62,18 @@ const Notifications = () => {
                     name="System Notifications"
                     component={SystemNotifications}
                     initialParams={{ notifications: notifications }}
-                    options={{ tabBarLabel: `Systems ${notifications && notifications.length === 0 ? '' : '(' + notifications.length + ')'}` }}
+                    options={{ tabBarLabel: `${formatMessage({ id: 'app.news.tab.system' })} ${notifications && notifications.length === 0 ? '' : '(' + notifications.length + ')'}` }}
                 />}
                 {messagesTabShow && <Tab.Screen
                     name="Messages"
                     component={Messages}
                     initialParams={{ unreadedMsgs: unreadedMsgs }}
-                    options={{ tabBarLabel: `Messages ${unreadedMsgs && unreadedMsgs.length === 0 ? '' : '(' + unreadedMsgs.length + ')'}` }}
+                    options={{ tabBarLabel: `${formatMessage({ id: 'app.news.tab.pm' })} ${unreadedMsgs && unreadedMsgs.length === 0 ? '' : '(' + unreadedMsgs.length + ')'}` }}
                 />}
                 {todosTabShow && <Tab.Screen
                     name="Todos"
                     component={TodoExercise}
-                    options={{ tabBarLabel: `Todos ${todo && todo.length === 0 ? '' : '(' + todo.length + ')'}` }}
+                    options={{ tabBarLabel: `${formatMessage({ id: 'app.news.tab.todos' })} ${todo && todo.length === 0 ? '' : '(' + todo.length + ')'}` }}
                 />}
             </Tab.Navigator>
             <TouchableOpacity
