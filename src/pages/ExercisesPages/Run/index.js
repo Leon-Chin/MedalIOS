@@ -14,9 +14,11 @@ import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
 import * as Location from 'expo-location';
+import { useIntl } from 'react-intl';
 import { RUN_TUTORIAL } from '../../../constants/APP_INSIDE_TUTORIAL';
 
 const Run = () => {
+    const { formatMessage } = useIntl()
     const [startTime, setStartTime] = useState()
     const [focused, setFocused] = useState(true)
     const navigation = useNavigation()
@@ -192,11 +194,11 @@ const Run = () => {
     const handleGoback = () => {
         // 显示确认对话框
         Alert.alert(
-            '放弃跑步记录？',
-            '如果你离开，跑步记录将会丢失。',
-            [{ text: '取消', style: 'cancel', onPress: () => { } },
+            formatMessage({ id: 'app.exercises.runningAlert' }),
+            formatMessage({ id: 'app.exercises.runEndAlert' }),
+            [{ text: formatMessage({ id: 'app.exercises.cancel' }), style: 'cancel', onPress: () => { } },
             {
-                text: '放弃', style: 'destructive', onPress: () => {
+                text: formatMessage({ id: 'app.exercises.endSession' }), style: 'destructive', onPress: () => {
                     setDistance(0)
                     setCurrentStepCount(0)
                     navigation.goBack()
@@ -213,16 +215,16 @@ const Run = () => {
                     onPress={() => handleGoback()}>
                     {ICON.left(36, "#fff")}
                 </TouchableOpacity>
-                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>Run</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>{formatMessage({ id: 'app.exercises.runExercise' })}</Text>
             </View>
             <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: '#fff', fontSize: 80, fontWeight: 'bold' }}>{(distance).toFixed(0)}</Text>
-                    <Text style={{ color: '#fff' }}>m</Text>
+                    <Text style={{ color: '#fff' }}>{formatMessage({ id: 'app.exercises.distanceUnit' })}</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: '#fff', fontSize: 80, fontWeight: 'bold' }}>{currentStepCount ? currentStepCount : "--"}</Text>
-                    <Text style={{ color: '#fff' }}>步数</Text>
+                    <Text style={{ color: '#fff' }}>{formatMessage({ id: 'app.exercises.stepUnit' })}</Text>
                 </View>
                 <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: '8%' }}>
                     {/* <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -231,7 +233,7 @@ const Run = () => {
                     </View> */}
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                         <ElapsedTimeDisplay startTime={startTime} />
-                        <Text style={{ color: '#fff', fontSize: 16 }}>用时</Text>
+                        <Text style={{ color: '#fff', fontSize: 16 }}>{formatMessage({ id: 'app.exercises.time' })}</Text>
                     </View>
                     {/* <View style={{ justifyContent: 'center', alignItems: 'center' }} >
                         <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>{calorie ? calorie : '--'}</Text>
