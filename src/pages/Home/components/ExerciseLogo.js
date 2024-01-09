@@ -1,12 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import COLORS from '../../../constants/COLORS';
-import { useIntl } from 'react-intl';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
 
 const ExerciseLogo = ({ children, exerciseName }) => {
-    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     return (
@@ -17,7 +15,7 @@ const ExerciseLogo = ({ children, exerciseName }) => {
             <Text style={{
                 marginTop: 6,
                 fontSize: 18,
-                fontWeight: '700',
+                fontWeight: 'bold',
                 color: currentTheme.fontColor
             }}>{exerciseName}</Text>
         </View>
@@ -30,7 +28,6 @@ const styles = StyleSheet.create({
     container: {
         width: 80,
         justifyContent: 'center',
-        marginBottom: 10,
         alignItems: 'center'
     },
     logoCard: {

@@ -12,6 +12,7 @@ import { zhCN_tutorial } from './tutorial';
 import { zhCN_notification } from './notification';
 import { zhCN_profile } from './profile';
 import { zhCN_promoPage } from './promoPage';
+import { zhCN_error } from './error';
 
 const zh_CN = {
     ...zhCN_dashboard,
@@ -27,7 +28,8 @@ const zh_CN = {
     ...zhCN_tutorial,
     ...zhCN_notification,
     ...zhCN_profile,
-    ...zhCN_promoPage
+    ...zhCN_promoPage,
+    ...zhCN_error
 };
 
 export default zh_CN;

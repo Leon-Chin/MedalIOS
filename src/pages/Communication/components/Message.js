@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, Dimensions, Pressable } from 'react-native'
+import { View, Text, Image, StyleSheet, Dimensions, Pressable, ActivityIndicator } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { Video, ResizeMode } from 'expo-av'
 import { FormatTimestamp } from '../../../utils/chatMessageFormat'
@@ -6,6 +6,7 @@ import COLORS from '../../../constants/COLORS'
 import SIZE from '../../../constants/SIZE'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
+import { useIntl } from 'react-intl'
 
 const { width, height } = Dimensions.get('screen')
 const Message = ({ owner, message }) => {
@@ -34,8 +35,11 @@ const Message = ({ owner, message }) => {
             }
         }
     }
+    const { formatMessage } = useIntl()
     const { msgValue, createdAt, msgType } = message
     const [msgWidth, setMsgWidth] = useState(message.msgWidth > message.msgHeight ? 280 : 200)
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     return (
         <View style={{
             alignItems: owner ? 'flex-end' : 'flex-start',
@@ -49,9 +53,31 @@ const Message = ({ owner, message }) => {
                 <Pressable onLongPress={() => { }}>
                     {msgType === 'text' && <Text style={{ fontSize: SIZE.NormalTitle, color: owner ? COLORS.backgroundGray : currentTheme.fontColor }}>{msgValue}</Text>}
                     {msgType === 'image' && <View style={{ width: msgWidth, height: (msgWidth * message.msgHeight / message.msgWidth) }}>
-                        <Image source={{ uri: msgValue }} resizeMode='contain' style={{ width: '100%', flex: 1 }} />
+                        {loading && !error && (
+                            <ActivityIndicator size="large" color={COLORS.primary} />
+                        )}
+                        {error && (
+                            <Text style={{ color: currentTheme.fontColor }}>{formatMessage({ id: 'error.cannotload' })}</Text>
+                        )}
+                        <Image
+                            source={{ uri: msgValue }}
+                            resizeMode='contain'
+                            style={{ width: '100%', height: '100%' }}
+                            onLoadStart={() => setLoading(true)}
+                            onLoad={() => setLoading(false)}
+                            onError={() => {
+                                setLoading(false);
+                                setError(true);
+                            }}
+                        />
                     </View>}
                     {msgType === 'video' && <View style={{ width: msgWidth, height: (msgWidth * message.msgHeight / message.msgWidth) }}>
+                        {(loading && !error) && (
+                            <ActivityIndicator size="large" color={COLORS.primary} />
+                        )}
+                        {error && (
+                            <Text style={{ color: currentTheme.fontColor }}>{formatMessage({ id: 'error.cannotload' })}</Text>
+                        )}
                         <Video
                             ref={videoPlayer}
                             source={{ uri: msgValue }}
@@ -59,6 +85,12 @@ const Message = ({ owner, message }) => {
                             resizeMode={ResizeMode.CONTAIN}
                             style={{ width: '100%', flex: 1 }}
                             onPlaybackStatusUpdate={updatePlaybackCallback}
+                            onLoadStart={() => setLoading(true)}
+                            onLoad={() => setLoading(false)}
+                            onError={() => {
+                                setError(true);
+                                setLoading(false);
+                            }}
                         />
                     </View>}
                 </Pressable>

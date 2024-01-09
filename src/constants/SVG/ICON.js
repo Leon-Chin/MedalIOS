@@ -38,5 +38,6 @@ export const ICON = {
     notification: (size, color) => <Ionicons name="notifications" size={size} color={color} />,
     refresh: (size, color) => <MaterialIcons name="refresh" size={size} color={color} />,
     send: (size, color) => <FontAwesome name="send" size={size} color={color} />,
-    setting: (size, color) => <Ionicons name="settings-outline" size={size} color={color} />
+    setting: (size, color) => <Ionicons name="settings-outline" size={size} color={color} />,
+    GPS: (size, color) => <MaterialCommunityIcons name="satellite-uplink" size={size} color={color} />,
 }

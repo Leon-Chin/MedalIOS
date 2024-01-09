@@ -1,4 +1,4 @@
-import { FlatList, TouchableOpacity, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Alert } from 'react-native'
+import { FlatList, TouchableOpacity, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Alert, Modal, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import SpecificConversationHeader from '../components/SpecificConversationHeader'
 import { getcurrentconversationmessages, getcurrentconversationmessagesmobile, getspecificconversation, sendmessage } from '../../../api/user.api'
@@ -16,9 +16,14 @@ import { ICON } from '../../../constants/SVG/ICON'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert, ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import Percentage from '../../Calender/components/Percentage'
+import PurePercentageLine from '../../../components/PurePercentageLine'
+import UploadProgressModal from '../../../components/UploadProgressModal'
+import { useIntl } from 'react-intl'
 const SpecificConversationPage = ({ route }) => {
     const { currentUser } = useSelector(state => state.user)
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { contact, conversationID } = route.params
@@ -105,18 +110,21 @@ const SpecificConversationPage = ({ route }) => {
         }
     }
     const pickVideo = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-            allowsEditing: false,
-            quality: 0.4,
-        })
-
-        if (!result.canceled) {
-            const videoHeight = result.assets[0].height
-            const videoWidth = result.assets[0].width
-            console.log("videoHeight", videoHeight);
-            console.log("videoWidth", videoWidth);
-            await uploadImage(result.assets[0].uri, "video", videoHeight, videoWidth)
+        try {
+            const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+                allowsEditing: false,
+                quality: 0.4,
+            })
+            if (!result.canceled) {
+                const videoHeight = result.assets[0].height
+                const videoWidth = result.assets[0].width
+                console.log("videoHeight", videoHeight);
+                console.log("videoWidth", videoWidth);
+                await uploadImage(result.assets[0].uri, "video", videoHeight, videoWidth)
+            }
+        } catch (error) {
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.cannothandleVideo' })))
         }
     }
     const [progress, setProgress] = useState()
@@ -127,14 +135,16 @@ const SpecificConversationPage = ({ route }) => {
         const uploadTask = uploadBytesResumable(storageRef, blob);
         uploadTask.on('state_changed', (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(progress.toFixed(2));
+            setProgress(progress.toFixed(2))
         },
             (error) => {
+                setProgress(null)
                 Toast.show(ERROR_MESSAGE)
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     // console.log('already exsity', downloadURL);
+                    setProgress(null)
                     sendMessage(fileType, downloadURL, imageWidth, imageHeight)
                 });
             }
@@ -150,9 +160,9 @@ const SpecificConversationPage = ({ route }) => {
                         data={currentConversationMessages}
                         renderItem={({ item, index }) => <Message key={index} owner={item.sender === currentUser._id} contact={contact} message={item} />}
                         inverted
-                    // keyExtractor={item => item.id}
-                    // extraData={currentConversationMessages}
                     />
+                    {/* {progress && <PurePercentageLine currentValue={progress} />} */}
+                    {progress && <UploadProgressModal visible={true} progress={progress} />}
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: '3%', paddingVertical: 10, borderTopWidth: 0.18, borderTopColor: COLORS.commentText }}>
                     <View style={{ flexDirection: 'row', gap: 6 }}>
@@ -182,5 +192,3 @@ const SpecificConversationPage = ({ route }) => {
 }
 
 export default SpecificConversationPage
-
-const styles = StyleSheet.create({})

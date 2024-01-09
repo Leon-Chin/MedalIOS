@@ -34,7 +34,7 @@ export const enUS_commonText = {
     'sort': 'Sort',
     'todaySessions': 'Today Sessions',
     'welcomeMessage': 'Welcome Back to Target~',
-    'loading': 'Loading',
+    'loading': 'Loading...',
     'app.viewAll': 'View All',
     'date.week': 'Week',
     'date.month': 'Month',

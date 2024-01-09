@@ -15,6 +15,7 @@ import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
+import UploadProgressModal from '../../../components/UploadProgressModal'
 
 const AvatorModal = ({ visible, setVisible }) => {
     const { formatMessage } = useIntl()
@@ -62,14 +63,16 @@ const AvatorModal = ({ visible, setVisible }) => {
         const uploadTask = uploadBytesResumable(storageRef, blob);
         uploadTask.on('state_changed', (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(progress.toFixed(2));
+            setProgress(progress.toFixed(2));
         },
             (error) => {
                 Toast.show(ERROR_MESSAGE)
+                setProgress(null)
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     setUpdatedAvator(downloadURL)
+                    setProgress(null)
                 });
             }
         );
@@ -80,6 +83,7 @@ const AvatorModal = ({ visible, setVisible }) => {
             style={{ flex: 1 }}
         >
             <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
+                {progress && <UploadProgressModal visible={true} progress={progress} />}
                 <View style={{ marginHorizontal: '3%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZE.NormalMargin, justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: SIZE.NormalMargin }}>

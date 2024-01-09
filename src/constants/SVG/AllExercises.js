@@ -16,7 +16,7 @@ const Exercises = (formatMessage) => [
         value: EXERCISETYPE.burning.value,
         icon: exerciseLogo.lose(30)
     },
-    
+
     {
         name: formatMessage({ id: 'app.dashboard.yoga' }),
         value: EXERCISETYPE.yoga.value,
@@ -25,7 +25,7 @@ const Exercises = (formatMessage) => [
     {
         name: formatMessage({ id: 'app.dashboard.strength' }),
         value: EXERCISETYPE.strength.value,
-        icon: exerciseLogo.yoga(30)
+        icon: exerciseLogo.strength(30)
     },
-    ]
-    export default Exercises
+]
+export default Exercises

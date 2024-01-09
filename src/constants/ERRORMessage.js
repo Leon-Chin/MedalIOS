@@ -12,4 +12,33 @@ const ThanksForFeedback_MESSAGE = { type: "success", text1: '感谢您的反馈'
 const AlreadyFavorTutorial_MESSAGE = { type: "success", text1: '您已收藏此教程', topOffset: 50 };
 
 
-export { PleaseInput_MESSAGE, FavorSuccess_MESSAGE, AlreadyFavorTutorial_MESSAGE, ERROR_MESSAGE, ThanksForFeedback_MESSAGE, CanNotFinish_MESSAGE, PublicSuccess_MESSAGE, AlreadyHave_MESSAGE, AddSuccess_MESSAGE, AlreadyEvaluation_MESSAGE, NothingInput_MESSAGE, PleaseInputSearchContent_MESSAGE }
+const ERROR_Alert = (content) => {
+    return { type: "error", text1: content, topOffset: 50 };
+}
+
+const INFO_Alert = (content) => {
+    return { type: "info", text1: content, topOffset: 50 };
+}
+
+const SUCCESS_Alert = (content) => {
+    return { type: "success", text1: content, topOffset: 50 };
+}
+
+
+export {
+    PleaseInput_MESSAGE,
+    FavorSuccess_MESSAGE,
+    AlreadyFavorTutorial_MESSAGE,
+    ERROR_MESSAGE,
+    ThanksForFeedback_MESSAGE,
+    CanNotFinish_MESSAGE,
+    PublicSuccess_MESSAGE,
+    AlreadyHave_MESSAGE,
+    AddSuccess_MESSAGE,
+    AlreadyEvaluation_MESSAGE,
+    NothingInput_MESSAGE,
+    PleaseInputSearchContent_MESSAGE,
+    ERROR_Alert,
+    INFO_Alert,
+    SUCCESS_Alert,
+}

@@ -12,6 +12,7 @@ import { enUS_tutorial } from './tutorial'
 import { enUS_notification } from './notification'
 import { enUS_profile } from './profile'
 import { enUS_promoPage } from './promoPage'
+import { enUS_error } from './error';
 
 const en_US = {
     ...enUS_dashboard,
@@ -27,7 +28,8 @@ const en_US = {
     ...enUS_tutorial,
     ...enUS_notification,
     ...enUS_profile,
-    ...enUS_promoPage
+    ...enUS_promoPage,
+    ...enUS_error
 };
 
 export default en_US;

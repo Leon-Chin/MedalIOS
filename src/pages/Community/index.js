@@ -150,7 +150,7 @@ const Community = () => {
                     if (!isMuted) {
                         setPostBlogVisible(true)
                     } else {
-                        Toast.show({ type: 'error', text1:  formatMessage({ id: 'app.blog.banAccountAlert' }), text2: formatMessage({ id: 'app.blog.alertContent' }) + muteDate, duration: 5, topOffset: 50 })
+                        Toast.show({ type: 'error', text1: formatMessage({ id: 'app.blog.banAccountAlert' }), text2: formatMessage({ id: 'app.blog.alertContent' }) + muteDate, duration: 5, topOffset: 50 })
                     }
                 }}
                 style={{ justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 100, right: 20, width: 50, height: 50, backgroundColor: COLORS.primary, borderRadius: 25, zIndex: 1 }}

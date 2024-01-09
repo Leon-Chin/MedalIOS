@@ -1,8 +1,8 @@
-import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import TutorialLibrary from './components/TutorialLibrary'
 import Header from './components/Header';
 import AllTutorialsCard from './components/AllTutorialsCard';
-import AllCompetitionsCard from './components/AllCompetetition';
+import WeightCard from './components/WeightCard';
 import ExerciseLogo from './components/ExerciseLogo';
 import Exercies from '../../constants/SVG/AllExercises'
 import { ScrollView } from 'react-native';
@@ -15,6 +15,7 @@ import TimeCard from './components/TimeCard';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { useIntl } from 'react-intl';
+import SIZE from '../../constants/SIZE';
 
 const Home = () => {
     const intl = useIntl()
@@ -28,7 +29,7 @@ const Home = () => {
             </View>
             <ScrollView
                 showsVerticalScrollIndicator={false}>
-                <View style={{ paddingHorizontal: '3%', overflow: 'visible' }}>
+                <View style={{ paddingHorizontal: '3%', marginBottom: SIZE.NormalMargin, overflow: 'visible' }}>
                     <FlatList
                         data={Exercies(intl.formatMessage)}
                         horizontal
@@ -55,9 +56,9 @@ const Home = () => {
                     <TimeCard />
                 </View>
                 <View style={{ marginHorizontal: '3%', flexDirection: 'row' }}>
-                    <AllTutorialsCard />
+                    <WeightCard />
                     <View style={{ width: 10 }}></View>
-                    <AllCompetitionsCard />
+                    <AllTutorialsCard />
                 </View>
 
                 <View style={{ marginHorizontal: '3%' }}>

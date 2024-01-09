@@ -1,6 +1,6 @@
 export const zhCN_calendar = {
 
-    'app.calendar.noCurrentTut': '暂无课程, 您可在下方精选中挑选课程, 也可以问助手',
+    'app.calendar.noCurrentTut': '暂无课程, 您可在下方精选中挑选课程',
     'app.calendar.tutCompletionPercentage': '任务完成比例',
     'app.calendar.remainingTut': "剩余",
     'app.calendar.personalRecommendation': '个性化推荐',
@@ -15,5 +15,5 @@ export const zhCN_calendar = {
     'app.calendar.submitAssessment': '提交评估',
     'app.calendar.meine': '我的',
     'app.calendar.tutLibPortal': '前往课程库以查看更多',
-    
-    };
+
+};

@@ -16,9 +16,13 @@ import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
 import * as Location from 'expo-location';
 import { useIntl } from 'react-intl';
 import { RUN_TUTORIAL } from '../../../constants/APP_INSIDE_TUTORIAL';
+import SIZE from '../../../constants/SIZE';
+import GPS_Level from '../../../constants/GPS_Level';
+import useUserLocale from '../../../hooks/useUserLocale';
 
 const Run = () => {
     const { formatMessage } = useIntl()
+    const userLocale = useUserLocale()
     const [startTime, setStartTime] = useState()
     const [focused, setFocused] = useState(true)
     const navigation = useNavigation()
@@ -105,8 +109,8 @@ const Run = () => {
     const [distance, setDistance] = useState(0);
     const [currentPosition, setCurrentPosition] = useState(null);
     const [positionStack, setPositionStack] = useState([]);
-    const MIN_DISTANCE_THRESHOLD = 5; // 最小距离阈值，单位为米
-    const POSITION_STACK_SIZE = 2; // 用于滑动窗口平均的位置栈大小
+    const MIN_DISTANCE_THRESHOLD = 7; // 最小距离阈值，单位为米
+    const POSITION_STACK_SIZE = 3; // 用于滑动窗口平均的位置栈大小
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -150,6 +154,7 @@ const Run = () => {
         return deg * (Math.PI / 180);
     }
 
+    const [GPSLevel, setGPSLevel] = useState(GPS_Level.Low)
 
     useEffect(() => {
         if (isTracking) {
@@ -159,6 +164,17 @@ const Run = () => {
                     distanceInterval: 6, // Receive updates only after moving 10 meters
                 },
                 (newPosition) => {
+                    const accuracy = newPosition.coords.accuracy;
+                    console.log("Accuracy:", newPosition.coords.accuracy);
+                    let signalStrength;
+                    if (accuracy > 34) {
+                        signalStrength = GPS_Level.Low; // 弱信号
+                    } else if (accuracy > 20 && accuracy <= 34) {
+                        signalStrength = GPS_Level.Medium; // 中等信号
+                    } else {
+                        signalStrength = GPS_Level.High; // 强信号
+                    }
+                    setGPSLevel(signalStrength);
                     setPositionStack(prev => [...prev.slice(1 - POSITION_STACK_SIZE), newPosition]); // 更新位置栈
 
                     if (positionStack.length === POSITION_STACK_SIZE) {
@@ -210,12 +226,21 @@ const Run = () => {
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.blueBackground }}>
-            <View style={{ marginHorizontal: '3%', flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity
-                    onPress={() => handleGoback()}>
-                    {ICON.left(36, "#fff")}
-                </TouchableOpacity>
-                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>{formatMessage({ id: 'app.exercises.runExercise' })}</Text>
+            <View style={{ marginHorizontal: '3%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <View style={{ marginHorizontal: '3%', flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity
+                        onPress={() => handleGoback()}>
+                        {ICON.left(36, "#fff")}
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>{formatMessage({ id: 'app.exercises.runExercise' })}</Text>
+                </View>
+                <View style={{ backgroundColor: 'rgba(66, 105, 144, 0.4)', padding: SIZE.LittleMargin, borderRadius: SIZE.CardBorderRadius, marginHorizontal: '3%', flexDirection: 'row', alignItems: 'center', gap: SIZE.LittleMargin }}>
+                    <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: '#fff' }}>GPS</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                        {ICON.GPS(SIZE.NormalTitle, GPSLevel.color)}
+                        <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: GPSLevel.color }}>{userLocale === "zh" ? GPSLevel.zh : GPSLevel.en}</Text>
+                    </View>
+                </View>
             </View>
             <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -227,10 +252,6 @@ const Run = () => {
                     <Text style={{ color: '#fff' }}>{formatMessage({ id: 'app.exercises.stepUnit' })}</Text>
                 </View>
                 <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: '8%' }}>
-                    {/* <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>{currentStepCount ? currentStepCount : "--"}</Text>
-                        <Text style={{ color: '#fff' }}>步数</Text>
-                    </View> */}
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                         <ElapsedTimeDisplay startTime={startTime} />
                         <Text style={{ color: '#fff', fontSize: 16 }}>{formatMessage({ id: 'app.exercises.time' })}</Text>

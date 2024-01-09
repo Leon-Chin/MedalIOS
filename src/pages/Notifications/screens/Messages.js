@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import { getunreadedmessage } from '../../../api/user.api';
 import { useEffect } from 'react';
@@ -7,7 +7,7 @@ import COLORS from '../../../constants/COLORS';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
 import { useIntl } from 'react-intl';
-
+import NoMessage from '../../../components/NoMessage';
 const Messages = () => {
     const { formatMessage } = useIntl()
     const theme = useUserTheme()
@@ -29,8 +29,9 @@ const Messages = () => {
         <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
             {unreadedMsgs.length === 0 ?
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <NoMessage />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.commentText }}>
-                        {formatMessage({id: 'app.news.noNews'})}
+                        {formatMessage({ id: 'app.news.noNews' })}
                     </Text>
                 </View> : <FlatList
                     data={unreadedMsgs}

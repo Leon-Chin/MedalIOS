@@ -34,7 +34,7 @@ export const zhCN_commonText = {
     'sort': '种类',
     'todaySessions': '今日课程',
     'welcomeMessage': '欢迎回到Target~',
-    'loading': '加载中',
+    'loading': '加载中...',
     'app.viewAll': '查看全部',
     'date.week': '周',
     'date.month': '月',

@@ -19,5 +19,5 @@ export const zhCN_notification = {
 
     'app.news.customQuestion': "选择一个选项卡以屏蔽通知",
     'app.news.customQuestion.exit': '退出',
-
+    'app.news.systemMsg': '系统消息',
 }

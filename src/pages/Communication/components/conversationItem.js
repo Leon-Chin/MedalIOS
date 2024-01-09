@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Touchable } from 'react-native'
+import { View, Text, TouchableOpacity, Touchable, ActivityIndicator, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getspecificconversationunreadnum, getuser } from '../../../api/user.api'
@@ -66,18 +66,22 @@ const ConversationItem = ({ conversation, deleteConversation }) => {
             </View>
         );
     };
-
+    const [isLoading, setIsLoading] = useState(true);
     return (
         <Swipeable renderRightActions={rightActions}>
             <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigate('SpecificConversationPage', { conversationID: conversation._id, contact })}
                 style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginHorizontal: '3%', paddingVertical: 6, borderBottomWidth: 0.2, borderBottomColor: COLORS.commentText }}>
-                {contact ? <Avatar size={50} rounded source={{ uri: contact.avator }} /> : <FontAwesome5 name="user-circle" size={24} color="black" />}
+                {contact ? <Avatar
+                    size={50}
+                    rounded
+                    source={{ uri: contact.avator }}
+                /> : <FontAwesome5 name="user-circle" size={24} color="black" />}
                 <View style={{ flex: 1, marginLeft: 10, }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         {contact && <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: 'bold', color: currentTheme.fontColor }}>{contact.name} {!alreadySubscribed && <Text style={{ fontSize: 10, color: COLORS.commentText }}>{formatMessage({ id: 'app.comu.subInfo' })}</Text>}</Text>}
-                        <Text style={{ color: COLORS.commentText, fontSize: 14 }}>{formatDateTime(conversation.updatedAt)}</Text>
+                        <Text style={{ color: COLORS.commentText, fontSize: 14 }}>{conversation?.updatedAt && formatDateTime(conversation.updatedAt)}</Text>
                     </View>
                     <View>
                         <Text numberOfLines={1} style={{ fontSize: 16, color: COLORS.commentText }}>{getMsgValue(conversation)}</Text>

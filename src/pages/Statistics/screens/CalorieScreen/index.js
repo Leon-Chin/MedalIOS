@@ -6,6 +6,7 @@ import BestRecord from './components/BestRecord'
 import useUserTheme from '../../../../hooks/useUserTheme'
 import APPTHEME from '../../../../constants/COLORS/APPTHEME'
 
+
 const CalorieScreen = () => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]

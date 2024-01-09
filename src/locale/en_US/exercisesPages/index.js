@@ -37,4 +37,5 @@ export const enUS_exercisesPages = {
     'app.exercises.noMark': 'No Marks',
     'app.exercises.equipReq': 'Equipments Requirement:',
     'app.exercises.startExercise': 'Start Exercise',
+    "app.exercises.stepUnit": 'Step',
 }

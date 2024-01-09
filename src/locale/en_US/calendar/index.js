@@ -1,6 +1,5 @@
 export const enUS_calendar = {
-
-    'app.calendar.noCurrentTut': 'Currently no tutorial, please view the recommendation list, or ask for help.',
+    'app.calendar.noCurrentTut': 'Currently no tutorial, please view the recommendation list below.',
     'app.calendar.tutCompletionPercentage': 'Completion Percentage',
     'app.calendar.remainingTut': "Remaining",
     'app.calendar.personalRecommendation': 'Recommendations',
@@ -16,4 +15,4 @@ export const enUS_calendar = {
     'app.calendar.meine': 'My Tutorials',
     'app.calendar.tutLibPortal': 'Go to Tutorial Library get more',
 
-    };
+};

@@ -1,5 +1,5 @@
 export const enUS_blog = {
-    'app.blog.postBlog': 'Compose',
+    'app.blog.postBlog': 'Post Blog',
     'app.blog.postBtn': 'Post',
     'app.blog.blogTitle': 'Blog Title',
     'app.blog.titleAlert': 'Add a title to get more views',

@@ -15,6 +15,7 @@ import { isEmptyObj } from '../../../utils/getDuration'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
+import NotFound from '../../../components/NotFound'
 
 const PersonalRecommend = ({ selectDay }) => {
     const { formatMessage } = useIntl()
@@ -54,7 +55,10 @@ const PersonalRecommend = ({ selectDay }) => {
                 <TutorialHorizontal key={index} tutorial={item} withCalender={true} selectDay={selectDay} />
             ))}
             {recommandTutorials && recommandTutorials.length === 0 && <View style={{ marginBottom: SIZE.NormalMargin, padding: SIZE.NormalMargin, alignItems: 'center', borderRadius: SIZE.CardBorderRadius, backgroundColor: currentTheme.contentColor }}>
-                <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.calendar.noRecommendations' })}</Text>
+                <NotFound />
+                <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor, fontWeight: 'bold' }}>
+                    {formatMessage({ id: 'app.calendar.noRecommendations' })}
+                </Text>
             </View>}
             {(recommandTutorials.length === 0 && (!currentUser?.personalPrefer || isEmptyObj(currentUser?.personalPrefer))) && (
                 <View style={{ marginTop: SIZE.LargerMargin, flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30, borderRadius: SIZE.CardBorderRadius, backgroundColor: currentTheme.contentColor }}>

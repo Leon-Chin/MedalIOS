@@ -15,8 +15,9 @@ export const enUS_notification = {
     'app.news.tab.system': 'Systems',
     'app.news.tab.pm': 'Messages',
     'app.news.tab.todos': 'Todos',
-
     'app.news.customQuestion': "Set one tab you don't want to receive notifications",
     'app.news.customQuestion.exit': 'Exit',
+    'app.news.systemMsg': 'System Message',
+
 
 }

@@ -14,9 +14,11 @@ import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
+import useUserLocale from '../../../hooks/useUserLocale'
 
 const BirthdayModal = ({ visible, setVisible }) => {
     const { formatMessage } = useIntl()
+    const userLocale = useUserLocale()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const dispatch = useDispatch()
@@ -76,7 +78,7 @@ const BirthdayModal = ({ visible, setVisible }) => {
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: SIZE.LargerMargin }}>
-                    <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.birthdate' })}</Text>
+                        <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.birthdate' })}</Text>
                         <DateTimePicker
                             themeVariant={theme}
                             testID="dateTimePicker"
@@ -84,6 +86,7 @@ const BirthdayModal = ({ visible, setVisible }) => {
                             mode="date"
                             is24Hour={true}
                             display="default"
+                            locale={userLocale === "zh" && 'zh_CN'}
                             onChange={handleChangeDay}
                         />
                     </View>

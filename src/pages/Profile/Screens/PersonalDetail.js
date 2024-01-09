@@ -1,11 +1,9 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import { Entypo } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { Avatar } from '@rneui/base'
 import { useSelector } from 'react-redux'
 import COLORS from '../../../constants/COLORS'
 import { formatTimeToChinese } from '../../../utils/formatTime'
-import { useNavigation } from '@react-navigation/native'
 import AvatorModal from '../components/AvatorModal'
 import GenderModal from '../components/GenderModal'
 import GENDER from '../../../constants/GENDER'
@@ -66,7 +64,7 @@ const PersonalDetail = () => {
             <TouchableOpacity
                 onPress={() => setStatusModalVisible(true)}
                 style={{ flexDirection: 'row', width: '100%', height: 60, justifyContent: 'space-between', backgroundColor: currentTheme.contentColor, marginBottom: SIZE.LittleMargin, alignItems: 'center', paddingHorizontal: 20 }}>
-                 <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.status' })}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: currentTheme.fontColor }}>{formatMessage({ id: 'app.profile.status' })}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: COLORS.commentText }}>{currentUser.personalStatus && currentUser.personalStatus}</Text>
                     {/* <Entypo name="chevron-right" size={18} style={{ marginLeft: 10 }} color="black" /> */}

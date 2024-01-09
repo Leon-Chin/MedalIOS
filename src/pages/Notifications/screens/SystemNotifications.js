@@ -11,6 +11,7 @@ import PIC from '../../../constants/PIC'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { useIntl } from 'react-intl'
+import NoMessage from '../../../components/NoMessage'
 
 const SystemNotifications = () => {
     const { formatMessage } = useIntl()
@@ -36,10 +37,12 @@ const SystemNotifications = () => {
         })
     }
     if (notifications.length === 0) {
-        return <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, alignItems: 'center', justifyContent: 'center' }}>
+        return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <NoMessage />
             <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.commentText }}>
-                {formatMessage({ id: 'app.news.noSystemMsg' })}
-            </Text></View>
+                {formatMessage({ id: 'app.news.noNews' })}
+            </Text>
+        </View>
     } else {
         return (
             <ScrollView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, }}>
@@ -48,7 +51,7 @@ const SystemNotifications = () => {
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Avatar source={{ uri: PIC.systemNoti }} size={30} />
-                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', marginLeft: 6, color: currentTheme.fontColor }}>系统消息</Text>
+                                <Text style={{ fontSize: SIZE.NormalTitle, fontWeight: 'bold', marginLeft: 6, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.news.systemMsg' })}</Text>
                             </View>
                             <TouchableOpacity
                                 onPress={() => { handleDeleteNotification(item._id) }}

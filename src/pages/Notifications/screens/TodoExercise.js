@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import useUncompletedTutorials from '../../../hooks/useUncompletedTutorials'
 import SIZE from '../../../constants/SIZE'
@@ -10,6 +10,9 @@ import useCompletedTutorials from '../../../hooks/useCompletedTutorials'
 import { useNavigation } from '@react-navigation/native'
 import TodoNotiPercentage from '../Components/TodoNotiPercentage'
 import { useIntl } from 'react-intl'
+import Lottie from 'lottie-react-native';
+
+const { width } = Dimensions.get('window')
 
 const TodoExercise = () => {
     const { formatMessage } = useIntl()
@@ -27,14 +30,21 @@ const TodoExercise = () => {
         return <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, alignItems: 'center', justifyContent: 'center' }}>
             {todo.length === 0 &&
                 <TouchableOpacity
-                    style={{ flexDirection: 'row', justifyContent: 'center', width: 200, padding: SIZE.NormalMargin, borderRadius: SIZE.CardBorderRadius, backgroundColor: currentTheme.contentColor }}
+                    style={{ flexDirection: 'column', justifyContent: 'center', padding: SIZE.NormalMargin, }}
                     onPress={() => navigate("MyExercise")}
                 >
-                    <Text style={{ fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: COLORS.commentText }}>
+                    <View style={{
+                        width: width * 0.9,
+                        height: width * 0.8
+                    }}>
+                        <Lottie source={require('../../../../assets/lottie/AddToDo.json')} autoPlay loop />
+                    </View>
+                    <Text style={{ marginTop: SIZE.NormalMargin, fontSize: SIZE.SmallTitle, fontWeight: 'bold', color: COLORS.commentText }}>
                         {formatMessage({ id: 'app.news.noTut' })}
                     </Text>
                 </TouchableOpacity>
-            }</View>
+            }
+        </View>
     } else {
         return (
             <ScrollView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, paddingTop: SIZE.NormalMargin, }}>

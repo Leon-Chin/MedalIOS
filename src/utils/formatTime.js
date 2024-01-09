@@ -9,12 +9,26 @@ export const FormattedTime = (Date) => {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
-export const DateToMonthDay = (Date) => {
+export const DateToMonthDay = (date, intl) => {
     // Get the individual components of the date and time
-    const month = Date.getMonth() + 1;
-    const day = Date.getDate();
+    // const month = Date.getMonth() + 1;
+    // const day = Date.getDate();
     // Format the components into a readable time string
-    return `${month}月${day}日`
+    const handledDate = new Date(date)
+    if (intl === "zh") {
+        return new Intl.DateTimeFormat('zh-CN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }).format(handledDate);
+    } else {
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }).format(handledDate);
+    }
+    // return `${month}月${day}日`
 }
 
 export const formatTimeToChinese = (dateNeedConvert) => {

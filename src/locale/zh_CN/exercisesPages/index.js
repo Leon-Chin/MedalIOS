@@ -32,9 +32,9 @@ export const zhCN_exercisesPages = {
     'app.exercises.addFav': '收藏',
     'app.exercises.addTodoPt1': '添加到',
     'app.exercises.addTodoPt2': '待练',
-
     'app.exercises.pracCount': '人练过',
     'app.exercises.noMark': '暂无评分',
     'app.exercises.equipReq': '器材需求:',
     'app.exercises.startExercise': '开始训练',
+    "app.exercises.stepUnit": '步',
 }

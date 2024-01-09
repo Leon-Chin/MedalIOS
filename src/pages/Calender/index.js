@@ -74,9 +74,10 @@ const MyExercise = () => {
                     <PersonalRecommend selectDay={selectDay} />
                     <NothingMore />
                 </ScrollView>
-                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', position: 'absolute', bottom: 110, right: 10, width: 50, height: 50, borderRadius: 25, backgroundColor: COLORS.primary }}>
+                {/* TODO */}
+                {/* <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', position: 'absolute', bottom: 110, right: 10, width: 50, height: 50, borderRadius: 25, backgroundColor: COLORS.primary }}>
                     {ICON.agent(30, '#fff')}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </SafeAreaView >
     )
