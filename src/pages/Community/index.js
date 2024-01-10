@@ -124,7 +124,11 @@ const Community = () => {
                 ref={scrollViewRef}
                 data={searchText ? searchedBlogs : blogs}
                 style={{ paddingHorizontal: '3%' }}
-                renderItem={({ item, index }) => <BlogCard key={index} blog={item} />}
+                renderItem={({ item, index }) => {
+                    console.log('item', item);
+                    console.log('item', index);
+                    return <BlogCard key={item?._id} blog={item} />
+                }}
                 onEndReached={handleEndReached}
                 refreshControl={
                     <RefreshControl

@@ -1,7 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import SIZE from '../../../constants/SIZE'
-import COLORS from '../../../constants/COLORS'
 import { ICON } from '../../../constants/SVG/ICON'
 import { DateToMonthDay } from '../../../utils/formatTime'
 import useUserTheme from '../../../hooks/useUserTheme'
