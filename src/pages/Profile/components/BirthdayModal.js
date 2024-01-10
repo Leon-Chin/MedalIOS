@@ -12,7 +12,7 @@ import { checkTwoDaysIsEqual } from '../../../utils/checkIsToday'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 import useUserLocale from '../../../hooks/useUserLocale'
 
@@ -36,11 +36,11 @@ const BirthdayModal = ({ visible, setVisible }) => {
                     dispatch(loginSuccess(res))
                     setVisible(false)
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
             .catch(error => {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             })
     }
     const handleChangeDay = (e, selectedDate) => {

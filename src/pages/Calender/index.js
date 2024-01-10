@@ -19,7 +19,7 @@ import SIZE from '../../constants/SIZE'
 import NothingMore from '../../components/NothingMore'
 import { useNavigation } from '@react-navigation/native'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../constants/ERRORMessage'
+import { ERROR_Alert } from '../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 
 const MyExercise = () => {
@@ -48,9 +48,9 @@ const MyExercise = () => {
             if (res && res.status !== false) {
                 dispatch(setSessions(res))
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: "error.errorMsg" })));
             }
-        }).catch(err => Toast.show(ERROR_MESSAGE))
+        }).catch(err => Toast.show(ERROR_Alert(formatMessage({ id: "error.errorMsg" }))))
         setRefreshing(false);
     };
 

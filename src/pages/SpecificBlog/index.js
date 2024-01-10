@@ -18,7 +18,7 @@ import EditBlogModal from './Components/EditBlogModal';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
+import { ERROR_Alert, } from '../../constants/ERRORMessage';
 import useCheckUserStatus from '../../hooks/useCheckUserStatus';
 import { useIntl } from 'react-intl';
 
@@ -92,10 +92,10 @@ const SpecificBlog = ({ route }) => {
                     getWholeBlogInfo(usersReqs, comments)
                 }
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         }).catch(err => {
-            Toast.show(ERROR_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         })
     }
     const getWholeBlogInfo = async (userReq, comments) => {
@@ -103,7 +103,7 @@ const SpecificBlog = ({ route }) => {
             if (res.status !== false) {
                 setComments(comments.map((comment, i) => { return { ...comment, commentUserInfo: res[i] } }))
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }
@@ -115,10 +115,10 @@ const SpecificBlog = ({ route }) => {
                 setLikeNum(likedNum - 1)
                 setLiked(false)
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         }).catch((err) => {
-            Toast.show(ERROR_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         }) : await likeblog(blogID).then((res) => {
             if (res.status !== false) {
                 console.log("res", res);
@@ -128,7 +128,7 @@ const SpecificBlog = ({ route }) => {
                 setLiked(true)
             }
         }).catch((err) => {
-            Toast.show(ERROR_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         })
     }
     const handleFavoriteBlog = async () => {
@@ -140,7 +140,7 @@ const SpecificBlog = ({ route }) => {
                     setFavorited(false)
                 }
             }).catch((err) => {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }) : await favoriteblog(blogID)
                 .then((res) => {
                     if (res.status !== false) {
@@ -149,7 +149,7 @@ const SpecificBlog = ({ route }) => {
                         setFavorited(true)
                     }
                 }).catch((err) => {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 })
     }
 
@@ -164,10 +164,10 @@ const SpecificBlog = ({ route }) => {
                         getBlogComments()
                         setCommentText('')
                     } else {
-                        Toast.show(ERROR_MESSAGE)
+                        Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                     }
                 }).catch(error => {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 })
         } else {
             Toast.show({ type: 'error', text1: formatMessage({ id: 'app.blog.banAccountAlert' }), text2: formatMessage({ id: 'app.blog.alertContent' }) + muteDate, duration: 5, topOffset: 50 })
@@ -182,7 +182,7 @@ const SpecificBlog = ({ route }) => {
                 goBack()
                 dispatch(loginSuccess(res))
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }
@@ -227,7 +227,7 @@ const SpecificBlog = ({ route }) => {
                             </View>
                             <View style={{ marginHorizontal: '3%', opacity: 0.4, height: 0.8, backgroundColor: COLORS.commentText }}></View>
                             <View style={{ marginHorizontal: '3%', paddingVertical: 10, }}>
-                            <Text style={{ color: currentTheme.fontColor, marginBottom: 10 }}>{formatMessage({ id: 'app.blog.totalCommentPt1' })}<Text style={{ fontWeight: 'bold' }}>{comments && comments.length}</Text>{formatMessage({ id: 'app.blog.totalCommentPt2' })}</Text>
+                                <Text style={{ color: currentTheme.fontColor, marginBottom: 10 }}>{formatMessage({ id: 'app.blog.totalCommentPt1' })}<Text style={{ fontWeight: 'bold' }}>{comments && comments.length}</Text>{formatMessage({ id: 'app.blog.totalCommentPt2' })}</Text>
                                 {comments && comments.map((item, index) => <OneComment key={index} comment={item} />)}
                             </View>
                         </ScrollView>

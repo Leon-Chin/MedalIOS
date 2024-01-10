@@ -13,12 +13,12 @@ import { secToMin, secToSpecificMin } from '../../../../../utils/funcs'
 import useUserTheme from '../../../../../hooks/useUserTheme'
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../../../constants/ERRORMessage'
+import { ERROR_Alert, INFO_Alert } from '../../../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 
 const { width } = Dimensions.get('screen')
 const HeaderCard = () => {
-    const {formatMessage} = useIntl()
+    const { formatMessage } = useIntl()
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const [ModalGoalVisible, setModalGoalVisible] = useState(false)
@@ -42,11 +42,11 @@ const HeaderCard = () => {
                     dispatch(loginSuccess(res))
                     setModalGoalVisible(false)
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
         } else {
-            Toast.show(PleaseInput_MESSAGE)
+            Toast.show(INFO_Alert(formatMessage({ id: "error.plsInputValidInfo" })))
         }
     }
     return (
@@ -67,7 +67,7 @@ const HeaderCard = () => {
                 <View style={{ width: 2, backgroundColor: COLORS.commentText, height: SIZE.ExtraLargerTitle }}></View>
                 <View style={{ flex: 3, marginLeft: SIZE.NormalMargin }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: SIZE.NormalMargin }}>
-                    <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: currentTheme.fontColor, }}>{formatMessage({ id: 'app.statistic.goalDuration' })}</Text>
+                        <Text style={{ fontSize: SIZE.ExtarSmallTitle, color: currentTheme.fontColor, }}>{formatMessage({ id: 'app.statistic.goalDuration' })}</Text>
                         <TouchableOpacity
                             onPress={() => setModalGoalVisible(true)}
                             style={{ flexDirection: "row", gap: 4 }}
@@ -96,7 +96,7 @@ const HeaderCard = () => {
                     colors={['#f8edf2', "#f2f0f5", '#ebf3f9']}>
                     <SafeAreaView style={{ flex: 1 }}>
                         <View style={{ marginHorizontal: '3%' }}>
-                        <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.black }}>{formatMessage({ id: 'app.statistic.goalDuration.Form2' })}</Text>
+                            <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.black }}>{formatMessage({ id: 'app.statistic.goalDuration.Form2' })}</Text>
                             <TextInput
                                 keyboardType='number-pad'
                                 onChangeText={setGoal}

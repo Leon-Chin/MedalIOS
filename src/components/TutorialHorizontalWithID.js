@@ -13,7 +13,7 @@ import { getspecifictutorial } from '../api/tutorial.api';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { AddSuccess_MESSAGE, AlreadyHave_MESSAGE, ERROR_MESSAGE } from '../constants/ERRORMessage';
+import { ERROR_Alert, INFO_Alert, SUCCESS_Alert } from '../constants/ERRORMessage';
 import useUserLocale from '../hooks/useUserLocale';
 import { useIntl } from 'react-intl';
 const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
@@ -30,7 +30,7 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
 
     const handleAddToCalendar = async () => {
         if (isTodayHasAlr) {
-            Toast.show(AlreadyHave_MESSAGE)
+            Toast.show(INFO_Alert(formatMessage({ id: 'info.tut.added' })))
         } else {
             const newSession = {
                 date: new Date(userSelectDay),
@@ -40,9 +40,9 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
                 if (res && res.status !== false) {
                     dispatch(loginSuccess(res.user))
                     dispatch(setSessions(res.updatedSessions))
-                    Toast.show(AddSuccess_MESSAGE)
+                    Toast.show(SUCCESS_Alert(formatMessage({ id: "success.alreadyAdd" })))
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: "error.errorMsg" })));
                 }
             })
         }
@@ -52,7 +52,7 @@ const TutorialHorizontalWithID = ({ tutorialID, withCalender }) => {
             if (res.status !== false) {
                 setTutorial(res)
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: "error.errorMsg" })));
             }
         })
     }

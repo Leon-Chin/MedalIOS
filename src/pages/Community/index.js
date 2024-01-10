@@ -13,7 +13,7 @@ import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { ICON } from '../../constants/SVG/ICON';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
+import { ERROR_Alert } from '../../constants/ERRORMessage';
 import useCheckUserStatus from '../../hooks/useCheckUserStatus';
 import { useIntl } from 'react-intl';
 
@@ -33,11 +33,11 @@ const Community = () => {
             if (blogs && blogs.status !== false) {
                 setBlogs(blogs)
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         }).catch(err => {
             console.log("blogsERRRR", err);
-            Toast.show(ERROR_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         })
     }
     useEffect(() => {
@@ -53,11 +53,11 @@ const Community = () => {
                 if (blogs.status !== false) {
                     setSearchedBlogs(blogs)
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             }).catch(err => {
                 console.log(err);
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             })
         } else {
             setSearchedBlogs([])
@@ -68,9 +68,6 @@ const Community = () => {
         if (!noMoreBlogs) {
             // 这里可以检查是否有更多博客的条件，如果没有更多博客，执行以下操作
             setNoMoreBlogs(true);
-
-            // 滚动到页面顶部
-            // scrollToTop();
         }
     };
 
@@ -86,11 +83,11 @@ const Community = () => {
             if (blogs && blogs.status !== false) {
                 setBlogs(blogs)
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         }).catch(err => {
             console.log("blogsERRRR", err);
-            Toast.show(ERROR_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         })
 
         setRefreshing(false);
@@ -124,11 +121,7 @@ const Community = () => {
                 ref={scrollViewRef}
                 data={searchText ? searchedBlogs : blogs}
                 style={{ paddingHorizontal: '3%' }}
-                renderItem={({ item, index }) => {
-                    console.log('item', item);
-                    console.log('item', index);
-                    return <BlogCard key={item?._id} blog={item} />
-                }}
+                renderItem={({ item, index }) => <BlogCard key={item?._id} blog={item} />}
                 onEndReached={handleEndReached}
                 refreshControl={
                     <RefreshControl
@@ -170,5 +163,3 @@ const Community = () => {
 }
 
 export default Community
-
-const styles = StyleSheet.create({})

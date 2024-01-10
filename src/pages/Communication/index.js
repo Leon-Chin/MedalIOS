@@ -1,6 +1,5 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, RefreshControl, FlatList, Alert } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, RefreshControl, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { AntDesign } from '@expo/vector-icons';
 import { deleteconversation, getconversation } from '../../api/user.api'
 import ConversationItem from './components/conversationItem'
 import { ICON } from '../../constants/SVG/ICON';
@@ -9,7 +8,7 @@ import SubscribeContactModal from './components/SubscribeContactModal';
 import useUserTheme from '../../hooks/useUserTheme';
 import APPTHEME from '../../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { ERROR_MESSAGE } from '../../constants/ERRORMessage';
+import { ERROR_Alert } from '../../constants/ERRORMessage';
 import { useIntl } from 'react-intl';
 
 const Communication = () => {
@@ -22,7 +21,7 @@ const Communication = () => {
         if (conversations && conversations.status !== false) {
             setConversations(conversations)
         } else {
-            Toast.show(ERROR_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         }
     }
     useEffect(() => {
@@ -41,7 +40,7 @@ const Communication = () => {
         if (conversations && conversations.status !== false) {
             setConversations(conversations)
         } else {
-            Toast.show(ERROR_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         }
         setRefreshing(false);
     };
@@ -50,7 +49,7 @@ const Communication = () => {
             if (res.status !== false) {
                 setConversations(res)
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }

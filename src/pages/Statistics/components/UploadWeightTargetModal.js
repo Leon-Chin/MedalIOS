@@ -8,7 +8,7 @@ import { updateweighttarget } from '../../../api/user.api'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from '../../../redux/userSlice'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert, INFO_Alert } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 
 const { width } = Dimensions.get("screen")
@@ -26,11 +26,11 @@ const UploadWeightTargetModal = ({ visible, setVisible }) => {
                 if (res && res.status !== false) {
                     dispatch(loginSuccess(res))
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
         } else {
-            Toast.show(PleaseInput_MESSAGE)
+            Toast.show(INFO_Alert(formatMessage({ id: "error.plsInputValidInfo" })))
         }
     }
 

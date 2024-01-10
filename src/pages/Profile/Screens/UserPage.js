@@ -19,7 +19,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert, } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 
 const UserPage = ({ route }) => {
@@ -45,7 +45,7 @@ const UserPage = ({ route }) => {
                 setUser(res)
                 setRecords(res.records)
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }
@@ -56,7 +56,7 @@ const UserPage = ({ route }) => {
                 const conversation = res.conversation
                 navigate('SpecificConversationPage', { conversationID: conversation._id, contact: user })
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }
@@ -65,7 +65,7 @@ const UserPage = ({ route }) => {
             if (res.status !== false) {
                 dispatch(loginSuccess(res))
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }
@@ -74,7 +74,7 @@ const UserPage = ({ route }) => {
             if (res.status !== false) {
                 dispatch(loginSuccess(res))
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }

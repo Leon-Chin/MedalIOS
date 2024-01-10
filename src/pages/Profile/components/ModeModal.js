@@ -11,7 +11,7 @@ import THEME from '../../../constants/THEME'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert, } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 
 const ModeModal = ({ visible, setVisible }) => {
@@ -34,11 +34,11 @@ const ModeModal = ({ visible, setVisible }) => {
                     dispatch(loginSuccess(res))
                     setVisible(false)
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
             .catch(error => {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             })
     }
     return (

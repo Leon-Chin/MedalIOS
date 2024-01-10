@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { ERROR_MESSAGE } from '../constants/ERRORMessage';
+import { ERROR_Alert } from '../constants/ERRORMessage';
 import { useIntl } from 'react-intl'
 
 const ContactHorizontal = ({ contact, setVisible }) => {
@@ -35,7 +35,7 @@ const ContactHorizontal = ({ contact, setVisible }) => {
             if (res.status !== false) {
                 dispatch(loginSuccess(res))
             } else {
-                Toast.show(ERROR_MESSAGE);
+                Toast.show(ERROR_Alert(formatMessage({ id: "error.errorMsg" })));
             }
         })
     }
@@ -48,7 +48,7 @@ const ContactHorizontal = ({ contact, setVisible }) => {
                 navigate('SpecificConversationPage', { conversationID: conversation._id, contact })
             } else {
                 console.log(res);
-                Toast.show(ERROR_MESSAGE);
+                Toast.show(ERROR_Alert(formatMessage({ id: "error.errorMsg" })));
             }
         })
     }

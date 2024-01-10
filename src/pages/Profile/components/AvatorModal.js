@@ -13,7 +13,7 @@ import { storage } from '../../../../firebase'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 import UploadProgressModal from '../../../components/UploadProgressModal'
 
@@ -36,11 +36,11 @@ const AvatorModal = ({ visible, setVisible }) => {
                     dispatch(loginSuccess(res))
                     setVisible(false)
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
             .catch(error => {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             })
     }
     const pickImage = async () => {
@@ -66,7 +66,7 @@ const AvatorModal = ({ visible, setVisible }) => {
             setProgress(progress.toFixed(2));
         },
             (error) => {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 setProgress(null)
             },
             () => {

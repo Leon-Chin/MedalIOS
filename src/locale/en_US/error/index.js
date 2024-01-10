@@ -1,4 +1,16 @@
 export const enUS_error = {
     'error.cannotload': 'Cannot load',
     'error.cannothandleVideo': 'Cannot process picked video',
+    'error.errorMsg': 'Please try again later',
+    'info.tut.added': 'Already Added to Selected Schedule',
+    "success.alreadyAdd": 'Add Successfully',
+    "success.favorite": 'Add To Favor Successfully',
+    "success.alreadySubmitEvaluation": 'Submit Evaluation Successfully, Will generate personal recommand soon',
+    'error.haventAnswerCannotUpdate': "You haven't answered yet, cannot update for you",
+    "error.plsInputValidInfo": 'Please Input Valid Content',
+    "info.plsInputContentForSearch": 'Please input content you want to search',
+    "success.publishSuccess": 'Publish Successfully',
+    "error.dataTooSmallCannotRecord": 'Too short time|Too few steps, cannot record for you',
+    "Success.thanksForFeedback": 'Thanks for your feedback',
+    'error.tut.favoured': 'Have already favorited',
 }

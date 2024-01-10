@@ -18,7 +18,7 @@ import EXERCISETYPE from '../../../constants/EXERCISETYPE';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
+import { ERROR_Alert, } from '../../../constants/ERRORMessage';
 import { useIntl } from 'react-intl';
 
 const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }) => {
@@ -61,7 +61,7 @@ const BeforeStartExerciseModal = ({ visible, setVisible, tutorial, setTutorial }
                     setTutorial(res.updatedTutorial)
                     navigate("TutorialVideo", { tutorial })
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
         }

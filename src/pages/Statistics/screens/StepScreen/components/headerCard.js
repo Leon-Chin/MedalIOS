@@ -1,4 +1,4 @@
-import { Alert, AppRegistry, Dimensions, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import SIZE from '../../../../../constants/SIZE'
 import COLORS from '../../../../../constants/COLORS'
 import { ICON } from '../../../../../constants/SVG/ICON'
@@ -12,7 +12,7 @@ import { loginSuccess } from '../../../../../redux/userSlice'
 import useUserTheme from '../../../../../hooks/useUserTheme'
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../../../constants/ERRORMessage'
+import { ERROR_Alert, INFO_Alert } from '../../../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 
 const { width } = Dimensions.get('screen')
@@ -41,11 +41,11 @@ const HeaderCard = () => {
                     dispatch(loginSuccess(res))
                     setStepModalGoalVisible(false)
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
         } else {
-            Toast.show(PleaseInput_MESSAGE)
+            Toast.show(INFO_Alert(formatMessage({ id: "error.plsInputValidInfo" })))
         }
     }
     return (

@@ -12,7 +12,7 @@ import EvaluationQuestion from '../components/EvaluationQuestion';
 import { updatePrefer } from '../../../api/user.api';
 import { loginSuccess } from '../../../redux/userSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { AlreadyEvaluation_MESSAGE, ERROR_MESSAGE, NothingInput_MESSAGE } from '../../../constants/ERRORMessage';
+import { ERROR_Alert, SUCCESS_Alert } from '../../../constants/ERRORMessage';
 import { useIntl } from 'react-intl';
 const { width } = Dimensions.get('screen')
 const Evaluation = () => {
@@ -39,15 +39,15 @@ const Evaluation = () => {
                 if (user.status !== false) {
                     dispatch(loginSuccess(user))
                     goBack()
-                    Toast.show(AlreadyEvaluation_MESSAGE)
+                    Toast.show(SUCCESS_Alert(formatMessage({ id: "success.alreadySubmitEvaluation" })))
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             }).catch(() => {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             })
         } else {
-            Toast.show(NothingInput_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.haventAnswerCannotUpdate' })))
             goBack()
         }
     }

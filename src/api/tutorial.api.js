@@ -13,4 +13,5 @@ export const deleteTutorial = (id, data) => request('delete', `/tutorials/${id}`
 export const addtutorialtofavor = (id) => request("put", `/tutorials/addtofavor/${id}`)
 
 export const getspecifictypetutorials = (data) => request("get", `/tutorials/type`, data)
+
 export const getrecommandtutorials = () => request("get", `/tutorials/getrecommend`)

@@ -4,7 +4,7 @@ export const enUS_calendar = {
     'app.calendar.remainingTut': "Remaining",
     'app.calendar.personalRecommendation': 'Recommendations',
     'app.calendar.fitnessAssessmentBtn': 'Try our assessment to get a personalized recommendation',
-    'app.calendar.noRecommendations': 'Currently no recommendations',
+    'app.calendar.noRecommendations': 'Currently no recommendations for your preference',
     'app.calendar.recomAlert': 'Please try out our assessment to get tutorial recommendation tailored to your interests.',
     'app.calendar.backToday': 'Go back to Today',
     'app.calendar.todaySessions': 'Today Sessions',
@@ -14,5 +14,4 @@ export const enUS_calendar = {
     'app.calendar.submitAssessment': 'Submit Assessment',
     'app.calendar.meine': 'My Tutorials',
     'app.calendar.tutLibPortal': 'Go to Tutorial Library get more',
-
 };

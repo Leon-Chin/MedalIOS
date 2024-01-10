@@ -5,7 +5,7 @@ import { createreport } from '../../api/user.api'
 import useUserTheme from '../../hooks/useUserTheme'
 import APPTHEME from '../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE, PleaseInput_MESSAGE, ThanksForFeedback_MESSAGE } from '../../constants/ERRORMessage'
+import { ERROR_Alert, INFO_Alert, SUCCESS_Alert } from '../../constants/ERRORMessage'
 import COLORS from '../../constants/COLORS'
 import { useIntl } from 'react-intl'
 
@@ -18,11 +18,11 @@ const Report = ({ route }) => {
     const handleReport = async () => {
         reportReason ? await createreport({ type, targetID: target._id, content: reportReason })
             .then(() => {
-                Toast.show(ThanksForFeedback_MESSAGE)
+                Toast.show(SUCCESS_Alert(formatMessage({ id: "Success.thanksForFeedback" })))
                 setReportReason('')
             }).catch(err => {
-                Toast.show(ERROR_MESSAGE)
-            }) : Toast.show(PleaseInput_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
+            }) : Toast.show(INFO_Alert(formatMessage({ id: "error.plsInputValidInfo" })))
     }
     return (
         <View style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>

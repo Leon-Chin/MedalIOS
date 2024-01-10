@@ -13,7 +13,7 @@ import { getrecommandtutorials } from '../../../api/tutorial.api'
 import { useSelector } from 'react-redux'
 import { isEmptyObj } from '../../../utils/getDuration'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 import NotFound from '../../../components/NotFound'
 
@@ -29,10 +29,11 @@ const PersonalRecommend = ({ selectDay }) => {
             if (res.status !== false) {
                 setRecommandTutorials(res)
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         }).catch(err => {
-            Toast.show(ERROR_MESSAGE)
+            console.log(err, "2233");
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         })
     }
     useEffect(() => {

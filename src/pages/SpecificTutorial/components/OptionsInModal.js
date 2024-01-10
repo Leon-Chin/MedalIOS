@@ -11,7 +11,7 @@ import { addtutorialtofavor } from '../../../api/tutorial.api'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { AddSuccess_MESSAGE, AlreadyFavorTutorial_MESSAGE, AlreadyHave_MESSAGE, ERROR_MESSAGE, FavorSuccess_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert, INFO_Alert, SUCCESS_Alert } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 
 const OptionsInModal = ({ handleModelClose, tutorial }) => {
@@ -27,7 +27,7 @@ const OptionsInModal = ({ handleModelClose, tutorial }) => {
 
     const handleAddToCalendar = async () => {
         if (isTodayHasAlr) {
-            Toast.show(AlreadyHave_MESSAGE)
+            Toast.show(INFO_Alert(formatMessage({ id: 'info.tut.added' })))
         } else {
             const newSession = {
                 date: new Date(userSelectDay),
@@ -38,23 +38,23 @@ const OptionsInModal = ({ handleModelClose, tutorial }) => {
                     dispatch(loginSuccess(res.user))
                     dispatch(setSessions(res.updatedSessions))
                     handleModelClose
-                    Toast.show(AddSuccess_MESSAGE)
+                    Toast.show(SUCCESS_Alert(formatMessage({ id: "success.alreadyAdd" })))
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
         }
     }
     const handleAddTutorialTofavor = async () => {
         if (isExit) {
-            Toast.show(AlreadyFavorTutorial_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.tut.favoured' })))
         } else {
             await addtutorialtofavor(_id).then(res => {
                 if (res && res.status !== false) {
                     dispatch(loginSuccess(res))
-                    Toast.show(FavorSuccess_MESSAGE)
+                    Toast.show(SUCCESS_Alert(formatMessage({ id: "success.favorite" })))
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
         }

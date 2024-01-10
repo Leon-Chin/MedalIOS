@@ -7,13 +7,15 @@ import { useState } from 'react'
 import { getalltutorial } from '../../api/user.api'
 import { useEffect } from 'react'
 import TutorialVerticalView from '../../components/TutorialVerticalView'
-import { getspecifictypetutorials } from '../../api/tutorial.api'
+import { getrecommandtutorials, getspecifictypetutorials } from '../../api/tutorial.api'
 import useUserTheme from '../../hooks/useUserTheme'
 import APPTHEME from '../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../constants/ERRORMessage'
+import { ERROR_Alert } from '../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 import Loading from '../../components/Loading'
+import NotFound from '../../components/NotFound'
+import COLORS from '../../constants/COLORS'
 
 const TutorialLibrary = ({ route }) => {
     const [loading, setLoading] = useState(false)
@@ -27,6 +29,7 @@ const TutorialLibrary = ({ route }) => {
         selectType && setSelectedType(selectType)
     }, [route])
     const [tutorials, setTutorials] = useState([])
+    const [recommendedTutorials, setRecommandedTutorials] = useState([])
     const [specificTypeTutorials, setSpecificTutorials] = useState([])
 
     const getSpecificBlog = async () => {
@@ -37,7 +40,7 @@ const TutorialLibrary = ({ route }) => {
                 setSpecificTutorials(res)
                 console.log("res", res);
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
         setLoading(false)
@@ -45,6 +48,7 @@ const TutorialLibrary = ({ route }) => {
     useEffect(() => {
         if (selectedType?.value) {
             if (selectedType.value === "recommand") {
+                getRecommandTutorials()
             } else if (selectedType.value === "all") {
                 setSpecificTutorials(tutorials)
             } else {
@@ -52,6 +56,16 @@ const TutorialLibrary = ({ route }) => {
             }
         }
     }, [selectedType])
+    const getRecommandTutorials = async () => {
+        setLoading(true)
+        await getrecommandtutorials().then(res => {
+            setRecommandedTutorials(res)
+        }).catch(err => {
+            console.log("err", err);
+            setRecommandedTutorials([])
+        })
+        setLoading(false)
+    }
 
     const getLibs = async () => {
         setLoading(true)
@@ -64,7 +78,9 @@ const TutorialLibrary = ({ route }) => {
     }
     useEffect(() => {
         getLibs()
+        getRecommandTutorials()
     }, [])
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor }}>
@@ -81,8 +97,16 @@ const TutorialLibrary = ({ route }) => {
                 {(!selectedType && !loading) &&
                     <View>
                         <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>{formatMessage({ id: 'app.tut.recommendation' })}</Text>
+                        {recommendedTutorials.length === 0 && <View>
+                            <NotFound />
+                            <View style={{ padding: SIZE.NormalMargin, }}>
+                                <Text style={{ fontSize: SIZE.NormalTitle, color: COLORS.commentText, fontWeight: 'bold' }}>
+                                    {formatMessage({ id: 'app.calendar.noRecommendations' })}
+                                </Text>
+                            </View>
+                        </View>}
                         <FlatList
-                            data={tutorials}
+                            data={recommendedTutorials}
                             renderItem={({ item, index }) => <TutorialVerticalView key={index} tutorial={item} />}
                             showsVerticalScrollIndicator={false}
                             contentContainerStyle={{ columnGap: SIZE.NormalMargin }}
@@ -92,6 +116,9 @@ const TutorialLibrary = ({ route }) => {
                 {(selectedType && !loading) &&
                     <View>
                         <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: currentTheme.fontColor }}>{selectedType.name}</Text>
+                        {specificTypeTutorials.length === 0 && <View>
+                            <NotFound />
+                        </View>}
                         <FlatList
                             data={specificTypeTutorials}
                             renderItem={({ item, index }) => <TutorialVerticalView key={index} tutorial={item} />}

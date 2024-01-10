@@ -13,7 +13,7 @@ import { loginSuccess } from '../../../redux/userSlice';
 import { finishsession } from '../../../api/session.api';
 import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
+import { ERROR_Alert, } from '../../../constants/ERRORMessage';
 import { useIntl } from 'react-intl';
 
 const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, watchTime, startTime, endTime }) => {
@@ -59,7 +59,7 @@ const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, wat
                 navigation.dispatch(StackActions.replace("AfterExercise", { tutorial, data }))
             } else {
                 console.log(res);
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }

@@ -12,7 +12,7 @@ import { loginSuccess } from '../../../../../redux/userSlice'
 import useUserTheme from '../../../../../hooks/useUserTheme'
 import APPTHEME from '../../../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE, PleaseInput_MESSAGE } from '../../../../../constants/ERRORMessage'
+import { ERROR_Alert, INFO_Alert } from '../../../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 
 const { width } = Dimensions.get('screen')
@@ -40,11 +40,11 @@ const HeaderCard = () => {
                     dispatch(loginSuccess(res))
                     setModalGoalVisible(false)
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
         } else {
-            Toast.show(PleaseInput_MESSAGE)
+            Toast.show(INFO_Alert(formatMessage({ id: "error.plsInputValidInfo" })))
         }
     }
     return (
@@ -93,7 +93,7 @@ const HeaderCard = () => {
                     style={{ flex: 1 }}
                     colors={['#f8edf2', "#f2f0f5", '#ebf3f9']}>
                     <SafeAreaView style={{ flex: 1 }}>
-                    <View style={{ marginHorizontal: '3%' }}>
+                        <View style={{ marginHorizontal: '3%' }}>
                             <Text style={{ fontSize: SIZE.LargerTitle, fontWeight: 'bold', marginBottom: SIZE.NormalMargin, color: COLORS.black }}>{formatMessage({ id: 'app.statistic.goalDist.Form2' })}</Text>
                             <TextInput
                                 keyboardType='decimal-pad'

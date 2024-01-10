@@ -11,10 +11,12 @@ import { setSessions } from '../../../redux/SessionSlice'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert } from '../../../constants/ERRORMessage'
 import useUserLocale from '../../../hooks/useUserLocale'
+import { useIntl } from 'react-intl'
 
 const DoneTodoItem = ({ tutorial }) => {
+    const { formatMessage } = useIntl()
     const dispatch = useDispatch()
     const theme = useUserTheme()
     const locale = useUserLocale()
@@ -27,7 +29,7 @@ const DoneTodoItem = ({ tutorial }) => {
                 dispatch(loginSuccess(user))
                 dispatch(setSessions(updatedSessions))
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: "error.errorMsg" })));
             }
         })
     }

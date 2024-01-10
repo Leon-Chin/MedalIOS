@@ -1,4 +1,16 @@
 export const zhCN_error = {
     'error.cannotload': '无法加载',
     'error.cannothandleVideo': '无法处理您选择的视频',
+    'error.errorMsg': '出现异常请稍后重试',
+    'info.tut.added': '此日已有这个训练了',
+    "success.alreadyAdd": '添加成功',
+    "success.favorite": '收藏成功',
+    "success.alreadySubmitEvaluation": '已经提交评估，将为您生成个性化推荐',
+    'error.haventAnswerCannotUpdate': '您未作出选择, 无法为您更新',
+    "error.plsInputValidInfo": '请输入有效信息',
+    "info.plsInputContentForSearch": '请输入你所要查找的内容',
+    "success.publishSuccess": '发布成功',
+    "error.dataTooSmallCannotRecord": '时间过短｜步数过少, 数据太小无法记录',
+    "Success.thanksForFeedback": '感谢您的反馈',
+    'error.tut.favoured': '您已收藏教程',
 }

@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../redux/userSlice';
 import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
+import { ERROR_Alert } from '../../../constants/ERRORMessage';
 import { useIntl } from 'react-intl';
 import { WALK_TUTORIAL } from '../../../constants/APP_INSIDE_TUTORIAL';
 
@@ -74,7 +74,7 @@ const Walk = () => {
     const handleFinish = async () => {
         const duration = getElapsedMinute(startTime).minutes
         if (duration < 2 || currentStepCount < 100) {
-            Toast.show(CanNotFinish_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: "error.dataTooSmallCannotRecord" })))
             return;
         }
         const ExerciseData = {

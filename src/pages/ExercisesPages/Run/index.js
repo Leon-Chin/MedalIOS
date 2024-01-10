@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../redux/userSlice';
 import { setSessions } from '../../../redux/SessionSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { CanNotFinish_MESSAGE } from '../../../constants/ERRORMessage';
+import { ERROR_Alert } from '../../../constants/ERRORMessage';
 import * as Location from 'expo-location';
 import { useIntl } from 'react-intl';
 import { RUN_TUTORIAL } from '../../../constants/APP_INSIDE_TUTORIAL';
@@ -65,11 +65,8 @@ const Run = () => {
         return () => {
             if (pedometerSubscription) {
                 // 取消订阅
-                console.log("xiezaile");
-                console.log(pedometerSubscription);
                 pedometerSubscription.remove();
                 pedometerSubscription.remove()
-                console.log("now", pedometerSubscription.remove());
             }
             stopPedometer(); // 确保计时器停止
         };
@@ -82,7 +79,7 @@ const Run = () => {
     const handleFinish = async () => {
         const duration = getElapsedMinute(startTime).minutes
         if (duration < 2 || currentStepCount < 100) {
-            Toast.show(CanNotFinish_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: "error.dataTooSmallCannotRecord" })))
             return;
         }
         const ExerciseData = {

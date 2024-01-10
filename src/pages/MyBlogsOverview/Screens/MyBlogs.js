@@ -8,20 +8,21 @@ import BlogCard from '../../../components/BlogCard';
 import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
+import { ERROR_Alert } from '../../../constants/ERRORMessage';
+import { useIntl } from 'react-intl';
 
 const MyBlogs = () => {
     const theme = useUserTheme()
     const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const [blogs, setBlogs] = useState([])
-
+    const { formatMessage } = useIntl()
     const getBlogs = async () => {
         await getmyblog().then(res => {
             if (res.status !== false) {
                 setBlogs(res)
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }

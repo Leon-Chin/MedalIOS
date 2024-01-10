@@ -12,7 +12,7 @@ import useIsTutorialHasAlr from '../hooks/useIsTutorialHasAlr';
 import useUserTheme from '../hooks/useUserTheme';
 import APPTHEME from '../constants/COLORS/APPTHEME';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { AlreadyHave_MESSAGE, ERROR_MESSAGE } from '../constants/ERRORMessage';
+import { ERROR_Alert, INFO_Alert } from '../constants/ERRORMessage';
 import useUserLocale from '../hooks/useUserLocale';
 import { useIntl } from 'react-intl';
 const TutorialHorizontal = ({ tutorial, withCalender }) => {
@@ -28,7 +28,7 @@ const TutorialHorizontal = ({ tutorial, withCalender }) => {
 
     const handleAddToCalendar = async () => {
         if (isTodayHasAlr) {
-            Toast.show(AlreadyHave_MESSAGE);
+            Toast.show(INFO_Alert(formatMessage({ id: 'info.tut.added' })));
         } else {
             const newSession = {
                 date: new Date(userSelectDay),
@@ -36,7 +36,7 @@ const TutorialHorizontal = ({ tutorial, withCalender }) => {
             }
             await createsession(newSession).then(res => {
                 if (res.status === false) {
-                    Toast.show(ERROR_MESSAGE);
+                    Toast.show(ERROR_Alert(formatMessage({ id: "error.errorMsg" })));
                 } else {
                     dispatch(loginSuccess(res.user))
                     dispatch(setSessions(res.updatedSessions))

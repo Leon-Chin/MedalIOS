@@ -13,7 +13,7 @@ import { Video, ResizeMode } from 'expo-av';
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_MESSAGE, PublicSuccess_MESSAGE } from '../../../constants/ERRORMessage'
+import { ERROR_Alert, SUCCESS_Alert } from '../../../constants/ERRORMessage'
 import { useIntl } from 'react-intl'
 import UploadProgressModal from '../../../components/UploadProgressModal'
 
@@ -43,7 +43,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
                 await uploadImage(result.assets[0].uri, "picture", imageHeight, imageWidth)
             }
         } catch (e) {
-            Toast.show(ERROR_MESSAGE);
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             Alert.alert("Error")
             // console.error("image erro", e);
         }
@@ -66,7 +66,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
             }
         } catch (e) {
             Alert.alert("Cannot handle the type of picked image")
-            Toast.show(ERROR_MESSAGE);
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             console.error("video erro", e);
         }
     }
@@ -81,7 +81,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
             setProgress(progress.toFixed(2))
         },
             (error) => {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 setProgress(null)
             },
             () => {
@@ -120,7 +120,7 @@ const PostBlogModal = ({ visible, setVisible }) => {
             } else if (blogType === 'text') {
                 handledItems = { ...handledItems }
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 return
             }
         }
@@ -129,19 +129,19 @@ const PostBlogModal = ({ visible, setVisible }) => {
             await postblog(handledItems).then(res => {
                 console.log("res", res);
                 if (res.status !== false) {
-                    Toast.show(PublicSuccess_MESSAGE)
+                    Toast.show(SUCCESS_Alert(formatMessage({ id: "success.publishSuccess" })))
                     setVisible(false)
                     setBlogImgs([])
                     setBlogVideo({})
                     setTitle(null)
                     setContent(null)
                 } else {
-                    Toast.show(ERROR_MESSAGE)
+                    Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
                 }
             })
         } catch (error) {
             console.log("error", error);
-            Toast.show(ERROR_MESSAGE)
+            Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
         }
     }
     const handleDeletePic = (deletedImg) => {

@@ -28,7 +28,7 @@ import useUserTheme from '../../../hooks/useUserTheme';
 import APPTHEME from '../../../constants/COLORS/APPTHEME';
 import UpdateMeasurementModal from './UpdateMeasurementModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { ERROR_MESSAGE } from '../../../constants/ERRORMessage';
+import { ERROR_Alert, } from '../../../constants/ERRORMessage';
 import { useIntl } from 'react-intl';
 
 echarts.use([ToolboxComponent, TooltipComponent, DataZoomComponent, LegendComponent, SVGRenderer, LineChart, BarChart, GridComponent]);
@@ -74,7 +74,7 @@ const StatisticChart = () => {
                 dispatch(setLatestMeasurement(res.measurement))
                 dispatch(setMeasurements(res.updatedMeasurements))
             } else {
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             }
         })
     }
@@ -107,7 +107,7 @@ const StatisticChart = () => {
                         gap: SIZE.NormalMargin
                     }} key={index}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(item.date)}{formatMessage({ id: 'app.statistic.record' })}</Text>
+                            <Text style={{ fontSize: SIZE.NormalTitle, color: currentTheme.fontColor }}>{formatTimeForChartSoloItem(item.date)}{formatMessage({ id: 'app.statistic.record' })}</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <TouchableOpacity
                                     onPress={() => handleEditMeasurement(item)}

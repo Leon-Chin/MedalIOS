@@ -1,9 +1,8 @@
 import { FlatList, TouchableOpacity, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Alert, Modal, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import SpecificConversationHeader from '../components/SpecificConversationHeader'
-import { getcurrentconversationmessages, getcurrentconversationmessagesmobile, getspecificconversation, sendmessage } from '../../../api/user.api'
+import { getcurrentconversationmessagesmobile, sendmessage } from '../../../api/user.api'
 import Message from '../components/Message'
-import { FontAwesome } from '@expo/vector-icons';
 import { useSelector } from 'react-redux'
 import COLORS from '../../../constants/COLORS'
 import { useRef } from 'react'
@@ -16,9 +15,7 @@ import { ICON } from '../../../constants/SVG/ICON'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { ERROR_Alert, ERROR_MESSAGE } from '../../../constants/ERRORMessage'
-import Percentage from '../../Calender/components/Percentage'
-import PurePercentageLine from '../../../components/PurePercentageLine'
+import { ERROR_Alert } from '../../../constants/ERRORMessage'
 import UploadProgressModal from '../../../components/UploadProgressModal'
 import { useIntl } from 'react-intl'
 const SpecificConversationPage = ({ route }) => {
@@ -139,7 +136,7 @@ const SpecificConversationPage = ({ route }) => {
         },
             (error) => {
                 setProgress(null)
-                Toast.show(ERROR_MESSAGE)
+                Toast.show(ERROR_Alert(formatMessage({ id: 'error.errorMsg' })))
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
