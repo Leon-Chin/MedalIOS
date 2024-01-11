@@ -99,7 +99,7 @@ const TutorialVerticalView = ({ tutorial }) => {
                         borderRadius: 15,
                         overflow: 'hidden'
                     }}>
-                    <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 10, color: currentTheme.fontColor }}>
+                    <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '700', marginBottom: 10, color: currentTheme.fontColor }}>
                         {locale === "en" ? name : zh_name}
                     </Text>
                     <Text numberOfLines={1} style={{ marginBottom: 2, color: currentTheme.fontColor }}>

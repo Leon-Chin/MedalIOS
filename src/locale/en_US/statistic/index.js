@@ -61,7 +61,7 @@ export const enUS_statistic = {
     'app.statistic.calorieExp': 'Cal. Consumed',
     'app.statistic.goalCalorie': 'Goal',
     'app.statistic.goalCalorie.Form2': 'Goal Cal. (Kcal)',
-    'app.statistic.updateGoal': 'Updaet Goal',
+    'app.statistic.updateGoal': 'Update Goal',
     'app.statistic.distCover': 'Dist. Covered',
     'app.statistic.goalDist': 'Goal',
     'app.statistic.goalDist.Form2': 'Goal Dist. (Km)',
