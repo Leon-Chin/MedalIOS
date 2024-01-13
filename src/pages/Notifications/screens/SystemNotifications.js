@@ -46,7 +46,7 @@ const SystemNotifications = () => {
     } else {
         return (
             <ScrollView style={{ flex: 1, backgroundColor: currentTheme.backgroundColor, }}>
-                {notifications && notifications.map((item, key) => <TouchableOpacity key={key} style={{ flexDirection: 'coloumn', justifyContent: 'space-between', width: '100%' }}>
+                {notifications && notifications?.map((item, key) => <TouchableOpacity key={key} style={{ flexDirection: 'coloumn', justifyContent: 'space-between', width: '100%' }}>
                     <View style={{ flex: 1, marginHorizontal: '3%', marginTop: SIZE.NormalMargin, backgroundColor: currentTheme.contentColor, borderRadius: SIZE.CardBorderRadius, padding: SIZE.NormalMargin }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -59,5 +59,6 @@ export const enUS_commonText = {
 
     'error.banAlert': 'Banning Alert:',
     'error.banAlertMessage': 'Your account has been banned for violating the community rules',
+    'sending': 'Sending...',
 
 };

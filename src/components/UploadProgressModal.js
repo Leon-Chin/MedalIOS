@@ -1,8 +1,10 @@
 import { ActivityIndicator, Modal, StyleSheet, Text, View } from "react-native";
 import PurePercentageLine from "./PurePercentageLine";
 import COLORS from "../constants/COLORS";
+import { useIntl } from "react-intl";
 
 const UploadProgressModal = ({ visible, progress }) => {
+    const { formatMessage } = useIntl()
     return (
         <Modal
             animationType="slide"
@@ -13,7 +15,7 @@ const UploadProgressModal = ({ visible, progress }) => {
                 <View style={styles.modalView}>
                     {progress < 1 ? <ActivityIndicator size="large" color={COLORS.primary} /> :
                         <PurePercentageLine currentValue={progress} />}
-                    <Text style={styles.modalText}>上传中... {progress}%</Text>
+                    <Text style={styles.modalText}>{formatMessage({ id: 'sending' })} {progress}%</Text>
                 </View>
             </View>
         </Modal>

@@ -59,5 +59,5 @@ export const zhCN_commonText = {
     'title.exerciseOverview': '课程训练',
     'error.banAlert': '封禁提示',
     'error.banAlertMessage': '您因违反社区规定, 账号已被封禁已经无法使用App',
-
+    'sending': '上传中...',
 };

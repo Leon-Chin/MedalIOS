@@ -17,7 +17,7 @@ import { ERROR_Alert, } from '../../../constants/ERRORMessage';
 import { useIntl } from 'react-intl';
 
 const FinishExerciseModal = ({ visible, setVisible, tutorial, videoDuration, watchTime, startTime, endTime }) => {
-    const { formatMessage } = useIntl
+    const { formatMessage } = useIntl()
     const [shouldRecord, setShouldRecord] = useState(false)
     const { navigate, goBack } = useNavigation()
     const navigation = useNavigation()

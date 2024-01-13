@@ -5,14 +5,14 @@ import BlogCard from '../../../../components/BlogCard'
 import { useNavigation } from '@react-navigation/native'
 import { getrandomblog } from '../../../../api/user.api'
 import COLORS from '../../../../constants/COLORS'
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { useIntl } from 'react-intl'
 
 const BlogsPromo = () => {
     const { formatMessage } = useIntl()
     const { navigate } = useNavigation()
     const [blogs, setBlogs] = useState([])
-    
+
     const getRecommandBlogs = async () => {
         const blogs = await getrandomblog()
         setBlogs(blogs)
