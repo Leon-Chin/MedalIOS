@@ -1,6 +1,5 @@
-import { SafeAreaView, ScrollView, StyleSheet, RefreshControl, TouchableOpacity, View, Text, Alert } from 'react-native'
+import { SafeAreaView, ScrollView, RefreshControl, TouchableOpacity, View, Text } from 'react-native'
 import React from 'react'
-import COLORS from '../../constants/COLORS'
 import { ICON } from '../../constants/SVG/ICON'
 import { useState } from 'react'
 import { useEffect } from 'react'

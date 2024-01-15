@@ -26,6 +26,9 @@ const SUCCESS_Alert = (content) => {
 
 
 export {
+    ERROR_Alert,
+    INFO_Alert,
+    SUCCESS_Alert,
     PleaseInput_MESSAGE,
     FavorSuccess_MESSAGE,
     AlreadyFavorTutorial_MESSAGE,
@@ -38,7 +41,4 @@ export {
     AlreadyEvaluation_MESSAGE,
     NothingInput_MESSAGE,
     PleaseInputSearchContent_MESSAGE,
-    ERROR_Alert,
-    INFO_Alert,
-    SUCCESS_Alert,
 }

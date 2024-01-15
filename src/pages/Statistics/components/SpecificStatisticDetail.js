@@ -4,7 +4,6 @@ import SIZE from '../../../constants/SIZE'
 import COLORS from '../../../constants/COLORS'
 import { ICON } from '../../../constants/SVG/ICON'
 import { useSelector } from 'react-redux'
-import { BMISort } from '../../../utils/BMICalculate'
 import useUserTheme from '../../../hooks/useUserTheme'
 import APPTHEME from '../../../constants/COLORS/APPTHEME'
 import { useIntl } from 'react-intl'
@@ -15,6 +14,18 @@ const SpecificStatisticDetail = ({ setUploadWeightModalVisible, latestMeasuremen
     const currentTheme = APPTHEME[theme]
     const { currentUser } = useSelector(state => state.user)
     const { weightTarget } = currentUser
+
+    const BMISort = (bmi) => {
+        if (bmi < 18.5) {
+            return formatMessage({ id: 'app.stats.bmiSort.uw' });
+        } else if (bmi >= 18.5 && bmi < 25) {
+            return formatMessage({ id: 'app.stats.bmiSort.nw' });
+        } else if (bmi >= 25 && bmi <= 29.9) {
+            return formatMessage({ id: 'app.stats.bmiSort.ow' });
+        } else {
+            return formatMessage({ id: 'app.stats.bmiSort.fa' });
+        }
+    }
     return (
         <View style={{
             flexDirection: 'row',

@@ -35,6 +35,11 @@ export const enUS_statistic = {
     'app.statistic.bmiLvl.overWt': 'Over Weight',
     'app.statistic.bmiLvl.obesity': 'Obesity',
 
+    'app.stats.bmiSort.uw': 'Under Weight',
+    'app.stats.bmiSort.nw': 'Normal',
+    'app.stats.bmiSort.ow': 'Over Weight',
+    'app.stats.bmiSort.fa': 'Obesity',
+
     'app.statistic.wgtAndHt': 'Body Metric',
     'app.statistic.weightForm3': 'Weight',
     'app.statistic.heightForm3': 'Height',

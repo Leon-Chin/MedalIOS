@@ -8,10 +8,8 @@ import { setRecords } from '../redux/RecordSlice';
 import { loginSuccess } from '../redux/userSlice';
 import useTodayTutorialCalorieConsumption from './useTodayTutorialCalorieConsumption';
 
-// 这是一个自定义Hook
 function useHealthKit() {
     const dispatch = useDispatch()
-
     const [hasPermissions, setHasPermissions] = useState(false);
     const [steps, setSteps] = useState(0);
     const [distance, setDistance] = useState(0.00);
@@ -20,7 +18,7 @@ function useHealthKit() {
     const duration = useTodayExerciseDuration()
     const tutorialCalorieConsumption = useTodayTutorialCalorieConsumption()
 
-    // 定义权限对象
+    // define the permission
     const permissions = {
         permissions: {
             read: [
@@ -31,7 +29,7 @@ function useHealthKit() {
         },
     };
 
-    // 初始化AppleHealthKit
+    // Init AppleHealthKit
     useEffect(() => {
         AppleHealthKit.initHealthKit(permissions, (err) => {
             if (err) {
@@ -42,7 +40,7 @@ function useHealthKit() {
         });
     }, []);
 
-    // 获取步数和行走距离
+    // get step and distance
     useEffect(() => {
         if (!hasPermissions) {
             return;
@@ -50,7 +48,7 @@ function useHealthKit() {
 
         const options = {
             date: new Date().toISOString(),
-            includeManuallyAdded: false, // 注意属性名称的大小写
+            includeManuallyAdded: false,
         };
 
         AppleHealthKit.getDistanceWalkingRunning(options, (err, results) => {

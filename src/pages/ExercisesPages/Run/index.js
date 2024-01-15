@@ -37,38 +37,30 @@ const Run = () => {
     const [currentStepCount, setCurrentStepCount] = useState(0);
     useEffect(() => {
         let pedometerSubscription;
-
-        // 检查Pedometer是否可用并开始监听步数
         const startPedometer = async () => {
             const isAvailable = await Pedometer.isAvailableAsync();
             setPedometerAvailable(isAvailable);
 
             if (isAvailable) {
                 setStartTime(new Date());
-                // 订阅Pedometer，并保存订阅以便稍后取消
                 let initial = 0
                 let first = true
                 pedometerSubscription = Pedometer.watchStepCount(result => {
-                    if (first) {  // 如果这是新会话，记录初始步数
+                    if (first) {
                         initial = result.steps;
                     }
                     first = false
-                    // 显示的步数为当前步数减去初始步数
                     setCurrentStepCount(result.steps - initial);
                 });
             }
         };
-
         startPedometer();
-
-        // 清理函数：组件卸载时调用
         return () => {
             if (pedometerSubscription) {
-                // 取消订阅
                 pedometerSubscription.remove();
                 pedometerSubscription.remove()
             }
-            stopPedometer(); // 确保计时器停止
+            stopPedometer();
         };
     }, []);
 
@@ -165,14 +157,14 @@ const Run = () => {
                     console.log("Accuracy:", newPosition.coords.accuracy);
                     let signalStrength;
                     if (accuracy > 34) {
-                        signalStrength = GPS_Level.Low; // 弱信号
+                        signalStrength = GPS_Level.Low; // weak
                     } else if (accuracy > 20 && accuracy <= 34) {
-                        signalStrength = GPS_Level.Medium; // 中等信号
+                        signalStrength = GPS_Level.Medium; // normal
                     } else {
-                        signalStrength = GPS_Level.High; // 强信号
+                        signalStrength = GPS_Level.High; // strong
                     }
                     setGPSLevel(signalStrength);
-                    setPositionStack(prev => [...prev.slice(1 - POSITION_STACK_SIZE), newPosition]); // 更新位置栈
+                    setPositionStack(prev => [...prev.slice(1 - POSITION_STACK_SIZE), newPosition]); // update stack
 
                     if (positionStack.length === POSITION_STACK_SIZE) {
                         // console.log("here", newPosition);
@@ -197,7 +189,6 @@ const Run = () => {
                     }
                 }
             );
-
             return () => {
                 subscription.then((sub) => sub.remove());
             };

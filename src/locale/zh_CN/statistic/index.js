@@ -33,6 +33,12 @@ export const zhCN_statistic = {
     'app.statistic.bmiLvl.overWt': '超重',
     'app.statistic.bmiLvl.obesity': '肥胖',
 
+
+    'app.stats.bmiSort.uw': '体重过轻',
+    'app.stats.bmiSort.nw': '正常范围',
+    'app.stats.bmiSort.ow': '超重',
+    'app.stats.bmiSort.fa': '肥胖',
+
     'app.statistic.wgtAndHt': '身高体重',
     'app.statistic.weightForm3': '体重',
     'app.statistic.heightForm3': '身高',
@@ -54,7 +60,7 @@ export const zhCN_statistic = {
 
     'app.statistic.highestRecord': '最高记录',
     'app.statistic.singleHighRecord': '单日最高记录',
-    
+
     'app.statistic.todayRecord': '今日数据',
     'app.statistic.calorieExp': '卡路里消耗',
     'app.statistic.goalCalorie': '目标卡路里消耗',
